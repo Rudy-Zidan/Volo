@@ -1,32 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/background"
     tools:context="com.quarklab.squarebash.SquareBash">
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/gridLayout">
 
-    <GridView
-        android:id="@+id/GameBoard"
-        android:layout_width="wrap_content" android:layout_height="wrap_content" android:columnWidth="600dp" android:numColumns="3"
-        android:stretchMode="columnWidth"
-        android:layout_gravity="center|top"
-        android:background="#FFFFFF"
-        android:scrollIndicators="none"
-        android:paddingLeft="0dp"
-        android:paddingRight="0dp"
-        android:paddingBottom="0dp"
-        android:paddingTop="0dp"
-        android:padding="0dp"
-        android:fastScrollEnabled="true">
-    </GridView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Square Bash"
+            android:id="@+id/textView"
+            android:textSize="48dp"
+            android:layout_marginTop="50dp"
+            android:shadowColor="#ffe5e5"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="15"
+            android:layout_row="3"
+            android:layout_column="0"
+            android:layout_columnSpan="2"
+            android:gravity="center_vertical|center_horizontal" />
+
+        <Button
+            android:background="@drawable/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/play"
+            android:text="Play"
+            android:textSize="40dp"
+            android:textColor="#fff"
+            android:layout_row="9"
+            android:layout_column="1"
+            android:gravity="center_horizontal|center_vertical"
+            android:layout_gravity="center_horizontal"
+            android:layout_rowSpan="2"
+            android:layout_marginBottom="20dp" />
+    </GridLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Score: 0"
-        android:id="@+id/score"
-        android:layout_gravity="bottom|center"
-        android:editable="false"
-        android:textColor="#000" />
-</FrameLayout>
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Quarklab"
+        android:id="@+id/textView2"
+        android:layout_row="0"
+        android:layout_column="1"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

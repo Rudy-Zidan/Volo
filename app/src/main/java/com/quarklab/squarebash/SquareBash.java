@@ -1,41 +1,27 @@
 package com.quarklab.squarebash;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
-import com.quarklab.squarebash.core.logic.GameEngine;
-import com.quarklab.squarebash.core.multimedia.SoundManager;
-import com.quarklab.squarebash.core.visualization.RenderEngine;
-
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
 
 public class SquareBash extends Activity {
-    public SoundManager soundManager;
-    private RenderEngine renderEngine;
-    private GameEngine gameEngine;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.renderEngine = new RenderEngine(this);
-        this.soundManager = new SoundManager(this);
-        this.gameEngine = new GameEngine(this);
-        this.renderEngine.render(R.id.GameBoard);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        setContentView(R.layout.activity_square_bash);
+        Button play = (Button) findViewById(R.id.play);
+        play.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(SquareBash.this, GameBoard.class));
+            }
+        });
     }
-
-    public void onResume() {
-        super.onResume();
-        this.gameEngine.startGame();
-        this.soundManager.startBackgroundSound();
-    }
-
-    public void onPause() {
-        super.onPause();
-        this.gameEngine.stopGame();
-        this.soundManager.stopBackgroundSound();
-    }
-
-    public GameEngine getGameEngine(){
-        return this.gameEngine;
-    }
-
-
 }

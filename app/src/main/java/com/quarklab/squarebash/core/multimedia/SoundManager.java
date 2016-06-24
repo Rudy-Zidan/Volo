@@ -12,7 +12,6 @@ public class SoundManager {
     private Context context;
     private BackgroundSound backgroundMusic;
     public  SoundManager(Context context){
-        this.backgroundMusic = new BackgroundSound();
         this.context = context;
     }
 
@@ -23,19 +22,37 @@ public class SoundManager {
     }
 
     public void startBackgroundSound(){
+        this.backgroundMusic = new BackgroundSound();
         this.backgroundMusic.execute(null);
     }
     public void stopBackgroundSound(){
-        this.backgroundMusic.cancel(true);
+        this.backgroundMusic.stop();
     }
     public class BackgroundSound extends AsyncTask<Void, Void, Void> {
+        private MediaPlayer player;
+
+        @Override
+        protected void onPreExecute() {
+            this.player = MediaPlayer.create(context, R.raw.background);
+        }
+
         @Override
         protected Void doInBackground(Void... params) {
-            MediaPlayer player = MediaPlayer.create(context,R.raw.background);
-            player.setLooping(true); // Set looping
-            player.setVolume(25,25);
-            player.start();
+            this.player.setLooping(true); // Set looping
+            this.player.setVolume(25,25);
+            this.player.start();
             return null;
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
+
+        protected void stop(){
+            this.player.stop();
+            this.player.release();
+            this.cancel(true);
         }
     }
 }

@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.quarklab.squarebash.R;
-import com.quarklab.squarebash.SquareBash;
+import com.quarklab.squarebash.GameBoard;
 
 import java.util.Random;
 
@@ -24,7 +24,7 @@ public class GameEngine {
     private enum gameMode {Easy,Sudden_death,No_Score}
     private static gameMode currentGameMode;
     private static Context context;
-    private SquareBash squareBash;
+    private GameBoard gameBoard;
     private int scoreNumber;
     private GameHandler gameHandler;
     private static int toastSpeed;
@@ -32,7 +32,7 @@ public class GameEngine {
     public GameEngine(Context context){
         this.context = context;
         this.currentGameMode = gameMode.Easy;
-        this.squareBash = (SquareBash) this.context;
+        this.gameBoard = (GameBoard) this.context;
         this.scoreNumber = 0;
         this.gameHandler = new GameHandler();
         this.toastSpeed = 100;
@@ -146,17 +146,17 @@ public class GameEngine {
         this.scoreNumber += 10;
         TextView score = (TextView) ((Activity)this.context).findViewById(R.id.score);
         score.setText("Score: " + this.scoreNumber);
-        this.squareBash.soundManager.playSound(R.raw.score);
+        this.gameBoard.soundManager.playSound(R.raw.score);
     }
 
     private void nothing(){
         showMessage("Oh you missed !!!");
-        this.squareBash.soundManager.playSound(R.raw.lose);
+        this.gameBoard.soundManager.playSound(R.raw.lose);
     }
 
     private void endGame(){
         showMessage("Game Over");
-        this.squareBash.soundManager.playSound(R.raw.gameover);
+        this.gameBoard.soundManager.playSound(R.raw.gameover);
         this.stopGame();
     }
 }

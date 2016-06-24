@@ -24,7 +24,7 @@ public class RenderEngine {
         this.activity = ((Activity)this.context);
         this.activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         this.activity.setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        this.activity.setContentView(R.layout.activity_square_bash);
+        this.activity.setContentView(R.layout.activity_game_board);
     }
     public void render(int resource){
         this.grid = (GridView) ((Activity)context).findViewById (resource);
