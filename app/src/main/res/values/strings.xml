@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Square Bash</string>
+    <string name="sound">Sound</string>
+    <string name="leader_board">Leader board</string>
+    <string name="square_bash">Square Bash</string>
+    <string name="play">Play</string>
+    <string name="quarklab">Quarklab</string>
 </resources>

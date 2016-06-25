@@ -3,14 +3,15 @@ package com.quarklab.squarebash;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
-public class SquareBash extends Activity {
+import com.quarklab.squarebash.core.preference.Setting;
 
+public class SquareBash extends Activity {
+    private Setting setting;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,5 +24,23 @@ public class SquareBash extends Activity {
                 startActivity(new Intent(SquareBash.this, GameBoard.class));
             }
         });
+        Button sound = (Button)findViewById(R.id.sound);
+        this.setting = new Setting(this);
+        this.HandleSoundButtonBG(sound);
+
+        sound.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                setting.changeSound();
+                HandleSoundButtonBG((Button)v);
+            }
+        });
+    }
+    private void HandleSoundButtonBG(Button btn){
+        if(this.setting.playSound()){
+            btn.setBackgroundDrawable( getResources().getDrawable(R.drawable.speaker) );
+        }else{
+            btn.setBackgroundDrawable( getResources().getDrawable(R.drawable.speakermute) );
+        }
     }
 }

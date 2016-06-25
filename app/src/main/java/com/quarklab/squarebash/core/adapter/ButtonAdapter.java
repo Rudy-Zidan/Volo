@@ -49,6 +49,7 @@ public class ButtonAdapter extends BaseAdapter {
         }else{
             btn = (Button) convertView;
         }
+        btn.setSoundEffectsEnabled(false);
         btn.setBackgroundColor(Color.WHITE);
         btn.setId(position);
         this.buttonAction.execute(this.context,btn);

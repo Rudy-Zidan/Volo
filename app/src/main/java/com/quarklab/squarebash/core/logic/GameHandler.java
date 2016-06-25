@@ -23,6 +23,7 @@ public class GameHandler {
     }
     public void start(){
         this.viewHandler.postDelayed(updateData,speed);
+        this.speedHandler.postDelayed(updateSpeed,15000);
         this.randomLevelHandler.postDelayed(changeGameMode,20000);
     }
     public void end(){
@@ -35,7 +36,6 @@ public class GameHandler {
         public void run(){
             GameEngine.changeGameBoard();
             viewHandler.postDelayed(updateData,speed);
-            speedHandler.postDelayed(updateSpeed,15000);
         }
     };
 

@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.quarklab.squarebash.R;
 import com.quarklab.squarebash.GameBoard;
+import com.quarklab.squarebash.core.preference.Setting;
 
 import java.util.Random;
 
@@ -144,6 +145,7 @@ public class GameEngine {
     private void addScore(){
         showMessage("Nice :)");
         this.scoreNumber += 10;
+        this.gameBoard.setting.updateScore(this.scoreNumber);
         TextView score = (TextView) ((Activity)this.context).findViewById(R.id.score);
         score.setText("Score: " + this.scoreNumber);
         this.gameBoard.soundManager.playSound(R.raw.score);

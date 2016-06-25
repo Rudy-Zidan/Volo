@@ -1,9 +1,13 @@
 package com.quarklab.squarebash.core.multimedia;
 
+import android.app.Activity;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
+
+import com.quarklab.squarebash.GameBoard;
 import com.quarklab.squarebash.R;
+import com.quarklab.squarebash.core.preference.Setting;
 
 /**
  * Created by rudy on 6/20/16.
@@ -11,22 +15,31 @@ import com.quarklab.squarebash.R;
 public class SoundManager {
     private Context context;
     private BackgroundSound backgroundMusic;
+    private GameBoard gameBoard;
     public  SoundManager(Context context){
         this.context = context;
+        this.gameBoard = (GameBoard) context;
     }
 
     public void playSound(int music){
-        MediaPlayer player = MediaPlayer.create(this.context,music);
-        player.setVolume(100,100);
-        player.start();
+        if(this.gameBoard.setting.playSound()) {
+            MediaPlayer player = MediaPlayer.create(this.context, music);
+            player.setVolume(100, 100);
+            player.start();
+        }
     }
 
     public void startBackgroundSound(){
-        this.backgroundMusic = new BackgroundSound();
-        this.backgroundMusic.execute(null);
+        if(this.gameBoard.setting.playSound()){
+            this.backgroundMusic = new BackgroundSound();
+            this.backgroundMusic.execute(null);
+        }
+
     }
     public void stopBackgroundSound(){
-        this.backgroundMusic.stop();
+        if(this.gameBoard.setting.playSound()) {
+            this.backgroundMusic.stop();
+        }
     }
     public class BackgroundSound extends AsyncTask<Void, Void, Void> {
         private MediaPlayer player;

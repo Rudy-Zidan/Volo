@@ -6,16 +6,20 @@ import android.os.Bundle;
 
 import com.quarklab.squarebash.core.logic.GameEngine;
 import com.quarklab.squarebash.core.multimedia.SoundManager;
+import com.quarklab.squarebash.core.preference.Setting;
 import com.quarklab.squarebash.core.visualization.RenderEngine;
 
 
 public class GameBoard extends Activity {
-    public SoundManager soundManager;
+    public  SoundManager soundManager;
     private RenderEngine renderEngine;
     private GameEngine gameEngine;
+    public Setting setting;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.setting = new Setting(this);
         this.renderEngine = new RenderEngine(this);
         this.soundManager = new SoundManager(this);
         this.gameEngine = new GameEngine(this);
