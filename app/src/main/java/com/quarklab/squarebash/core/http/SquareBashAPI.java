@@ -18,12 +18,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.net.URLEncoder;
 
 /**
  * Created by rudy on 7/2/16.
@@ -37,7 +39,17 @@ public class SquareBashAPI {
     public static JSONArray get(String path, String params) {
         JSONArray result = null;
         try {
-            result = new JSONArray(call(path,requestType.GET));
+            result = new JSONArray(call(path,requestType.GET,params));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return result ;
+    }
+
+    public static JSONObject post(String path, String params){
+        JSONObject result = null;
+        try {
+            result = new JSONObject(call(path,requestType.POST,params));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -48,16 +60,24 @@ public class SquareBashAPI {
         return (baseURI  + relativeUrl);
     }
 
-    private static String call(String uri,requestType method){
+    private static String call(String uri,requestType method, String rawData){
         String response = "";
         try {
             URL url = null;
             url = new URL(getAbsoluteUrl(uri));
-
             //create the connection
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod(method.name());
             connection.setRequestProperty("User-Agent", USER_AGENT);
+            if(connection.getRequestMethod().equals(requestType.POST.name())){
+                connection.setDoOutput(true);
+                connection.setRequestProperty( "Content-Type", "application/json" );
+                connection.setRequestProperty( "Content-Length", String.valueOf(rawData.length()));
+                OutputStreamWriter osr = new OutputStreamWriter(connection.getOutputStream());
+                osr.write(rawData);
+                osr.flush();
+                osr.close();
+            }
             String line = "";
             //create your inputsream
             InputStreamReader isr = new InputStreamReader(
