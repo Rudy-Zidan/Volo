@@ -23,7 +23,7 @@ import java.security.NoSuchAlgorithmException;
 
 
 public class SquareBash extends Activity {
-    private Setting setting;
+    public Setting setting;
     private Facebook facebook;
     public CallbackManager callbackManager;
     @Override
@@ -41,8 +41,6 @@ public class SquareBash extends Activity {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            //your codes here
-
         }
         play.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

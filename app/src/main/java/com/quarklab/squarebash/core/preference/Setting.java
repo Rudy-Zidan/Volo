@@ -19,6 +19,18 @@ public class Setting {
         if(!this.preferences.contains("score")){
             this.preferences.edit().putInt("score",0);
         }
+        if(!this.preferences.contains("facebookUser")){
+            this.preferences.edit().putString("facebookUser","");
+        }
+    }
+    public void updateFacebookAccount(String account){
+        this.preferences.edit().putString("facebookUser",account).commit();
+    }
+    public boolean isFacebookAccountExists(){
+        if(!this.preferences.getString("facebookUser","").equals(""))
+            return true;
+        else
+            return false;
     }
     public void updateScore(int score){
         int oldScore = this.preferences.getInt("score",0);

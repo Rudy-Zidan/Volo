@@ -37,7 +37,11 @@ public class Facebook {
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
-                        getCurrentUserInfo(loginResult);
+                        if(!((SquareBash)context).setting.isFacebookAccountExists()) {
+                            getCurrentUserInfo(loginResult);
+                        }else{
+                            ((SquareBash)context).displayGameBoard();
+                        }
                     }
 
                     @Override
@@ -57,11 +61,12 @@ public class Facebook {
                 new GraphRequest.GraphJSONObjectCallback() {
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
-                        // Application code
-                        JSONObject x = SquareBashAPI.post("/player/save",object.toString());
+                        String facebookAccount = object.toString();
+                        JSONObject x = SquareBashAPI.post("/player/save",facebookAccount);
                         try {
                             if(x.has("save") && x.getBoolean("save")){
                                 ((SquareBash)context).displayGameBoard();
+                                ((SquareBash)context).setting.updateFacebookAccount(facebookAccount);
                             }else if(x.has("errors") && x.getString("name").equals("SequelizeUniqueConstraintError")){
                                 ((SquareBash)context).displayGameBoard();
                             }
