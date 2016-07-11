@@ -16,7 +16,11 @@ import android.widget.Button;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.quarklab.squarebash.core.authentication.Facebook;
+import com.quarklab.squarebash.core.http.SquareBashAPI;
 import com.quarklab.squarebash.core.preference.Setting;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -55,6 +59,29 @@ public class SquareBash extends Activity {
             public void onClick(View v) {
                 setting.changeSound();
                 HandleSoundButtonBG((Button)v);
+            }
+        });
+
+        Button trophy = (Button)findViewById(R.id.trophy);
+
+        trophy.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                if(setting.isFacebookAccountExists()){
+                    try {
+                        JSONObject account = new JSONObject(setting.getFacebookAccount());
+                        JSONObject data = new JSONObject();
+                        data.put("id",Long.parseLong(account.get("id").toString()));
+                        data.put("score",setting.getScore());
+                        JSONObject x = SquareBashAPI.post("/player/update_score",data.toString());
+                        if(x.has("save") && x.getBoolean("save")){
+                            //TODO Open leadersboard activity.
+                        }else{
+                            //TODO alert user the connection failed.
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         });
     }

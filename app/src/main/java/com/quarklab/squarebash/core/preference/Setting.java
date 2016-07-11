@@ -17,7 +17,7 @@ public class Setting {
             this.preferences.edit().putBoolean("sound",true);
         }
         if(!this.preferences.contains("score")){
-            this.preferences.edit().putInt("score",0);
+            this.preferences.edit().putLong("score",0);
         }
         if(!this.preferences.contains("facebookUser")){
             this.preferences.edit().putString("facebookUser","");
@@ -32,9 +32,15 @@ public class Setting {
         else
             return false;
     }
+    public String getFacebookAccount(){
+        return this.preferences.getString("facebookUser","");
+    }
     public void updateScore(int score){
-        int oldScore = this.preferences.getInt("score",0);
-        this.preferences.edit().putInt("score",oldScore+score).commit();
+        long oldScore = this.preferences.getLong("score",0);
+        this.preferences.edit().putLong("score",oldScore+score).commit();
+    }
+    public long getScore(){
+        return this.preferences.getLong("score",0);
     }
     public void changeSound(){
         if(this.preferences.getBoolean("sound",true)){
