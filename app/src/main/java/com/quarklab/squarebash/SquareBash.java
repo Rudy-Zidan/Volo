@@ -75,6 +75,7 @@ public class SquareBash extends Activity {
                         JSONObject x = SquareBashAPI.post("/player/update_score",data.toString());
                         if(x.has("save") && x.getBoolean("save")){
                             //TODO Open leadersboard activity.
+                            displayLeaderBoard();
                         }else{
                             //TODO alert user the connection failed.
                         }
@@ -89,6 +90,12 @@ public class SquareBash extends Activity {
         Intent gameBoardIntent= new Intent(SquareBash.this,GameBoard.class);
         startActivity(gameBoardIntent);
     }
+
+    public void displayLeaderBoard(){
+        Intent leaderBoardIntent= new Intent(SquareBash.this,LeaderBoard.class);
+        startActivity(leaderBoardIntent);
+    }
+
     private void HandleSoundButtonBG(Button btn){
         if(this.setting.playSound()){
             btn.setBackgroundDrawable( getResources().getDrawable(R.drawable.speaker) );

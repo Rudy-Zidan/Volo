@@ -68,6 +68,9 @@ public class Facebook {
                                 ((SquareBash)context).displayGameBoard();
                                 ((SquareBash)context).setting.updateFacebookAccount(facebookAccount);
                             }else if(x.has("errors") && x.getString("name").equals("SequelizeUniqueConstraintError")){
+                                if(!((SquareBash)context).setting.isFacebookAccountExists()) {
+                                    ((SquareBash)context).setting.updateFacebookAccount(facebookAccount);
+                                }
                                 ((SquareBash)context).displayGameBoard();
                             }
                         } catch (JSONException e) {
