@@ -13,12 +13,16 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.quarklab.squarebash.core.authentication.Facebook;
 import com.quarklab.squarebash.core.http.SquareBashAPI;
 import com.quarklab.squarebash.core.preference.Setting;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -63,26 +67,10 @@ public class SquareBash extends Activity {
         });
 
         Button trophy = (Button)findViewById(R.id.trophy);
-
         trophy.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-                if(setting.isFacebookAccountExists()){
-                    try {
-                        JSONObject account = new JSONObject(setting.getFacebookAccount());
-                        JSONObject data = new JSONObject();
-                        data.put("id",Long.parseLong(account.get("id").toString()));
-                        data.put("score",setting.getScore());
-                        JSONObject x = SquareBashAPI.post("/player/update_score",data.toString());
-                        if(x.has("save") && x.getBoolean("save")){
-                            //TODO Open leadersboard activity.
-                            displayLeaderBoard();
-                        }else{
-                            //TODO alert user the connection failed.
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
+            if(setting.isFacebookAccountExists())
+                getFacebookFriends();
             }
         });
     }
@@ -127,5 +115,40 @@ public class SquareBash extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         this.callbackManager.onActivityResult(requestCode,
                 resultCode, data);
+    }
+
+    private void getFacebookFriends(){
+        final String[] result = {""};
+        AccessToken token = AccessToken.getCurrentAccessToken();
+        if(token!=null){
+            GraphRequest request = GraphRequest.newMyFriendsRequest(
+                token,
+                new GraphRequest.GraphJSONArrayCallback() {
+                    @Override
+                    public void onCompleted(JSONArray objects, GraphResponse response) {
+                        result[0] = objects.toString();
+                        try {
+                            JSONObject account = new JSONObject(setting.getFacebookAccount());
+                            JSONObject data = new JSONObject();
+                            data.put("id",Long.parseLong(account.get("id").toString()));
+                            data.put("score",setting.getScore());
+                            data.put("friends",objects);
+                            JSONObject x = SquareBashAPI.post(getString(R.string.update_score_api),data.toString());
+                            if(x.has("save") && x.getBoolean("save")){
+                                //TODO Open leadersboard activity.
+                                displayLeaderBoard();
+                            }else{
+                                //TODO alert user the connection failed.
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            );
+            Bundle parameters = new Bundle();
+            request.setParameters(parameters);
+            request.executeAsync();
+        }
     }
 }

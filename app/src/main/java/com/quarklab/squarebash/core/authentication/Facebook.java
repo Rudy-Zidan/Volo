@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -14,9 +15,11 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.quarklab.squarebash.GameBoard;
+import com.quarklab.squarebash.R;
 import com.quarklab.squarebash.SquareBash;
 import com.quarklab.squarebash.core.http.SquareBashAPI;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,6 +32,7 @@ import java.util.List;
 public class Facebook {
     private List<String> permissionNeeds= Arrays.asList("user_photos", "email", "user_birthday", "user_friends");
     private Context context;
+    private AccessToken token;
     public void authenticate(final Context context){
         this.context = context;
         ((SquareBash)this.context).callbackManager = CallbackManager.Factory.create();
@@ -62,7 +66,7 @@ public class Facebook {
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
                         String facebookAccount = object.toString();
-                        JSONObject x = SquareBashAPI.post("/player/save",facebookAccount);
+                        JSONObject x = SquareBashAPI.post(context.getString(R.string.save_player_api),facebookAccount);
                         try {
                             if(x.has("save") && x.getBoolean("save")){
                                 ((SquareBash)context).displayGameBoard();
@@ -82,5 +86,8 @@ public class Facebook {
         parameters.putString("fields", "id,name,email,gender, birthday");
         request.setParameters(parameters);
         request.executeAsync();
+    }
+    public AccessToken getToken(){
+        return this.token;
     }
 }
