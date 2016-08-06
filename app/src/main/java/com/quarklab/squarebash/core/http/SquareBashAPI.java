@@ -46,10 +46,20 @@ public class SquareBashAPI {
         return result ;
     }
 
-    public static JSONObject post(String path, String params){
+    public static JSONObject postObject(String path, String params){
         JSONObject result = null;
         try {
             result = new JSONObject(call(path,requestType.POST,params));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return result ;
+    }
+
+    public static JSONArray post(String path, String params){
+        JSONArray result = null;
+        try {
+            result = new JSONArray(call(path,requestType.POST,params));
         } catch (JSONException e) {
             e.printStackTrace();
         }

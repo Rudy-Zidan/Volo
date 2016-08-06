@@ -37,7 +37,8 @@ public class SquareBash extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         FacebookSdk.sdkInitialize(getApplicationContext());
         this.facebook = new Facebook();
@@ -133,12 +134,13 @@ public class SquareBash extends Activity {
                             data.put("id",Long.parseLong(account.get("id").toString()));
                             data.put("score",setting.getScore());
                             data.put("friends",objects);
-                            JSONObject x = SquareBashAPI.post(getString(R.string.update_score_api),data.toString());
-                            if(x.has("save") && x.getBoolean("save")){
+                            JSONObject x = SquareBashAPI.postObject(getString(R.string.update_score_api),
+                                    data.toString());
+                            if((x.has("save") && x.getBoolean("save")) ||
+                                    (x.has("errors") &&
+                                    x.getString("name").equals("SequelizeUniqueConstraintError"))){
                                 //TODO Open leadersboard activity.
                                 displayLeaderBoard();
-                            }else{
-                                //TODO alert user the connection failed.
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

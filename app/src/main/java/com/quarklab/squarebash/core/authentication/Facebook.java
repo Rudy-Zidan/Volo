@@ -66,7 +66,7 @@ public class Facebook {
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
                         String facebookAccount = object.toString();
-                        JSONObject x = SquareBashAPI.post(context.getString(R.string.save_player_api),facebookAccount);
+                        JSONObject x = SquareBashAPI.postObject(context.getString(R.string.save_player_api),facebookAccount);
                         try {
                             if(x.has("save") && x.getBoolean("save")){
                                 ((SquareBash)context).displayGameBoard();
