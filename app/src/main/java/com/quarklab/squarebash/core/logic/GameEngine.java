@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,7 +63,7 @@ public class GameEngine {
         int index = r.nextInt(count);
         for(int i = 0 ; i <count ; i++){
             Button child = (Button)gameBoard.getChildAt(i);
-            child.setBackgroundColor(Color.WHITE);
+            child.setBackgroundColor(Color.parseColor("#ffe5e5"));
             child.setTag("");
         }
         Button target = (Button)gameBoard.getChildAt(index);
@@ -130,20 +131,10 @@ public class GameEngine {
     }
 
     private static void showMessage(String msg){
-        LayoutInflater inflater =  ((Activity)context).getLayoutInflater();
-        View toastLayout = inflater.inflate(R.layout.toast,
-                (ViewGroup) ((Activity)context).findViewById(R.id.custom_toast_layout_id));
-        TextView text = (TextView) toastLayout.findViewById(R.id.text);
-        text.setText(msg);
-        Toast toast = Toast.makeText(context, "", Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
-        toast.setDuration(toastSpeed);
-        toast.setView(toastLayout);
-        toast.show();
+        Toast.makeText(context,msg, Toast.LENGTH_SHORT).show();
     }
 
     private void addScore(){
-        showMessage("Nice :)");
         this.scoreNumber += 10;
         this.gameBoard.setting.updateScore(this.scoreNumber);
         TextView score = (TextView) ((Activity)this.context).findViewById(R.id.score);
@@ -152,12 +143,10 @@ public class GameEngine {
     }
 
     private void nothing(){
-        showMessage("Oh you missed !!!");
         this.gameBoard.soundManager.playSound(R.raw.lose);
     }
 
     private void endGame(){
-        showMessage("Game Over");
         this.gameBoard.soundManager.playSound(R.raw.gameover);
         this.stopGame();
     }

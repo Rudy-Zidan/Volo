@@ -46,11 +46,12 @@ public class ButtonAdapter extends BaseAdapter {
             int buttonWidth = this.screen.getWidthPX()/3;
             btn.setHeight(buttonHeight);
             btn.setWidth(buttonWidth);
+
         }else{
             btn = (Button) convertView;
         }
         btn.setSoundEffectsEnabled(false);
-        btn.setBackgroundColor(Color.WHITE);
+        btn.setBackgroundColor(Color.parseColor("#ffe5e5"));
         btn.setId(position);
         this.buttonAction.execute(this.context,btn);
         return btn;

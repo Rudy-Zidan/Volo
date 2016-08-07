@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -74,6 +75,7 @@ public class SquareBash extends Activity {
                 getFacebookFriends();
             }
         });
+        printKeyHash();
     }
     public void displayGameBoard(){
         Intent gameBoardIntent= new Intent(SquareBash.this,GameBoard.class);
@@ -136,11 +138,13 @@ public class SquareBash extends Activity {
                             data.put("friends",objects);
                             JSONObject x = SquareBashAPI.postObject(getString(R.string.update_score_api),
                                     data.toString());
-                            if((x.has("save") && x.getBoolean("save")) ||
+                            if( x != null && ((x.has("save") && x.getBoolean("save")) ||
                                     (x.has("errors") &&
-                                    x.getString("name").equals("SequelizeUniqueConstraintError"))){
+                                    x.getString("name").equals("SequelizeUniqueConstraintError")))){
                                 //TODO Open leadersboard activity.
                                 displayLeaderBoard();
+                            }else{
+                                alertUser();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -152,5 +156,9 @@ public class SquareBash extends Activity {
             request.setParameters(parameters);
             request.executeAsync();
         }
+    }
+    private void alertUser(){
+        Toast.makeText(getApplicationContext(),R.string.server_problem,
+                Toast.LENGTH_SHORT).show();
     }
 }
