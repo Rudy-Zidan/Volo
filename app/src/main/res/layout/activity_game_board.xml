@@ -3,30 +3,59 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GameBoard">
+    tools:context=".GameBoard"
+    android:background="#eee"
+    >
 
     <GridView
         android:id="@+id/GameBoard"
-        android:layout_width="wrap_content" android:layout_height="wrap_content" android:columnWidth="600dp" android:numColumns="3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:columnWidth="600dp"
+        android:numColumns="3"
         android:stretchMode="columnWidth"
         android:layout_gravity="center|top"
-        android:background="#FFFFFF"
+        android:background="#eee"
         android:scrollIndicators="none"
         android:paddingLeft="0dp"
         android:paddingRight="0dp"
         android:paddingBottom="0dp"
         android:paddingTop="0dp"
         android:padding="0dp"
-        android:fastScrollEnabled="true">
+        android:layout_marginTop="10sp"
+        android:fastScrollEnabled="false">
     </GridView>
-
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Score: 0"
-        android:id="@+id/score"
-        android:layout_gravity="bottom|center"
-        android:editable="false"
-        android:textColor="#000" />
+        android:orientation="horizontal"
+        android:layout_marginTop="2sp"
+        >
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="0"
+            android:id="@+id/score"
+            android:layout_gravity="center|right"
+            android:editable="false"
+            android:textColor="#000" />
+        <ImageView
+            android:layout_width="20sp"
+            android:layout_height="20sp"
+            android:background="@drawable/coin"
+            android:layout_marginLeft="5sp"
+            />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            />
+    </LinearLayout>
+
 </FrameLayout>

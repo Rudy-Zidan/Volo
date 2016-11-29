@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -76,6 +77,8 @@ public class SquareBash extends Activity {
             }
         });
         printKeyHash();
+        TextView score = (TextView)findViewById(R.id.scoreText);
+        score.setText(this.setting.getScore()+"");
     }
     public void displayGameBoard(){
         Intent gameBoardIntent= new Intent(SquareBash.this,GameBoard.class);

@@ -1,13 +1,11 @@
 package com.quarklab.squarebash.core.multimedia;
 
-import android.app.Activity;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 
 import com.quarklab.squarebash.GameBoard;
 import com.quarklab.squarebash.R;
-import com.quarklab.squarebash.core.preference.Setting;
 
 /**
  * Created by rudy on 6/20/16.
@@ -32,7 +30,7 @@ public class SoundManager {
     public void startBackgroundSound(){
         if(this.gameBoard.setting.playSound()){
             this.backgroundMusic = new BackgroundSound();
-            this.backgroundMusic.execute(null);
+            this.backgroundMusic.execute();
         }
 
     }

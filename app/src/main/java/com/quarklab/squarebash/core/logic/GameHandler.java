@@ -30,6 +30,7 @@ public class GameHandler {
         this.viewHandler.removeCallbacks(updateData);
         this.speedHandler.removeCallbacks(updateSpeed);
         this.randomLevelHandler.removeCallbacks(changeGameMode);
+        GameEngine.showReplayDialog();
     }
     private Runnable updateData = new Runnable(){
         @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -44,6 +45,8 @@ public class GameHandler {
         public void run() {
             Random rand = new Random();
             speed = rand.nextInt((1000 - 150) + 1)+150;
+            int x = Math.abs((1000 - speed));
+            GameEngine.changeScore((x*20)/100);
             speedHandler.postDelayed(updateSpeed,15000);
         }
     };

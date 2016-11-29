@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SquareBash.iml" filepath="$PROJECT_DIR$/SquareBash.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/square-bash.iml" filepath="$PROJECT_DIR$/square-bash.iml" />
     </modules>
   </component>
 </project>

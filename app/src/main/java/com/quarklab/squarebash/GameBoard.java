@@ -31,8 +31,10 @@ public class GameBoard extends Activity {
     }
     public void onResume() {
         super.onResume();
-        this.gameEngine.startGame();
-        this.soundManager.startBackgroundSound();
+        if(!this.gameEngine.isEnded()){
+            this.gameEngine.startGame();
+            this.soundManager.startBackgroundSound();
+        }
     }
 
     public void onPause() {
@@ -40,6 +42,8 @@ public class GameBoard extends Activity {
         this.gameEngine.stopGame();
         this.soundManager.stopBackgroundSound();
     }
+
+
 
     public GameEngine getGameEngine(){
         return this.gameEngine;

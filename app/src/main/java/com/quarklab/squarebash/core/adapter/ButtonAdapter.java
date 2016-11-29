@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 
+import com.quarklab.squarebash.R;
 import com.quarklab.squarebash.core.logic.ButtonAction;
 import com.quarklab.squarebash.core.visualization.PhoneScreen;
 
@@ -42,16 +43,16 @@ public class ButtonAdapter extends BaseAdapter {
         Button btn;
         if (convertView == null) {
             btn = new Button (this.context);
-            int buttonHeight = this.screen.getHeightPX()/4;
-            int buttonWidth = this.screen.getWidthPX()/3;
-            btn.setHeight(buttonHeight);
-            btn.setWidth(buttonWidth);
+//            int buttonHeight = this.screen.getHeightPX()/4;
+//            int buttonWidth = this.screen.getWidthPX()/3;
+//            btn.setHeight(100);
+//            btn.setWidth(100);
 
         }else{
             btn = (Button) convertView;
         }
         btn.setSoundEffectsEnabled(false);
-        btn.setBackgroundColor(Color.parseColor("#ffe5e5"));
+        btn.setBackgroundResource(R.drawable.block);
         btn.setId(position);
         this.buttonAction.execute(this.context,btn);
         return btn;

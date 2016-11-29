@@ -32,7 +32,7 @@ import java.net.URLEncoder;
  */
 public class SquareBashAPI {
     private static enum requestType {POST,GET};
-    private static String baseURI = "http://41.39.56.198:3000";
+    private static String baseURI = "http://192.168.1.4:3000";
     private static final String USER_AGENT = "Mozilla/5.0";
 
     @SuppressLint("NewApi")

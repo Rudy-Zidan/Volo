@@ -8,30 +8,37 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.quarklab.squarebash.LeaderBoard"
-    android:background="@drawable/background3">
+    android:background="#eee">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15sp"
+        >
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/leaderboard" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Leader Board"
+            android:id="@+id/textView3"
+            android:textSize="30sp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="20sp"
+            android:layout_marginTop="5dp"/>
 
+    </LinearLayout>
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/leaderBoardList"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="47dp"
+        android:layout_marginTop="60dp"
         android:layout_centerHorizontal="true" />
-    <ImageView
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:background="@drawable/leaderboard" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Leader Board"
-        android:id="@+id/textView3"
-        android:textSize="30sp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="55dp"
-        android:layout_marginTop="5dp"/>
+
 
 </RelativeLayout>

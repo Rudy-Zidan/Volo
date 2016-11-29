@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <!-- Inside border/shadow -->
-    <item android:top="14dp" android:left="14dp" android:right="14dp" android:bottom="14dp" android:gravity="bottom|center_vertical">
-        <shape android:shape="oval">
-            <gradient android:angle="90" android:startColor="#ffe5e5" android:endColor="#ffe5e5" />
-        </shape>
-    </item>
-
     <!-- Main button -->
     <item android:top="16dp" android:left="16dp" android:right="16dp" android:bottom="16dp" android:gravity="bottom|center_vertical">
         <shape android:shape="oval">
