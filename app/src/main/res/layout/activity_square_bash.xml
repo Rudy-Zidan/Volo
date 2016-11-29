@@ -69,6 +69,7 @@
         android:layout_weight="1"
         />
     <LinearLayout
+        android:id="@+id/actions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -117,6 +118,27 @@
             android:soundEffectsEnabled="false"
             android:layout_gravity="right|center_vertical"
             />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/loader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        >
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            />
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"

@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,9 @@ public class SquareBash extends Activity {
     public Setting setting;
     private Facebook facebook;
     public CallbackManager callbackManager;
+    private LinearLayout linearLoader;
+    private LinearLayout linearActions;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,8 +74,14 @@ public class SquareBash extends Activity {
         });
 
         Button trophy = (Button)findViewById(R.id.trophy);
+
+        this.linearLoader = (LinearLayout) findViewById(R.id.loader);
+        this.linearActions = (LinearLayout) findViewById(R.id.actions);
+
         trophy.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
+            linearActions.setVisibility(View.GONE);
+            linearLoader.setVisibility(View.VISIBLE);
             if(setting.isFacebookAccountExists())
                 getFacebookFriends();
             }
@@ -145,6 +155,7 @@ public class SquareBash extends Activity {
                                     (x.has("errors") &&
                                     x.getString("name").equals("SequelizeUniqueConstraintError")))){
                                 //TODO Open leadersboard activity.
+
                                 displayLeaderBoard();
                             }else{
                                 alertUser();
@@ -163,5 +174,12 @@ public class SquareBash extends Activity {
     private void alertUser(){
         Toast.makeText(getApplicationContext(),R.string.server_problem,
                 Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        linearActions.setVisibility(View.VISIBLE);
+        linearLoader.setVisibility(View.GONE);
     }
 }
