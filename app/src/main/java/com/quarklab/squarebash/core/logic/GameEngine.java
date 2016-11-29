@@ -183,39 +183,40 @@ public class GameEngine {
     }
 
     public static void showReplayDialog(){
-        ended = true;
-        final Dialog dialog = new Dialog(context);
+        if(!gameBoard.backClicked){
+            ended = true;
+            final Dialog dialog = new Dialog(context);
 
-        dialog.setCancelable(false);
-        dialog.setContentView(R.layout.replay_dialog);
+            dialog.setCancelable(false);
+            dialog.setContentView(R.layout.replay_dialog);
 
-        TextView score = (TextView) dialog.findViewById(R.id.dialog_score);
-        score.setText(gameBoard.setting.getScore()+"");
+            TextView score = (TextView) dialog.findViewById(R.id.dialog_score);
+            score.setText(gameBoard.setting.getScore()+"");
 
-        Button again = (Button) dialog.findViewById(R.id.btn_replay);
-        Button no = (Button) dialog.findViewById(R.id.btn_no);
+            Button again = (Button) dialog.findViewById(R.id.btn_replay);
+            Button no = (Button) dialog.findViewById(R.id.btn_no);
 
-        again.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scoreNumber = 0;
-                TextView score = (TextView) ((Activity)context).findViewById(R.id.score);
-                score.setText(""+scoreNumber);
-                dialog.dismiss();
-                startGame();
-            }
-        });
+            again.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    scoreNumber = 0;
+                    TextView score = (TextView) ((Activity)context).findViewById(R.id.score);
+                    score.setText(""+scoreNumber);
+                    dialog.dismiss();
+                    startGame();
+                }
+            });
 
-        no.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent gameBoardIntent= new Intent(context,SquareBash.class);
-                context.startActivity(gameBoardIntent);
-            }
-        });
+            no.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent gameBoardIntent= new Intent(context,SquareBash.class);
+                    context.startActivity(gameBoardIntent);
+                }
+            });
 
-
-        dialog.show();
+            dialog.show();
+        }
     }
 
     public static boolean isEnded(){

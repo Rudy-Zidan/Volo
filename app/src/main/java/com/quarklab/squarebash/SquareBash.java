@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.util.Base64;
 import android.util.Log;
@@ -39,6 +40,8 @@ public class SquareBash extends Activity {
     public CallbackManager callbackManager;
     private LinearLayout linearLoader;
     private LinearLayout linearActions;
+
+    private Boolean exit = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,5 +184,23 @@ public class SquareBash extends Activity {
         super.onResume();
         linearActions.setVisibility(View.VISIBLE);
         linearLoader.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (exit) {
+            finish();
+        } else {
+            Toast.makeText(this, "Press Back again to Exit.",
+                    Toast.LENGTH_SHORT).show();
+            exit = true;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    exit = false;
+                }
+            }, 3 * 1000);
+
+        }
     }
 }

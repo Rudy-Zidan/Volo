@@ -2,37 +2,26 @@ package com.quarklab.squarebash.core.http;
 
 
 import android.annotation.SuppressLint;
-import android.os.Build;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.net.URLEncoder;
 
 /**
  * Created by rudy on 7/2/16.
  */
 public class SquareBashAPI {
-    private static enum requestType {POST,GET};
-    private static String baseURI = "http://192.168.1.3:3000";
+    private enum requestType {POST,GET}
+    private static String baseURI = "http://192.168.1.2:3000";
     private static final String USER_AGENT = "Mozilla/5.0";
 
     @SuppressLint("NewApi")

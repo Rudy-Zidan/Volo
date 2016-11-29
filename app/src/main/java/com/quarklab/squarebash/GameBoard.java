@@ -1,7 +1,6 @@
 package com.quarklab.squarebash;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.quarklab.squarebash.core.logic.GameEngine;
@@ -16,6 +15,8 @@ public class GameBoard extends Activity {
     private GameEngine gameEngine;
     public Setting setting;
 
+    public boolean backClicked;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,10 +25,13 @@ public class GameBoard extends Activity {
         this.soundManager = new SoundManager(this);
         this.gameEngine = new GameEngine(this);
         this.renderEngine.render(R.id.GameBoard);
+        this.backClicked = false;
     }
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(GameBoard.this, SquareBash.class));
+        super.onBackPressed();
+        this.backClicked = true;
+        finish();
     }
     public void onResume() {
         super.onResume();
@@ -43,11 +47,7 @@ public class GameBoard extends Activity {
         this.soundManager.stopBackgroundSound();
     }
 
-
-
     public GameEngine getGameEngine(){
         return this.gameEngine;
     }
-
-
 }
