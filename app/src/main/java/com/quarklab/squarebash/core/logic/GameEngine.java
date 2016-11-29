@@ -7,7 +7,6 @@ import android.content.Context;
 
 import android.content.Intent;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -19,11 +18,14 @@ import com.quarklab.squarebash.SquareBash;
 
 import java.util.Random;
 
+import xyz.hanks.library.SmallBang;
+import xyz.hanks.library.SmallBangListener;
+
 /**
  * Created by rudy on 6/20/16.
  */
 public class GameEngine {
-    private enum gameMode {Easy,Sudden_death,No_Score}
+    private enum gameMode {Easy,Sudden_death,No_Score,Double_tap}
     private static gameMode currentGameMode;
     private static Context context;
     private static GameBoard gameBoard;
@@ -32,6 +34,7 @@ public class GameEngine {
     private static GameHandler gameHandler;
     private static int toastSpeed;
     private static boolean ended;
+    private SmallBang smallBang;
 
     public GameEngine(Context context){
         this.context = context;
@@ -42,6 +45,7 @@ public class GameEngine {
         this.gameHandler = new GameHandler();
         this.toastSpeed = 100;
         ended = false;
+        smallBang = SmallBang.attach2Window((Activity)this.context);
     }
     public static void startGame(){
         gameHandler.start();
@@ -51,13 +55,14 @@ public class GameEngine {
     }
     public void actionHandler(View button){
         switch (button.getTag().toString()){
-            case "good": good();
+            case "good": good(button);
                 break;
-            case "evil": evil();
+            case "evil": evil(button);
                 break;
-            case "meh": meh();
+            case "meh": meh(button);
                 break;
         }
+
     }
 
     public static void changeGameBoard(){
@@ -97,7 +102,7 @@ public class GameEngine {
                 changeGameMode();
             }
         } else {
-            random = rand.nextInt(2) + 1;
+            random = rand.nextInt(3) + 1;
             if (!currentGameMode.equals(gameMode.values()[random])) {
                 currentGameMode = gameMode.values()[random];
             }else{
@@ -111,9 +116,13 @@ public class GameEngine {
         score = value;
     }
 
-    private void good(){
+    private void good(View button){
+        int[] colors ={0XFF86AC41,0XFF99AC41,0XFF22AC41,0XFF00AC41,0XFF20AC50,0XFF82AC20};
+        this.animate(button,colors,16);
         switch (this.currentGameMode){
-            case Easy: addScore();
+            case Easy: addScore(0);
+                break;
+            case Double_tap: addScore(2);
                 break;
             case Sudden_death: endGame();
                 break;
@@ -122,20 +131,28 @@ public class GameEngine {
         }
     }
 
-    private void evil(){
+    private void evil(View button){
+        int[] colors ={0XFFCE5A57,0XFFCE5A20,0XFFFF726E,0XFFB64F4C,0XFFB62B27,0XFFB46260};
+        this.animate(button,colors,16);
         switch (this.currentGameMode){
             case Easy: endGame();
                 break;
-            case Sudden_death: addScore();
+            case Double_tap: addScore(2);
+                break;
+            case Sudden_death: addScore(0);
                 break;
             case No_Score: endGame();
                 break;
         }
     }
 
-    private void meh(){
+    private void meh(View button){
+        int[] colors ={0XFFE1B16A,0XFFE1B103,0XFFFDC97A, 0XFFFFB33F, 0XFFF0A93E,0XFFFF9A01};
+        this.animate(button,colors,16);
         switch (this.currentGameMode){
             case Easy: nothing();
+                break;
+            case Double_tap: nothing();
                 break;
             case Sudden_death: nothing();
                 break;
@@ -148,8 +165,8 @@ public class GameEngine {
         Toast.makeText(context,msg, Toast.LENGTH_SHORT).show();
     }
 
-    private void addScore(){
-        this.scoreNumber += this.score;
+    private void addScore(int power){
+        this.scoreNumber += power !=0 ? power*this.score : this.score;
         this.gameBoard.setting.updateScore(this.scoreNumber);
         TextView score = (TextView) ((Activity)this.context).findViewById(R.id.score);
         score.setText(""+this.scoreNumber);
@@ -203,5 +220,20 @@ public class GameEngine {
 
     public static boolean isEnded(){
         return ended;
+    }
+
+    private void animate(View button, int[] colors, int dots){
+        smallBang.setColors(colors);
+        smallBang.setDotNumber(dots);
+        smallBang.bang(button,300,new SmallBangListener() {
+            @Override
+            public void onAnimationStart() {
+            }
+
+            @Override
+            public void onAnimationEnd() {
+
+            }
+        });
     }
 }
