@@ -161,6 +161,8 @@ public class SquareBash extends Activity {
 
                                 displayLeaderBoard();
                             }else{
+                                linearActions.setVisibility(View.VISIBLE);
+                                linearLoader.setVisibility(View.GONE);
                                 alertUser();
                             }
                         } catch (JSONException e) {
