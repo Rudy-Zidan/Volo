@@ -11,8 +11,10 @@ import android.os.StrictMode;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,7 +54,7 @@ public class SquareBash extends Activity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         this.facebook = new Facebook();
         setContentView(R.layout.activity_square_bash);
-        Button play = (Button) findViewById(R.id.play);
+        ImageButton play = (ImageButton) findViewById(R.id.play);
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
         if (SDK_INT > 8)
         {
@@ -65,18 +67,18 @@ public class SquareBash extends Activity {
                 facebook.authenticate(SquareBash.this);
             }
         });
-        Button sound = (Button)findViewById(R.id.sound);
+        ImageButton sound = (ImageButton)findViewById(R.id.sound);
         this.setting = new Setting(this);
         this.HandleSoundButtonBG(sound);
 
         sound.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 setting.changeSound();
-                HandleSoundButtonBG((Button)v);
+                HandleSoundButtonBG((ImageButton)v);
             }
         });
 
-        Button trophy = (Button)findViewById(R.id.trophy);
+        ImageButton trophy = (ImageButton)findViewById(R.id.trophy);
 
         this.linearLoader = (LinearLayout) findViewById(R.id.loader);
         this.linearActions = (LinearLayout) findViewById(R.id.actions);
@@ -103,11 +105,14 @@ public class SquareBash extends Activity {
         startActivity(leaderBoardIntent);
     }
 
-    private void HandleSoundButtonBG(Button btn){
+    private void HandleSoundButtonBG(ImageButton btn){
+//        ViewGroup.LayoutParams params = btn.getLayoutParams();
+//        params.width = 80;
+//        params.height = 80;
         if(this.setting.playSound()){
-            btn.setBackgroundDrawable( getResources().getDrawable(R.drawable.speaker) );
+            btn.setImageDrawable( getResources().getDrawable(R.drawable.speaker) );
         }else{
-            btn.setBackgroundDrawable( getResources().getDrawable(R.drawable.speakermute) );
+            btn.setImageDrawable( getResources().getDrawable(R.drawable.speakermute) );
         }
     }
 

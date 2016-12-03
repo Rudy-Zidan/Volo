@@ -4,7 +4,7 @@
     <string name="leader_board">Leader board</string>
     <string name="square_bash">Square Bash</string>
     <string name="play">Play</string>
-    <string name="quarklab">Quarklab</string>
+    <string name="quarklab">www.quarklabs.co</string>
     <string name="facebook_app_id">916130085175917</string>
     <string name="save_player_api">/player/save</string>
     <string name="update_score_api">/player/update_score</string>
