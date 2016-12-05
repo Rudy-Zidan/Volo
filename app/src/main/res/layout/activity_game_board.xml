@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".GameBoard"
-    android:background="#eee"
+    android:background="@drawable/backgblue_png"
     >
 
     <GridView
@@ -15,7 +15,7 @@
         android:numColumns="3"
         android:stretchMode="columnWidth"
         android:layout_gravity="center|top"
-        android:background="#eee"
+        android:background="@drawable/backgblue_png"
         android:scrollIndicators="none"
         android:paddingLeft="0dp"
         android:paddingRight="0dp"
