@@ -92,8 +92,7 @@ public class SquareBash extends Activity {
             }
         });
         printKeyHash();
-        TextView score = (TextView)findViewById(R.id.scoreText);
-        score.setText(this.setting.getScore()+"");
+        this.showUserScore();
     }
     public void displayGameBoard(){
         Intent gameBoardIntent= new Intent(SquareBash.this,GameBoard.class);
@@ -106,9 +105,6 @@ public class SquareBash extends Activity {
     }
 
     private void HandleSoundButtonBG(ImageButton btn){
-//        ViewGroup.LayoutParams params = btn.getLayoutParams();
-//        params.width = 80;
-//        params.height = 80;
         if(this.setting.playSound()){
             btn.setImageDrawable( getResources().getDrawable(R.drawable.speaker) );
         }else{
@@ -186,11 +182,17 @@ public class SquareBash extends Activity {
                 Toast.LENGTH_SHORT).show();
     }
 
+    private void showUserScore(){
+        TextView score = (TextView)findViewById(R.id.scoreText);
+        score.setText(this.setting.getScore()+"");
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
         linearActions.setVisibility(View.VISIBLE);
         linearLoader.setVisibility(View.GONE);
+        this.showUserScore();
     }
 
     @Override
