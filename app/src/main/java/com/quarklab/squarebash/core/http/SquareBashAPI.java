@@ -21,8 +21,8 @@ import java.net.URL;
  */
 public class SquareBashAPI {
     private enum requestType {POST,GET}
-    //private static String baseURI = "http://game.quarklabs.co";
-    private static String baseURI = "http://192.168.1.3:3000";
+    private static String baseURI = "http://game.quarklabs.co";
+    //private static String baseURI = "http://192.168.1.3:3000";
     private static final String USER_AGENT = "Mozilla/5.0";
 
     @SuppressLint("NewApi")
