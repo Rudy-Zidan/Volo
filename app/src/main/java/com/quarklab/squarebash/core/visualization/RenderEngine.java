@@ -6,6 +6,9 @@ import android.content.pm.ActivityInfo;
 import android.view.WindowManager;
 import android.widget.GridView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.quarklab.squarebash.R;
 import com.quarklab.squarebash.core.adapter.ButtonAdapter;
 
