@@ -11,9 +11,7 @@ import android.os.StrictMode;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -146,29 +144,29 @@ public class SquareBash extends Activity {
                 new GraphRequest.GraphJSONArrayCallback() {
                     @Override
                     public void onCompleted(JSONArray objects, GraphResponse response) {
-                        result[0] = objects.toString();
-                        try {
-                            JSONObject account = new JSONObject(setting.getFacebookAccount());
-                            JSONObject data = new JSONObject();
-                            data.put("id",Long.parseLong(account.get("id").toString()));
-                            data.put("score",setting.getScore());
-                            data.put("friends",objects);
-                            JSONObject x = SquareBashAPI.postObject(getString(R.string.update_score_api),
-                                    data.toString());
-                            if( x != null && ((x.has("save") && x.getBoolean("save")) ||
-                                    (x.has("errors") &&
-                                    x.getString("name").equals("SequelizeUniqueConstraintError")))){
-                                //TODO Open leadersboard activity.
+                    result[0] = objects.toString();
+                    try {
+                        JSONObject account = new JSONObject(setting.getFacebookAccount());
+                        JSONObject data = new JSONObject();
+                        data.put("id",Long.parseLong(account.get("id").toString()));
+                        data.put("score",setting.getScore());
+                        data.put("friends",objects);
+                        JSONObject x = SquareBashAPI.postObject(getString(R.string.update_score_api),
+                                data.toString());
+                        if( x != null && ((x.has("save") && x.getBoolean("save")) ||
+                                (x.has("errors") &&
+                                x.getString("name").equals("SequelizeUniqueConstraintError")))){
+                            //TODO Open leadersboard activity.
 
-                                displayLeaderBoard();
-                            }else{
-                                linearActions.setVisibility(View.VISIBLE);
-                                linearLoader.setVisibility(View.GONE);
-                                alertUser();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                            displayLeaderBoard();
+                        }else{
+                            linearActions.setVisibility(View.VISIBLE);
+                            linearLoader.setVisibility(View.GONE);
+                            alertUser();
                         }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     }
                 }
             );
@@ -209,7 +207,6 @@ public class SquareBash extends Activity {
                     exit = false;
                 }
             }, 3 * 1000);
-
         }
     }
 }

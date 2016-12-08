@@ -5,19 +5,20 @@
     android:layout_height="fill_parent"
     android:orientation="horizontal"
     android:padding="30dp"
-    android:foreground="#fff"
-
     >
-
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Large Text"
-        android:id="@+id/text"
+        android:id="@+id/toast_text"
         android:layout_gravity="center_horizontal|center_vertical"
         android:textAlignment="center"
-        android:textColor="#1cbe00"
-        android:textSize="29sp"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="15"
+        android:elevation="20sp"
+        android:shadowColor="#E1B16A"
+        android:textColor="#F0810F"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:textStyle="bold" />
 </LinearLayout>

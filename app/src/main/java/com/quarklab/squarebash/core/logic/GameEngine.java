@@ -6,9 +6,12 @@ import android.app.Dialog;
 import android.content.Context;
 
 import android.content.Intent;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +38,8 @@ public class GameEngine {
     private static int toastSpeed;
     private static boolean ended;
     private SmallBang smallBang;
+    private static Toast toast;
+    private static View toastAppear;
 
     public GameEngine(Context context){
         this.context = context;
@@ -46,6 +51,12 @@ public class GameEngine {
         this.toastSpeed = 100;
         ended = false;
         smallBang = SmallBang.attach2Window((Activity)this.context);
+        LayoutInflater li = gameBoard.getLayoutInflater();
+        toastAppear = li.inflate(R.layout.toast, (LinearLayout) gameBoard.findViewById(R.id.custom_toast_layout_id));
+        toast = new Toast(context);
+        toast.setView(toastAppear);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER,Gravity.CENTER,Gravity.CENTER);
     }
     public static void startGame(){
         gameHandler.start();
@@ -162,7 +173,9 @@ public class GameEngine {
     }
 
     private static void showMessage(String msg){
-        Toast.makeText(context,msg, Toast.LENGTH_SHORT).show();
+        TextView text = (TextView) toastAppear.findViewById(R.id.toast_text);
+        text.setText(msg);
+        toast.show();
     }
 
     private void addScore(int power){
