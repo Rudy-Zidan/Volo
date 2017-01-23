@@ -33,6 +33,11 @@ dependencies {
     compile 'com.facebook.android:facebook-android-sdk:4.+'
     compile 'hanks.xyz:smallbang-library:0.1.2'
     compile 'com.android.support:multidex:1.0.0'
+    compile('com.mopub:mopub-sdk:4.9.0@aar') {
+        transitive = true
+    }
+    compile 'com.intuit.sdp:sdp-android:1.0.4'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

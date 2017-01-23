@@ -237,9 +237,11 @@ public class GameEngine {
     }
 
     private void animate(View button, int[] colors, int dots){
+        int extraSpace = 50;
+        int radius = button.getWidth()/2 + extraSpace;
         smallBang.setColors(colors);
         smallBang.setDotNumber(dots);
-        smallBang.bang(button,300,new SmallBangListener() {
+        smallBang.bang(button,radius,new SmallBangListener() {
             @Override
             public void onAnimationStart() {
             }

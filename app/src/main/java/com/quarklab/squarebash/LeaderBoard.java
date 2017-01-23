@@ -5,7 +5,13 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.mopub.mobileads.MoPubErrorCode;
+import com.mopub.mobileads.MoPubView;
 import com.quarklab.squarebash.core.adapter.ListAdapter;
 import com.quarklab.squarebash.core.http.SquareBashAPI;
 import com.quarklab.squarebash.core.preference.Setting;
@@ -20,6 +26,9 @@ public class LeaderBoard extends Activity {
     private String[] scores;
     private String[] players;
     private ListView list;
+    private AdView mAdView;
+    private MoPubView moPubView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +42,8 @@ public class LeaderBoard extends Activity {
                 ListAdapter(LeaderBoard.this, this.players, this.userId, this.scores);
         list=(ListView)findViewById(R.id.leaderBoardList);
         list.setAdapter(adapter);
+
+        this.setAds();
     }
 
     private void getRank(){
@@ -66,9 +77,65 @@ public class LeaderBoard extends Activity {
         }
     }
 
+    private void setAds() {
+
+        moPubView = (MoPubView) findViewById(R.id.adviewMopub);
+        moPubView.setAdUnitId("df6c5194fadc4046ac36b4cfba32a8fd");
+        moPubView.loadAd();
+        moPubView.setBannerAdListener(new MoPubView.BannerAdListener() {
+            @Override
+            public void onBannerLoaded(MoPubView banner) {
+                Toast.makeText(getApplicationContext(), "Ad Loaded", Toast.LENGTH_SHORT);
+            }
+
+            @Override
+            public void onBannerFailed(MoPubView banner, MoPubErrorCode errorCode) {
+                Toast.makeText(getApplicationContext(), "Ad Failed", Toast.LENGTH_SHORT);
+            }
+
+            @Override
+            public void onBannerClicked(MoPubView banner) {
+
+            }
+
+            @Override
+            public void onBannerExpanded(MoPubView bannesr) {
+
+            }
+
+            @Override
+            public void onBannerCollapsed(MoPubView banner) {
+
+            }
+        });
+
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-5665008338785349~2646543711");
+        this.mAdView = (AdView) findViewById(R.id.adView);
+
+        AdRequest.Builder adBuilder = new AdRequest.Builder().addTestDevice("65294B7A3AF3B393B68BBC6026A955D3");
+        AdRequest adRequest = adBuilder.build();
+
+        this.mAdView.loadAd(adRequest);
+    }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        if(this.mAdView != null){
+            this.mAdView.destroy();
+        }
         finish();
+    }
+    public void onResume() {
+        super.onResume();
+        if(this.mAdView != null){
+            this.mAdView.resume();
+        }
+    }
+    public void onPause() {
+        super.onPause();
+        if(this.mAdView != null){
+            this.mAdView.pause();
+        }
     }
 }

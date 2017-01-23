@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
     tools:context=".GameBoard"
     android:background="@drawable/backgblue_png">
 
@@ -19,10 +18,8 @@
         android:scrollIndicators="none"
         android:paddingLeft="0dp"
         android:paddingRight="0dp"
-        android:paddingBottom="10sp"
-        android:paddingTop="10sp"
         android:layout_marginTop="20sp"
-        android:layout_marginBottom="20sp"
+        android:layout_marginBottom="10sp"
         android:fastScrollEnabled="false">
     </GridView>
     <LinearLayout
@@ -57,16 +54,4 @@
             android:layout_weight="1"
             />
     </LinearLayout>
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        ads:adSize="BANNER"
-        ads:adUnitId="@string/banner_ad_unit_id">
-    </com.google.android.gms.ads.AdView>
-
-
 </FrameLayout>
