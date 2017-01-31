@@ -32,7 +32,6 @@ import java.util.List;
 public class Facebook {
     private List<String> permissionNeeds= Arrays.asList("user_photos", "email", "user_birthday", "user_friends");
     private Context context;
-    private AccessToken token;
     public void authenticate(final Context context){
         this.context = context;
         ((SquareBash)this.context).callbackManager = CallbackManager.Factory.create();
@@ -55,6 +54,7 @@ public class Facebook {
 
                     @Override
                     public void onError(FacebookException error) {
+                        ((SquareBash)context).displayGameBoard();
                         Log.e("dd", "facebook login failed error");
                     }
                 });
@@ -68,10 +68,10 @@ public class Facebook {
                         String facebookAccount = object.toString();
                         JSONObject x = SquareBashAPI.postObject(context.getString(R.string.save_player_api),facebookAccount);
                         try {
-                            if(x.has("save") && x.getBoolean("save")){
+                            if(x.getBoolean("status")){
                                 ((SquareBash)context).displayGameBoard();
                                 ((SquareBash)context).setting.updateFacebookAccount(facebookAccount);
-                            }else if(x.has("errors") && x.getString("name").equals("SequelizeUniqueConstraintError")){
+                            }else{
                                 if(!((SquareBash)context).setting.isFacebookAccountExists()) {
                                     ((SquareBash)context).setting.updateFacebookAccount(facebookAccount);
                                 }
@@ -86,8 +86,5 @@ public class Facebook {
         parameters.putString("fields", "id,name,email,gender, birthday");
         request.setParameters(parameters);
         request.executeAsync();
-    }
-    public AccessToken getToken(){
-        return this.token;
     }
 }

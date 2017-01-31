@@ -6,8 +6,8 @@
     <string name="play">Play</string>
     <string name="quarklab">www.quarklabs.co</string>
     <string name="facebook_app_id">916130085175917</string>
-    <string name="save_player_api">/player/save</string>
-    <string name="update_score_api">/player/update_score</string>
+    <string name="save_player_api">/players</string>
+    <string name="update_score_api">/players/update_score</string>
     <string name="leader_board_api">/rank</string>
     <string name="server_problem">Server under maintenance, try again later.</string>
     <string name="banner_ad_unit_id">ca-app-pub-5665008338785349/8413875716</string>

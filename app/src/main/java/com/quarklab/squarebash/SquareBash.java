@@ -1,10 +1,13 @@
 package com.quarklab.squarebash;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
@@ -62,7 +65,11 @@ public class SquareBash extends Activity {
         }
         play.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                facebook.authenticate(SquareBash.this);
+                if(isNetworkAvailable()) {
+                    facebook.authenticate(SquareBash.this);
+                }else{
+                    displayGameBoard();
+                }
             }
         });
         ImageButton sound = (ImageButton)findViewById(R.id.sound);
@@ -83,10 +90,13 @@ public class SquareBash extends Activity {
 
         trophy.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-            linearActions.setVisibility(View.GONE);
-            linearLoader.setVisibility(View.VISIBLE);
-            if(setting.isFacebookAccountExists())
-                getFacebookFriends();
+                linearActions.setVisibility(View.GONE);
+                linearLoader.setVisibility(View.VISIBLE);
+                if(setting.isFacebookAccountExists() && isNetworkAvailable()){
+                    getFacebookFriends();
+                }else{
+                    displayLeaderBoard();
+                }
             }
         });
         printKeyHash();
@@ -153,11 +163,8 @@ public class SquareBash extends Activity {
                         data.put("friends",objects);
                         JSONObject x = SquareBashAPI.postObject(getString(R.string.update_score_api),
                                 data.toString());
-                        if( x != null && ((x.has("save") && x.getBoolean("save")) ||
-                                (x.has("errors") &&
-                                x.getString("name").equals("SequelizeUniqueConstraintError")))){
-                            //TODO Open leadersboard activity.
-
+                        if(x.getBoolean("status")){
+                            //TODO Open leadersboard a                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          ctivity.
                             displayLeaderBoard();
                         }else{
                             linearActions.setVisibility(View.VISIBLE);
@@ -208,5 +215,12 @@ public class SquareBash extends Activity {
                 }
             }, 3 * 1000);
         }
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }
