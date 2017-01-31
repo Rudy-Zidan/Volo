@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -35,6 +37,7 @@ import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Locale;
 
 
 public class SquareBash extends Activity {
@@ -43,6 +46,8 @@ public class SquareBash extends Activity {
     public CallbackManager callbackManager;
     private LinearLayout linearLoader;
     private LinearLayout linearActions;
+
+    private Typeface typeface;
 
     private Boolean exit = false;
 
@@ -101,6 +106,12 @@ public class SquareBash extends Activity {
         });
         printKeyHash();
         this.showUserScore();
+
+        AssetManager am = getApplicationContext().getAssets();
+        typeface = Typeface.createFromAsset(am,
+                String.format(Locale.US, "fonts/%s", "chlorinr.ttf"));
+        TextView title = (TextView) findViewById(R.id.title);
+        title.setTypeface(this.typeface);
     }
     public void displayGameBoard(){
         Intent gameBoardIntent= new Intent(SquareBash.this,GameBoard.class);
@@ -190,6 +201,7 @@ public class SquareBash extends Activity {
     private void showUserScore(){
         TextView score = (TextView)findViewById(R.id.scoreText);
         score.setText(this.setting.getScore()+"");
+        score.setTypeface(this.typeface);
     }
 
     @Override

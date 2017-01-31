@@ -2,9 +2,13 @@ package com.quarklab.squarebash;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.style.TypefaceSpan;
 import android.view.WindowManager;
 import android.widget.ListView;
+import android.widget.TextView;
 
 //import com.google.android.gms.ads.AdRequest;
 //import com.google.android.gms.ads.AdView;
@@ -19,12 +23,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Locale;
+
 public class LeaderBoard extends Activity {
     private Setting setting;
     private String[] userId;
     private String[] scores;
     private String[] players;
     private ListView list;
+    private Typeface typeface;
 //    private AdView mAdView;
 //    private MoPubView moPubView;
 
@@ -41,7 +48,11 @@ public class LeaderBoard extends Activity {
                 ListAdapter(LeaderBoard.this, this.players, this.userId, this.scores);
         list=(ListView)findViewById(R.id.leaderBoardList);
         list.setAdapter(adapter);
-
+        AssetManager am = getApplicationContext().getAssets();
+        typeface = Typeface.createFromAsset(am,
+                String.format(Locale.US, "fonts/%s", "chlorinr.ttf"));
+        TextView title = (TextView) findViewById(R.id.title);
+        title.setTypeface(this.typeface);
         //this.setAds();
     }
 
