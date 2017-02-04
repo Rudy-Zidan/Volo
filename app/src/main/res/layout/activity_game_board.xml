@@ -28,6 +28,16 @@
         android:orientation="horizontal"
         android:layout_marginTop="10sp"
         >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="4"
+            android:id="@+id/lifes"
+            android:layout_gravity="center|right"
+            android:editable="false"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:textColor="#000" />
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -41,6 +51,7 @@
             android:id="@+id/score"
             android:layout_gravity="center|right"
             android:editable="false"
+            android:layout_marginLeft="-17dp"
             android:textColor="#000" />
         <ImageView
             android:layout_width="20sp"

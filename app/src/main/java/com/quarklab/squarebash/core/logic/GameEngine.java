@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Context;
 
 import android.content.Intent;
+import android.speech.tts.TextToSpeech;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +19,9 @@ import android.widget.Toast;
 import com.quarklab.squarebash.R;
 import com.quarklab.squarebash.GameBoard;
 import com.quarklab.squarebash.SquareBash;
+import com.quarklab.squarebash.core.TTS.Speaker;
 
+import java.util.Locale;
 import java.util.Random;
 
 import xyz.hanks.library.SmallBang;
@@ -29,6 +32,7 @@ import xyz.hanks.library.SmallBangListener;
  */
 public class GameEngine {
     private enum gameMode {Easy,Sudden_death,No_Score,Double_tap}
+    private int lifes;
     private static gameMode currentGameMode;
     private static Context context;
     private static GameBoard gameBoard;
@@ -40,6 +44,10 @@ public class GameEngine {
     private SmallBang smallBang;
     private static Toast toast;
     private static View toastAppear;
+    private static Speaker speaker;
+
+    private TextView scoreText;
+    private TextView lifesText;
 
     public GameEngine(Context context){
         this.context = context;
@@ -57,6 +65,14 @@ public class GameEngine {
         toast.setView(toastAppear);
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER,Gravity.CENTER,Gravity.CENTER);
+        this.speaker = new Speaker(this.context);
+
+        this.lifes = 0;
+        this.setLifes(4);
+
+        this.scoreText = (TextView) ((Activity)this.context).findViewById(R.id.score);
+
+        this.lifesText = (TextView) ((Activity)this.context).findViewById(R.id.lifes);
     }
     public static void startGame(){
         gameHandler.start();
@@ -81,11 +97,7 @@ public class GameEngine {
         int count = gameBoard.getChildCount();
         Random r = new Random();
         int index = r.nextInt(count);
-        for(int i = 0 ; i <count ; i++){
-            Button child = (Button)gameBoard.getChildAt(i);
-            child.setBackgroundResource(R.drawable.block);
-            child.setTag("");
-        }
+        resetButtons();
         Button target = (Button)gameBoard.getChildAt(index);
         switch (r.nextInt(3)){
             case 0:
@@ -120,7 +132,9 @@ public class GameEngine {
                 changeGameMode();
             }
         }
-        showMessage(currentGameMode.name().replace("_", " "));
+        String text = currentGameMode.name().replace("_", " ");
+        speaker.speak(text);
+        showMessage(text);
     }
 
     public static void changeScore(int value){
@@ -135,7 +149,7 @@ public class GameEngine {
                 break;
             case Double_tap: addScore(2);
                 break;
-            case Sudden_death: endGame();
+            case Sudden_death: endLife();
                 break;
             case No_Score: nothing();
                 break;
@@ -146,13 +160,13 @@ public class GameEngine {
         int[] colors ={0XFFCE5A57,0XFFCE5A20,0XFFFF726E,0XFFB64F4C,0XFFB62B27,0XFFB46260};
         this.animate(button,colors,16);
         switch (this.currentGameMode){
-            case Easy: endGame();
+            case Easy: endLife();
                 break;
             case Double_tap: addScore(2);
                 break;
             case Sudden_death: addScore(0);
                 break;
-            case No_Score: endGame();
+            case No_Score: endLife();
                 break;
         }
     }
@@ -161,9 +175,9 @@ public class GameEngine {
         int[] colors ={0XFFE1B16A,0XFFE1B103,0XFFFDC97A, 0XFFFFB33F, 0XFFF0A93E,0XFFFF9A01};
         this.animate(button,colors,16);
         switch (this.currentGameMode){
-            case Easy: nothing();
+            case Easy: reduceScore(0);
                 break;
-            case Double_tap: nothing();
+            case Double_tap: reduceScore(2);
                 break;
             case Sudden_death: nothing();
                 break;
@@ -179,24 +193,33 @@ public class GameEngine {
     }
 
     private void addScore(int power){
-        this.scoreNumber += power !=0 ? power*this.score : this.score;
-        this.gameBoard.setting.updateScore(this.scoreNumber);
-        TextView score = (TextView) ((Activity)this.context).findViewById(R.id.score);
-        score.setText(""+this.scoreNumber);
-        this.gameBoard.soundManager.playSound(R.raw.score);
+        this.scoreNumber += this.calcScore(power);
+        this.updateScoreText();
+    }
+
+    private void reduceScore(int power){
+        this.scoreNumber -= this.calcScore(power);
+        this.updateScoreText();
     }
 
     private void nothing(){
         this.gameBoard.soundManager.playSound(R.raw.lose);
     }
 
-    private void endGame(){
-        this.gameBoard.soundManager.playSound(R.raw.gameover);
-        this.stopGame();
+    private void endLife(){
+        if(this.lifes > 0) {
+            this.lifes -- ;
+            this.lifesText.setText(""+this.lifes);
+        }
+        if(this.lifes == 0) {
+            this.gameBoard.soundManager.playSound(R.raw.gameover);
+            this.stopGame();
+        }
     }
 
     public static void showReplayDialog(){
         if(!gameBoard.backClicked){
+            resetButtons();
             ended = true;
             final Dialog dialog = new Dialog(context);
 
@@ -212,19 +235,20 @@ public class GameEngine {
             again.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    scoreNumber = 0;
-                    TextView score = (TextView) ((Activity)context).findViewById(R.id.score);
-                    score.setText(""+scoreNumber);
-                    dialog.dismiss();
-                    startGame();
+                scoreNumber = 0;
+                TextView score = (TextView) ((Activity)context).findViewById(R.id.score);
+                score.setText(""+scoreNumber);
+                dialog.dismiss();
+                startGame();
                 }
             });
 
             no.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent gameBoardIntent= new Intent(context,SquareBash.class);
-                    context.startActivity(gameBoardIntent);
+                dialog.dismiss();
+                speaker.shutdown();
+                ((Activity)context).onBackPressed();
                 }
             });
 
@@ -252,4 +276,33 @@ public class GameEngine {
             }
         });
     }
+
+    private static void resetButtons() {
+        GridView gameBoard = (GridView) ((Activity)context).findViewById(R.id.GameBoard);
+        int count = gameBoard.getChildCount();
+        for(int i = 0 ; i <count ; i++){
+            Button child = (Button)gameBoard.getChildAt(i);
+            child.setBackgroundResource(R.drawable.block);
+            child.setTag("");
+        }
+    }
+
+    private void setLifes(int n){
+        this.lifes += n;
+    }
+
+    private int calcScore(int power) {
+        int score = this.score;
+        if(power !=0){
+            score =  power*score;
+        }
+        return score;
+    }
+
+    private void updateScoreText(){
+        this.gameBoard.setting.updateScore(this.scoreNumber);
+        this.scoreText.setText(""+this.scoreNumber);
+        this.gameBoard.soundManager.playSound(R.raw.score);
+    }
+
 }
