@@ -29,6 +29,7 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.quarklab.squarebash.core.authentication.Facebook;
 import com.quarklab.squarebash.core.http.SquareBashAPI;
+import com.quarklab.squarebash.core.logic.Numbers;
 import com.quarklab.squarebash.core.preference.Setting;
 
 import org.json.JSONArray;
@@ -200,7 +201,7 @@ public class SquareBash extends Activity {
 
     private void showUserScore(){
         TextView score = (TextView)findViewById(R.id.scoreText);
-        score.setText(this.setting.getScore()+"");
+        score.setText(Numbers.format(this.setting.getScore())+"");
         score.setTypeface(this.typeface);
     }
 

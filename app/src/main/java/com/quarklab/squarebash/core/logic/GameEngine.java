@@ -207,6 +207,9 @@ public class GameEngine {
 
     private void reduceScore(int power){
         this.scoreNumber -= this.calcScore(power);
+        if(this.scoreNumber < 0){
+            this.scoreNumber = 0;
+        }
         this.updateScoreText();
     }
 
@@ -328,7 +331,7 @@ public class GameEngine {
 
     private void updateScoreText(){
         this.gameBoard.setting.updateScore(this.scoreNumber);
-        this.scoreText.setText(""+this.scoreNumber);
+        this.scoreText.setText(""+Numbers.format(this.scoreNumber));
         this.gameBoard.soundManager.playSound(R.raw.score);
     }
 
