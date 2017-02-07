@@ -1,17 +1,22 @@
 package com.quarklab.squarebash.core.logic;
 
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.speech.tts.TextToSpeech;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,6 +51,8 @@ public class GameEngine {
     private static View toastAppear;
     private static Speaker speaker;
 
+    private ImageView heartIcon;
+
     private TextView scoreText;
     private TextView lifesText;
 
@@ -73,6 +80,7 @@ public class GameEngine {
         this.scoreText = (TextView) ((Activity)this.context).findViewById(R.id.score);
 
         this.lifesText = (TextView) ((Activity)this.context).findViewById(R.id.lifes);
+        this.heartIcon = (ImageView) ((Activity)this.context).findViewById(R.id.heart);
     }
     public static void startGame(){
         gameHandler.start();
@@ -210,11 +218,29 @@ public class GameEngine {
         if(this.lifes > 0) {
             this.lifes -- ;
             this.lifesText.setText(""+this.lifes);
+            this.animateHeartIcon();
         }
         if(this.lifes == 0) {
             this.gameBoard.soundManager.playSound(R.raw.gameover);
             this.stopGame();
         }
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    private void animateHeartIcon() {
+        this.heartIcon.animate()
+            .alpha(0.f)
+            .scaleX(3.f).scaleY(3.f)
+            .setDuration(300)
+            .withEndAction(new Runnable() {
+                @Override
+                public void run() {
+                    heartIcon.setAlpha(1.f);
+                    heartIcon.setScaleX(1.f);
+                    heartIcon.setScaleY(1.f);
+                }
+            })
+            .start();
     }
 
     public static void showReplayDialog(){
@@ -276,6 +302,7 @@ public class GameEngine {
             }
         });
     }
+
 
     private static void resetButtons() {
         GridView gameBoard = (GridView) ((Activity)context).findViewById(R.id.GameBoard);
