@@ -7,7 +7,7 @@
     android:id="@+id/linearLayout"
     android:columnCount="2"
     android:rowCount="12"
-    android:background="@drawable/backgblue_png"
+    android:background="#ffffff"
     android:layout_centerInParent="true"
     tools:context="com.quarklab.squarebash.SquareBash"
     android:orientation="vertical">
@@ -18,12 +18,8 @@
         android:text="@string/title"
         android:id="@+id/title"
         android:textSize="48sp"
-        android:textColor="#FFF"
+        android:textColor="#000"
         android:layout_marginTop="20sp"
-        android:shadowColor="#2f2f2f"
-        android:shadowDx="0"
-        android:shadowDy="0"
-        android:shadowRadius="20"
         android:layout_row="4"
         android:layout_column="0"
         android:layout_columnSpan="2"
@@ -88,7 +84,6 @@
             android:background="@drawable/button"
             android:soundEffectsEnabled="false"
             android:src="@drawable/speaker"
-            android:elevation="5sp"
             android:layout_gravity="left|center_vertical"
             />
         <View
@@ -106,8 +101,7 @@
             android:soundEffectsEnabled="false"
             android:layout_marginBottom="10dp"
             android:src="@drawable/play"
-            android:layout_gravity="center_horizontal"
-            android:elevation="5sp"/>
+            android:layout_gravity="center_horizontal"/>
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -122,7 +116,6 @@
             android:background="@drawable/button"
             android:soundEffectsEnabled="false"
             android:src="@drawable/trophy"
-            android:elevation="5sp"
             android:layout_gravity="right|center_vertical"
             />
 

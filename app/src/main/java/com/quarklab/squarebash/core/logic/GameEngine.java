@@ -230,7 +230,7 @@ public class GameEngine {
     private void animateHeartIcon() {
         this.heartIcon.animate()
             .alpha(0.f)
-            .scaleX(3.f).scaleY(3.f)
+            .scaleX(1.5f).scaleY(1.5f)
             .setDuration(300)
             .withEndAction(new Runnable() {
                 @Override
