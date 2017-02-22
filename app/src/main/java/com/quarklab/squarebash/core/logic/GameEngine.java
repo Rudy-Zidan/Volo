@@ -11,6 +11,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -98,26 +99,7 @@ public class GameEngine {
     }
 
     public static void changeGameBoard() {
-        GridView gameBoard = (GridView) ((Activity)context).findViewById(R.id.GameBoard);
-        int count = gameBoard.getChildCount();
-        Random r = new Random();
-        int index = r.nextInt(count);
-        resetButtons();
-        Button target = (Button)gameBoard.getChildAt(index);
-        switch (r.nextInt(3)){
-            case 0:
-                target.setBackgroundResource(R.drawable.green_button);
-                target.setTag("good");
-                break;
-            case 1:
-                target.setBackgroundResource(R.drawable.red_button);
-                target.setTag("evil");
-                break;
-            case 2:
-                target.setBackgroundResource(R.drawable.warm_button);
-                target.setTag("meh");
-                break;
-        }
+        gameBoard.getRenderEngine().renderButton();
     }
 
     public static void changeGameMode() {

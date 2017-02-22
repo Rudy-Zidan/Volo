@@ -24,7 +24,7 @@ public class GameBoard extends Activity {
         this.renderEngine = new RenderEngine(this);
         this.soundManager = new SoundManager(this);
         this.gameEngine = new GameEngine(this);
-        this.renderEngine.render(R.id.GameBoard);
+        this.renderEngine.renderButton();
         this.backClicked = false;
     }
     @Override
@@ -50,4 +50,6 @@ public class GameBoard extends Activity {
     public GameEngine getGameEngine(){
         return this.gameEngine;
     }
+
+    public RenderEngine getRenderEngine() {return this.renderEngine;}
 }

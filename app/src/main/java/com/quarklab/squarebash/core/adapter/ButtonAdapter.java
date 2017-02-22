@@ -43,10 +43,11 @@ public class ButtonAdapter extends BaseAdapter {
         Button btn;
         if (convertView == null) {
             btn = new Button (this.context);
-//            int buttonHeight = this.screen.getHeightPX()/4;
-//            int buttonWidth = this.screen.getWidthPX()/3;
-//            btn.setHeight(100);
-//            btn.setWidth(100);
+            int buttonHeight = this.screen.getHeightPX()/4;
+            int buttonWidth = this.screen.getWidthPX()/3;
+            int margin = this.screen.convertSpToPixels(25);
+            btn.setHeight(buttonHeight - margin * 2);
+            btn.setWidth(buttonWidth);
 
         }else{
             btn = (Button) convertView;
