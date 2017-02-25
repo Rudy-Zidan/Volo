@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.os.Build;
 import android.view.View;
 import android.view.WindowManager;
@@ -80,17 +81,19 @@ public class RenderEngine {
         float x = this.screen.getRandomX();
         float y = this.screen.getRandomY();
 
-        this.button.setWidth(this.screen.getRandomWidth());
-        this.button.setHeight(this.screen.getRandomHeight());
+        int blockSize = this.screen.getSize();
 
-        float totalHeight = (y + this.button.getHeight());
+        this.button.setWidth(blockSize);
+        this.button.setHeight(blockSize);
+
+        float totalHeight = (y + blockSize);
         if ( totalHeight > this.screen.getHeightPX()){
             y -= (totalHeight - this.screen.getHeightPX());
         }
 
         this.button.setY(y);
 
-        float totalWidth = (x+this.button.getWidth());
+        float totalWidth = (x + blockSize);
         if ( totalWidth > this.screen.getWidthPX()){
             x -= (totalWidth - this.screen.getWidthPX());
         }
@@ -102,15 +105,18 @@ public class RenderEngine {
         Random r = new Random();
         switch (r.nextInt(3)){
             case 0:
-                this.button.setBackgroundResource(R.drawable.green_button);
+                this.button.setBackgroundColor(Color.parseColor("#86AC41"));
+//                this.button.setBackgroundResource(R.drawable.green_button);
                 this.button.setTag("good");
                 break;
             case 1:
-                this.button.setBackgroundResource(R.drawable.red_button);
+                this.button.setBackgroundColor(Color.parseColor("#CE5A57"));
+//                this.button.setBackgroundResource(R.drawable.red_button);
                 this.button.setTag("evil");
                 break;
             case 2:
-                this.button.setBackgroundResource(R.drawable.warm_button);
+                this.button.setBackgroundColor(Color.parseColor("#E1B16A"));
+//                this.button.setBackgroundResource(R.drawable.warm_button);
                 this.button.setTag("meh");
                 break;
         }

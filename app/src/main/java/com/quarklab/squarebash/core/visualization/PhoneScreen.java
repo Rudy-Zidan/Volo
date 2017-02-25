@@ -21,11 +21,11 @@ public class PhoneScreen {
     }
 
     public int getHeightPX(){
-        return this.metrics.heightPixels;
+        return this.metrics.heightPixels - (int)(this.metrics.heightPixels * 0.05);
     }
 
     public int getWidthPX(){
-        return this.metrics.widthPixels;
+        return this.metrics.widthPixels  - (int)(this.metrics.widthPixels * 0.15);
     }
 
     public int convertSpToPixels(float sp) {
@@ -35,7 +35,7 @@ public class PhoneScreen {
 
     public float getRandomX() {
         Random rand = new Random();
-        return rand.nextInt(this.getWidthPX())+1;
+        return rand.nextInt(this.getWidthPX())+50;
     }
 
     public float getRandomY() {
@@ -49,13 +49,9 @@ public class PhoneScreen {
         return y;
     }
 
-    public int getRandomWidth() {
+    public int getSize() {
+        int total = (this.getWidthPX()+this.getHeightPX())/(3*4);
         Random rand = new Random();
-        return rand.nextInt(this.getWidthPX()/3)+100;
-    }
-
-    public int getRandomHeight() {
-        Random rand = new Random();
-        return rand.nextInt(this.getHeightPX()/4)+100;
+        return rand.nextInt(total)+100;
     }
 }
