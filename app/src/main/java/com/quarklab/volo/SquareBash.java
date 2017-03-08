@@ -136,7 +136,7 @@ public class SquareBash extends Activity {
         // Add code to print out the key hash
         try {
             PackageInfo info = getPackageManager().getPackageInfo(
-                    "com.quarklab.squarebash",
+                    "com.quarklab.volo",
                     PackageManager.GET_SIGNATURES);
             for (android.content.pm.Signature signature : info.signatures) {
                 MessageDigest md = MessageDigest.getInstance("SHA");

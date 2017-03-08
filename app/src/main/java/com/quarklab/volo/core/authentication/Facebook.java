@@ -62,8 +62,8 @@ public class Facebook {
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
                         String facebookAccount = object.toString();
-                        JSONObject x = SquareBashAPI.postObject(context.getString(R.string.save_player_api),facebookAccount);
                         try {
+                        JSONObject x = SquareBashAPI.postObject(context.getString(R.string.save_player_api),facebookAccount);
                             if(x.getBoolean("status")){
                                 ((SquareBash)context).displayGameBoard();
                                 ((SquareBash)context).setting.updateFacebookAccount(facebookAccount);
@@ -74,7 +74,9 @@ public class Facebook {
                                 ((SquareBash)context).displayGameBoard();
                             }
                         } catch (JSONException e) {
-                            e.printStackTrace();
+                            ((SquareBash)context).displayGameBoard();
+                        } catch (Exception e){
+                            ((SquareBash)context).displayGameBoard();
                         }
                     }
                 });

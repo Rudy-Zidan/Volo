@@ -21,7 +21,9 @@ import com.quarklab.volo.R;
 import com.quarklab.volo.GameBoard;
 import com.quarklab.volo.core.Modes.GameMode;
 import com.quarklab.volo.core.Modes.GameModeListener;
-import com.quarklab.volo.core.TTS.Speaker;
+//import com.quarklab.volo.core.TTS.Speaker;
+
+import java.util.Random;
 
 import xyz.hanks.library.SmallBang;
 import xyz.hanks.library.SmallBangListener;
@@ -42,7 +44,7 @@ public class GameEngine {
     private SmallBang smallBang;
     private static Toast toast;
     private static View toastAppear;
-    private static Speaker speaker;
+    //private static Speaker speaker;
 
     private ImageView heartIcon;
 
@@ -67,7 +69,7 @@ public class GameEngine {
         toast.setView(toastAppear);
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER,Gravity.CENTER,Gravity.CENTER);
-        this.speaker = new Speaker(this.context);
+        //this.speaker = new Speaker(this.context);
 
         this.scoreText = (TextView) ((Activity)this.context).findViewById(R.id.score);
 
@@ -104,7 +106,7 @@ public class GameEngine {
     public static void changeGameMode() {
         gameMode.change();
         String text = gameMode.getCurrentGameMode();
-        speaker.speak(text);
+        //speaker.speak(text);
         showMessage(text);
     }
 
@@ -131,9 +133,20 @@ public class GameEngine {
     }
 
     private void random(View button) {
-        int[] colors ={0XFFE1B16A,0XFFE1B103,0XFFFDC97A, 0XFFFFB33F, 0XFFF0A93E,0XFFFF9A01};
+        int[] colors ={0XFFFF5A00,0XFFFF7B32,0XFFFF8B4C,0XFFF25500, 0XFFF06215,0XFFDD6B2D};
         this.animate(button,colors,16);
-
+        // TODO random score, life lost, life gain or reduce score.
+        Random rand = new Random();
+        switch (rand.nextInt(4)) {
+            case 0: scoreAdded(rand.nextInt(20)+10);
+                break;
+            case 1: reduceScore(rand.nextInt(20)+10);
+                break;
+            case 2: reduceLife();
+                break;
+            case 3: addLife(1);
+                break;
+        }
     }
 
     private static void showMessage(String msg) {
@@ -189,7 +202,7 @@ public class GameEngine {
                 @Override
                 public void onClick(View v) {
                 dialog.dismiss();
-                speaker.shutdown();
+                //speaker.shutdown();
                 ((Activity)context).onBackPressed();
                 }
             });
@@ -282,6 +295,12 @@ public class GameEngine {
         currentScore += score;
         gameBoard.soundManager.playSound(R.raw.score);
         updateScoreText(currentScore);
+    }
+
+    private void addLife(int n) {
+        lifes+=n;
+        lifesText.setText(""+lifes);
+        animateHeartIcon();
     }
 
 }

@@ -28,12 +28,16 @@ public class RenderEngine {
     private FrameLayout frameLayout;
     private Button button;
     private ButtonAction buttonAction;
+    private int randomTrigger;
+    private Random rand;
 
     private PhoneScreen screen;
 
     public RenderEngine(Context context){
         this.context = context;
         this.setUpActivityScreen();
+        this.rand = new Random();
+        this.setRandomTrigger();
     }
     private void setUpActivityScreen(){
         this.activity = ((Activity)this.context);
@@ -53,7 +57,11 @@ public class RenderEngine {
     public void renderButton() {
         if(this.button == null) {
             this.button = new Button(this.context);
+
             this.button.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                this.button.setStateListAnimator(null);
+            }
         }else if(this.frameLayout.indexOfChild(this.button) > -1) {
             this.frameLayout.removeView(this.button);
         }
@@ -99,8 +107,7 @@ public class RenderEngine {
     }
 
     private void buttonColors() {
-        Random r = new Random();
-        switch (r.nextInt(3)){
+        switch (this.rand.nextInt(4)){
             case 0:
                 this.button.setBackgroundResource(R.drawable.green_button);
                 this.button.setTag("good");
@@ -114,9 +121,17 @@ public class RenderEngine {
                 this.button.setTag("meh");
                 break;
             case 3:
-                this.button.setBackgroundResource(R.drawable.warm_button);
-                this.button.setTag("random");
+                this.randomTrigger--;
+                if(randomTrigger <= 0) {
+                    this.button.setBackgroundResource(R.drawable.random);
+                    this.button.setTag("random");
+                    this.setRandomTrigger();
+                }
                 break;
         }
+    }
+
+    private void setRandomTrigger() {
+        this.randomTrigger = this.rand.nextInt(20)+10;
     }
 }

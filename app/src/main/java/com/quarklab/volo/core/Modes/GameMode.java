@@ -13,6 +13,8 @@ public class GameMode {
     private int scoreRate;
     private int score;
     private int lifes;
+    private Random rand;
+
 
     protected GameModeListener gmlistener;
 
@@ -22,11 +24,11 @@ public class GameMode {
         this.lifes = 4;
         this.current = modes.Easy;
         this.gmlistener = gmListener;
+        this.rand = new Random();
     }
 
     public void change() {
-        Random rand = new Random();
-        int random = rand.nextInt(10);
+        int random = this.rand.nextInt(10);
         if (random % 2 == 0) {
             if (!this.current.equals(modes.Easy)) {
                 this.current = modes.Easy;
@@ -34,7 +36,7 @@ public class GameMode {
                 change();
             }
         } else {
-            random = rand.nextInt(3) + 1;
+            random = this.rand.nextInt(3) + 1;
             if (!this.current.equals(modes.values()[random])) {
                 this.current = modes.values()[random];
             }else{
