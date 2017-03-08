@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        applicationId "com.quarklab.squarebash"
+        applicationId "com.quarklab.volo"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.quarklab.squarebash">
+    package="com.quarklab.volo">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -28,12 +28,12 @@
             android:authorities="com.facebook.app.FacebookContentProvider916130085175917"
             android:exported="true" />
 
-        <activity android:name=".GameBoard">
+        <activity android:name="com.quarklab.volo.GameBoard">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity android:name=".SquareBash">
+        <activity android:name="com.quarklab.volo.SquareBash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -47,7 +47,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             tools:replace="android:theme"
             />
-        <activity android:name=".LeaderBoard"></activity>
+        <activity android:name="com.quarklab.volo.LeaderBoard"></activity>
 
         <activity android:name="com.mopub.mobileads.MoPubActivity" android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity android:name="com.mopub.mobileads.MraidActivity" android:configChanges="keyboardHidden|orientation|screenSize"/>
