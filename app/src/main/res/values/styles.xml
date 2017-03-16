@@ -8,4 +8,17 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- Glossy Gradient Button Style -->
+    <style name="GlossyGradientButtonStyle" parent="@android:style/Widget.Button">
+        <item name="android:background">@drawable/play_button_selector</item>
+        <item name="android:shadowColor">#000</item>
+        <item name="android:shadowRadius">3.0</item>
+        <item name="android:shadowDx">-0.5</item>
+        <item name="android:shadowDy">-0.5</item>
+        <item name="android:paddingLeft">@dimen/button_content_paddingLeft</item>
+        <item name="android:paddingRight">@dimen/button_content_paddingRight</item>
+        <item name="android:paddingTop">@dimen/button_content_paddingTop</item>
+        <item name="android:paddingBottom">@dimen/button_content_paddingBottom</item>
+    </style>
+
 </resources>

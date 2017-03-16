@@ -45,6 +45,7 @@ public class GameBoard extends Activity {
         super.onPause();
         this.gameEngine.stopGame();
         this.soundManager.stopBackgroundSound();
+        this.soundManager.stopTicTocSound();
     }
 
     public GameEngine getGameEngine(){

@@ -44,9 +44,12 @@ public class GameHandler {
 
         public void run() {
             Random rand = new Random();
-            speed = rand.nextInt((1000 - 150) + 1)+150;
+            speed = rand.nextInt(1000);
+            if(speed < 500){
+                speed = 500;
+            }
             int x = Math.abs((1000 - speed));
-            GameEngine.changeScore((x*20)/100);
+            GameEngine.changeScore((x*10)/100);
             speedHandler.postDelayed(updateSpeed,15000);
         }
     };

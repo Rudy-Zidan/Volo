@@ -7,7 +7,7 @@
     android:id="@+id/linearLayout"
     android:columnCount="2"
     android:rowCount="12"
-    android:background="#ffffff"
+    android:background="@drawable/gameboard"
     android:layout_centerInParent="true"
     tools:context="com.quarklab.volo.SquareBash"
     android:orientation="vertical">
@@ -18,8 +18,8 @@
         android:text="@string/title"
         android:id="@+id/title"
         android:textSize="48sp"
-        android:textColor="#000"
-        android:layout_marginTop="20sp"
+        android:textColor="#FFF"
+        android:layout_marginTop="25sp"
         android:layout_row="4"
         android:layout_column="0"
         android:layout_columnSpan="2"
@@ -46,6 +46,7 @@
             android:id="@+id/scoreText"
             android:textSize="28sp"
             android:layout_gravity="center|right"
+            android:textColor="#FFF"
             android:text="2500"
             />
         <ImageView
@@ -92,7 +93,7 @@
             android:layout_weight="1"
             />
         <ImageButton
-            android:background="@drawable/glacier_button"
+            style="@style/GlossyGradientButtonStyle"
             android:layout_width="100sp"
             android:layout_height="100sp"
             android:id="@+id/play"

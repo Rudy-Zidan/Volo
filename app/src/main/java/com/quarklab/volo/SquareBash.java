@@ -110,7 +110,7 @@ public class SquareBash extends Activity {
 
         AssetManager am = getApplicationContext().getAssets();
         typeface = Typeface.createFromAsset(am,
-                String.format(Locale.US, "fonts/%s", "chlorinr.ttf"));
+                String.format(Locale.US, "fonts/%s", "KBZipaDeeDooDah.ttf"));
         TextView title = (TextView) findViewById(R.id.title);
         title.setTypeface(this.typeface);
     }

@@ -5,7 +5,8 @@ import android.media.MediaPlayer;
 import android.os.AsyncTask;
 
 import com.quarklab.volo.GameBoard;
-import com.quarklab.volo.R;
+import com.quarklab.volo.core.sounds.BackgroundSound;
+import com.quarklab.volo.core.sounds.TicTocSound;
 
 /**
  * Created by rudy on 6/20/16.
@@ -13,6 +14,7 @@ import com.quarklab.volo.R;
 public class SoundManager {
     private Context context;
     private BackgroundSound backgroundMusic;
+    private TicTocSound ticTocSound;
     private GameBoard gameBoard;
     public  SoundManager(Context context){
         this.context = context;
@@ -22,48 +24,38 @@ public class SoundManager {
     public void playSound(int music){
         if(this.gameBoard.setting.playSound()) {
             MediaPlayer player = MediaPlayer.create(this.context, music);
-            player.setVolume(100, 100);
+            player.setVolume(1f, 1f);
             player.start();
+        }
+    }
+    public void startTicTocSound() {
+        if(this.gameBoard.setting.playSound()){
+            this.ticTocSound = new TicTocSound(this.context);
+            this.backgroundMusic.setVolume(0.3f, 0.3f);
+            this.ticTocSound.execute();
+        }
+    }
+
+    public void stopTicTocSound(){
+        if(this.gameBoard.setting.playSound() && this.ticTocSound.getStatus().equals(AsyncTask.Status.RUNNING)) {
+            if(this.backgroundMusic.getStatus().equals(AsyncTask.Status.RUNNING)){
+                this.backgroundMusic.setVolume(1f, 1f);
+            }
+            this.ticTocSound.stop();
         }
     }
 
     public void startBackgroundSound(){
         if(this.gameBoard.setting.playSound()){
-            this.backgroundMusic = new BackgroundSound();
+            this.backgroundMusic = new BackgroundSound(this.context);
             this.backgroundMusic.execute();
         }
 
     }
+
     public void stopBackgroundSound(){
         if(this.gameBoard.setting.playSound()) {
             this.backgroundMusic.stop();
-        }
-    }
-    public class BackgroundSound extends AsyncTask<Void, Void, Void> {
-        private MediaPlayer player;
-
-        @Override
-        protected void onPreExecute() {
-            this.player = MediaPlayer.create(context, R.raw.background);
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            this.player.setLooping(true); // Set looping
-            this.player.setVolume(25,25);
-            this.player.start();
-            return null;
-        }
-
-        @Override
-        protected void onCancelled() {
-            super.onCancelled();
-        }
-
-        protected void stop(){
-            this.player.stop();
-            this.player.release();
-            this.cancel(true);
         }
     }
 }

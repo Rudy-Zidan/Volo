@@ -55,24 +55,25 @@ public class RenderEngine {
     }
 
     public void renderButton() {
-        if(this.button == null) {
-            this.button = new Button(this.context);
 
-            this.button.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT));
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                this.button.setStateListAnimator(null);
-            }
-        }else if(this.frameLayout.indexOfChild(this.button) > -1) {
+        if(this.frameLayout.indexOfChild(this.button) > -1) {
             this.frameLayout.removeView(this.button);
+        }
+
+        this.button = new Button(this.context);
+
+        this.button.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            this.button.setStateListAnimator(null);
         }
 
         this.setButtonLayout();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            this.button.setBackground( this.context.getResources().getDrawable(R.drawable.green_button));
-        } else {
-            this.button.setBackgroundDrawable( this.context.getResources().getDrawable(R.drawable.green_button) );
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+//            this.button.setBackground( this.context.getResources().getDrawable(R.drawable.green_button));
+//        } else {
+//            this.button.setBackgroundDrawable( this.context.getResources().getDrawable(R.drawable.green_button) );
+//        }
 
         this.buttonColors();
 
@@ -126,6 +127,9 @@ public class RenderEngine {
                     this.button.setBackgroundResource(R.drawable.random);
                     this.button.setTag("random");
                     this.setRandomTrigger();
+                }else{
+                    this.button.setBackgroundResource(R.drawable.green_button);
+                    this.button.setTag("good");
                 }
                 break;
         }

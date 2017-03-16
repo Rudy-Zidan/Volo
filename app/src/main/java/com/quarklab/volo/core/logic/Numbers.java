@@ -10,12 +10,12 @@ import java.util.TreeMap;
 public class Numbers {
     private static final NavigableMap<Long, String> suffixes = new TreeMap<>();
     static {
-        suffixes.put(1_000L, "k");
-        suffixes.put(1_000_000L, "M");
-        suffixes.put(1_000_000_000L, "G");
-        suffixes.put(1_000_000_000_000L, "T");
-        suffixes.put(1_000_000_000_000_000L, "P");
-        suffixes.put(1_000_000_000_000_000_000L, "E");
+        suffixes.put(1_000L, "k ");
+        suffixes.put(1_000_000L, "M ");
+        suffixes.put(1_000_000_000L, "G ");
+        suffixes.put(1_000_000_000_000L, "T ");
+        suffixes.put(1_000_000_000_000_000L, "P ");
+        suffixes.put(1_000_000_000_000_000_000L, "E ");
     }
 
     public static String format(long value) {
