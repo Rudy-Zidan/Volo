@@ -77,7 +77,7 @@ public class GameEngine {
         this.scoreText = (TextView) ((Activity)this.context).findViewById(R.id.score);
 
         this.lifesText = (TextView) ((Activity)this.context).findViewById(R.id.lifes);
-        this.heartIcon = (ImageView) ((Activity)this.context).findViewById(R.id.heart);
+//        this.heartIcon = (ImageView) ((Activity)this.context).findViewById(R.id.heart);
 
         this.onBoardNotification = new OnBoardNotification(this.context);
     }
@@ -148,22 +148,22 @@ public class GameEngine {
         this.animate(button,colors,16);
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    private void animateHeartIcon() {
-        this.heartIcon.animate()
-            .alpha(0.f)
-            .scaleX(1.5f).scaleY(1.5f)
-            .setDuration(300)
-            .withEndAction(new Runnable() {
-                @Override
-                public void run() {
-                    heartIcon.setAlpha(1.f);
-                    heartIcon.setScaleX(1.f);
-                    heartIcon.setScaleY(1.f);
-                }
-            })
-            .start();
-    }
+    //@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+//    private void animateHeartIcon() {
+//        this.heartIcon.animate()
+//            .alpha(0.f)
+//            .scaleX(1.5f).scaleY(1.5f)
+//            .setDuration(300)
+//            .withEndAction(new Runnable() {
+//                @Override
+//                public void run() {
+//                    heartIcon.setAlpha(1.f);
+//                    heartIcon.setScaleX(1.f);
+//                    heartIcon.setScaleY(1.f);
+//                }
+//            })
+//            .start();
+//    }
 
     public static void showReplayDialog() {
         if(!gameBoard.backClicked){
@@ -273,7 +273,7 @@ public class GameEngine {
         if(lifes > 0) {
             lifes--;
             lifesText.setText(""+lifes);
-            animateHeartIcon();
+           // animateHeartIcon();
         }
         if(lifes == 1) {
             gameBoard.soundManager.startTicTocSound();
@@ -303,7 +303,7 @@ public class GameEngine {
     private void addLife(int n) {
         lifes+=n;
         lifesText.setText(""+lifes);
-        animateHeartIcon();
+       // animateHeartIcon();
         this.gameBoard.soundManager.stopTicTocSound();
     }
 }
