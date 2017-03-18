@@ -55,13 +55,13 @@ public class OnBoardNotification {
 
     public void notify(String message, String color){
         this.color = color;
-        this.execute(message);
+        this.execute(message, false);
     }
 
-    public void notify(String message, int speed, int textSize){
+    public void notify(String message, int speed, int textSize, boolean center){
         this.speed = speed;
         this.textSize = textSize;
-        this.execute(message);
+        this.execute(message, center);
     }
 
     private void setLayout(){
@@ -78,16 +78,35 @@ public class OnBoardNotification {
         this.notificationHolder = new TextView(this.context);
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    private void execute(String message){
+
+    private void execute(String message, boolean center){
         this.layout.addView(notificationHolder);
+        this.setHolderProperties();
+        this.notificationHolder.setText(message);
+        this.setHolderCoordinates(center);
+        this.animateHolder();
+    }
+
+    private void setHolderCoordinates(boolean center){
+        if(center){
+            this.notificationHolder.measure(0, 0);
+            int width = this.notificationHolder.getMeasuredWidth();
+            this.notificationHolder.setX(this.x - (width/2));
+        }else{
+            this.notificationHolder.setX(this.x);
+        }
+        this.notificationHolder.setY(this.y);
+    }
+
+    private void setHolderProperties(){
         this.notificationHolder.setTextSize(this.textSize);
         this.notificationHolder.setShadowLayer(1.5f, 0, 0, Color.parseColor("#2F2F2F"));
         this.notificationHolder.setTextColor(Color.parseColor(this.color));
-        this.notificationHolder.setX(this.x);
-        this.notificationHolder.setY(this.y);
-        this.notificationHolder.setText(message);
         this.notificationHolder.setTypeface(this.typeface);
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    private void animateHolder(){
         this.notificationHolder.animate()
                 .alpha(0.f)
                 .scaleX(1.f).scaleY(1.2f)

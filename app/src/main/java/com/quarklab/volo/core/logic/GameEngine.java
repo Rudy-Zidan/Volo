@@ -6,15 +6,11 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 
-import android.content.res.AssetManager;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,7 +24,6 @@ import com.quarklab.volo.core.Modes.GameModeListener;
 import com.quarklab.volo.core.Notification.OnBoardNotification;
 //import com.quarklab.volo.core.TTS.Speaker;
 
-import java.util.Locale;
 import java.util.Random;
 
 import xyz.hanks.library.SmallBang;
@@ -119,10 +114,10 @@ public class GameEngine {
         gameMode.change();
         String text = gameMode.getCurrentGameMode();
         //speaker.speak(text);
-        onBoardNotification.setX((gameBoard.getRenderEngine().getScreenWidth()/2) - 150);
+        onBoardNotification.setX((gameBoard.getRenderEngine().getScreenWidth()/2));
         onBoardNotification.setY(gameBoard.getRenderEngine().getScreenHeight()/2);
         onBoardNotification.setColor("#ffffff");
-        onBoardNotification.notify(text, 1500, 30);
+        onBoardNotification.notify(text, 1500, 30, true);
     }
 
     public static void changeScore(int value) {
@@ -153,12 +148,6 @@ public class GameEngine {
         this.animate(button,colors,16);
     }
 
-    private static void showMessage(String msg) {
-        TextView text = (TextView) toastAppear.findViewById(R.id.toast_text);
-        text.setText(msg);
-        toast.show();
-    }
-
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void animateHeartIcon() {
         this.heartIcon.animate()
@@ -178,7 +167,6 @@ public class GameEngine {
 
     public static void showReplayDialog() {
         if(!gameBoard.backClicked){
-            //resetButtons();
             ended = true;
             final Dialog dialog = new Dialog(context);
 
@@ -252,16 +240,6 @@ public class GameEngine {
         });
     }
 
-    private static void resetButtons() {
-        GridView gameBoard = (GridView) ((Activity)context).findViewById(R.id.GameBoard);
-        int count = gameBoard.getChildCount();
-        for(int i = 0 ; i <count ; i++){
-            Button child = (Button)gameBoard.getChildAt(i);
-            child.setBackgroundResource(R.drawable.block);
-            child.setTag("");
-        }
-    }
-
     private void updateScoreText(int score) {
         this.gameBoard.setting.updateScore(score);
         this.scoreText.setText(""+Numbers.format(score));
@@ -312,14 +290,14 @@ public class GameEngine {
             currentScore = 0;
         }
         updateScoreText(currentScore);
-        this.onBoardNotification.notify("- "+score, 500, 18);
+        this.onBoardNotification.notify("- "+score, 500, 18, false);
     }
 
     private void scoreAdded(int score) {
         currentScore += score;
         gameBoard.soundManager.playSound(R.raw.score);
         updateScoreText(currentScore);
-        this.onBoardNotification.notify("+ "+score, 500, 18);
+        this.onBoardNotification.notify("+ "+score, 500, 18, false);
     }
 
     private void addLife(int n) {
