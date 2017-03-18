@@ -54,6 +54,14 @@ public class RenderEngine {
         this.grid.setAdapter(new ButtonAdapter(this.context));
     }
 
+    public int getScreenWidth(){
+       return this.screen.getNormalWidthPX();
+    }
+
+    public int getScreenHeight(){
+        return this.screen.getNormalHeightPX();
+    }
+
     public void renderButton() {
 
         if(this.frameLayout.indexOfChild(this.button) > -1) {
@@ -68,12 +76,6 @@ public class RenderEngine {
         }
 
         this.setButtonLayout();
-
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-//            this.button.setBackground( this.context.getResources().getDrawable(R.drawable.green_button));
-//        } else {
-//            this.button.setBackgroundDrawable( this.context.getResources().getDrawable(R.drawable.green_button) );
-//        }
 
         this.buttonColors();
 

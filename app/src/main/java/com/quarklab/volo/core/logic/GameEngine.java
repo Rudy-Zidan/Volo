@@ -25,6 +25,7 @@ import com.quarklab.volo.R;
 import com.quarklab.volo.GameBoard;
 import com.quarklab.volo.core.Modes.GameMode;
 import com.quarklab.volo.core.Modes.GameModeListener;
+import com.quarklab.volo.core.Notification.OnBoardNotification;
 //import com.quarklab.volo.core.TTS.Speaker;
 
 import java.util.Locale;
@@ -49,11 +50,6 @@ public class GameEngine {
     private SmallBang smallBang;
     private static Toast toast;
     private static View toastAppear;
-    private FrameLayout frameLayout;
-
-    private float buttonX;
-    private float buttonY;
-    private String color;
     //private static Speaker speaker;
 
     private ImageView heartIcon;
@@ -61,7 +57,7 @@ public class GameEngine {
     private TextView scoreText;
     private TextView lifesText;
 
-    private Typeface typeface;
+    private static OnBoardNotification onBoardNotification;
 
     public GameEngine(Context context) {
         this.context = context;
@@ -88,7 +84,7 @@ public class GameEngine {
         this.lifesText = (TextView) ((Activity)this.context).findViewById(R.id.lifes);
         this.heartIcon = (ImageView) ((Activity)this.context).findViewById(R.id.heart);
 
-        this.frameLayout = (FrameLayout)((Activity)this.context).findViewById(R.id.gameBoardLayout);
+        this.onBoardNotification = new OnBoardNotification(this.context);
     }
 
     public static void startGame() {
@@ -100,8 +96,8 @@ public class GameEngine {
     }
 
     public void actionHandler(View button) {
-        this.buttonX = (button.getX() + (button.getWidth() / 2)) - 25;
-        this.buttonY = button.getY();
+        this.onBoardNotification.setX((button.getX() + (button.getWidth() / 2)) - 25);
+        this.onBoardNotification.setY(button.getY());
         switch (button.getTag().toString()) {
             case "good": good(button);
                 break;
@@ -123,7 +119,10 @@ public class GameEngine {
         gameMode.change();
         String text = gameMode.getCurrentGameMode();
         //speaker.speak(text);
-        showMessage(text);
+        onBoardNotification.setX((gameBoard.getRenderEngine().getScreenWidth()/2) - 150);
+        onBoardNotification.setY(gameBoard.getRenderEngine().getScreenHeight()/2);
+        onBoardNotification.setColor("#ffffff");
+        onBoardNotification.notify(text, 1500, 30);
     }
 
     public static void changeScore(int value) {
@@ -131,25 +130,25 @@ public class GameEngine {
     }
 
     private void good(View button) {
-        this.color = "#579B00";
+        this.onBoardNotification.setColor("#579B00");
         int[] colors ={0XFF86AC41,0XFF99AC41,0XFF22AC41,0XFF00AC41,0XFF20AC50,0XFF82AC20};
         this.animate(button,colors,16);
     }
 
     private void evil(View button) {
-        this.color = "#FF3232";
+        this.onBoardNotification.setColor("#FF3232");
         int[] colors ={0XFFCE5A57,0XFFCE5A20,0XFFFF726E,0XFFB64F4C,0XFFB62B27,0XFFB46260};
         this.animate(button,colors,16);
     }
 
     private void meh(View button) {
-        this.color = "#FFE13C";
+        this.onBoardNotification.setColor("#FFE13C");
         int[] colors ={0XFFE1B16A,0XFFE1B103,0XFFFDC97A, 0XFFFFB33F, 0XFFF0A93E,0XFFFF9A01};
         this.animate(button,colors,16);
     }
 
     private void random(View button) {
-        this.color = "#876DD1";
+        this.onBoardNotification.setColor("#876DD1");
         int[] colors ={0XFFFF5A00,0XFFFF7B32,0XFFFF8B4C,0XFFF25500, 0XFFF06215,0XFFDD6B2D};
         this.animate(button,colors,16);
     }
@@ -313,14 +312,14 @@ public class GameEngine {
             currentScore = 0;
         }
         updateScoreText(currentScore);
-        NotifyScoreOnBoard("- "+score);
+        this.onBoardNotification.notify("- "+score, 500, 18);
     }
 
     private void scoreAdded(int score) {
         currentScore += score;
         gameBoard.soundManager.playSound(R.raw.score);
         updateScoreText(currentScore);
-        NotifyScoreOnBoard("+ "+score);
+        this.onBoardNotification.notify("+ "+score, 500, 18);
     }
 
     private void addLife(int n) {
@@ -329,34 +328,4 @@ public class GameEngine {
         animateHeartIcon();
         this.gameBoard.soundManager.stopTicTocSound();
     }
-
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    private void NotifyScoreOnBoard(String text){
-        final TextView scoreHint = new TextView(this.context);
-        this.frameLayout.addView(scoreHint);
-        AssetManager am = this.context.getAssets();
-        typeface = Typeface.createFromAsset(am,
-                String.format(Locale.US, "fonts/%s", "KBZipaDeeDooDah.ttf"));
-        scoreHint.setTextColor(Color.parseColor(this.color));
-        scoreHint.setX(this.buttonX);
-        scoreHint.setY(this.buttonY);
-        scoreHint.setText(text);
-        scoreHint.setTypeface(typeface);
-        scoreHint.animate()
-                .alpha(0.f)
-                .scaleX(1.f).scaleY(1.2f)
-                .setDuration(500)
-                .withEndAction(new Runnable() {
-                    @Override
-                    public void run() {
-                        scoreHint.setAlpha(1.f);
-                        scoreHint.setScaleX(1.f);
-                        scoreHint.setScaleY(1.f);
-                        frameLayout.removeView(scoreHint);
-                    }
-                })
-                .start();
-
-    }
-
 }

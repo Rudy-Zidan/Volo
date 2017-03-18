@@ -20,6 +20,14 @@ public class PhoneScreen {
         display.getMetrics(this.metrics);
     }
 
+    public int getNormalHeightPX(){
+        return this.metrics.heightPixels;
+    }
+
+    public int getNormalWidthPX(){
+        return this.metrics.widthPixels;
+    }
+
     public int getHeightPX(){
         return this.metrics.heightPixels - (int)(this.metrics.heightPixels * 0.1);
     }
