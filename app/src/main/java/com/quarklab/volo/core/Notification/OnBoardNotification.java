@@ -80,6 +80,7 @@ public class OnBoardNotification {
 
 
     private void execute(String message, boolean center){
+        this.removeHolder();
         this.layout.addView(notificationHolder);
         this.setHolderProperties();
         this.notificationHolder.setText(message);
@@ -117,9 +118,15 @@ public class OnBoardNotification {
                         notificationHolder.setAlpha(1.f);
                         notificationHolder.setScaleX(1.f);
                         notificationHolder.setScaleY(1.f);
-                        layout.removeView(notificationHolder);
+                        removeHolder();
                     }
                 })
                 .start();
+    }
+
+    private void removeHolder(){
+        if(this.layout.indexOfChild(notificationHolder) > -1){
+            this.layout.removeView(notificationHolder);
+        }
     }
 }

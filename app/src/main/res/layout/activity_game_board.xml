@@ -49,7 +49,6 @@
             android:drawablePadding="@dimen/_5sdp"
             android:layoutDirection="rtl"
             android:gravity="center"
-            android:editable="false"
             android:textColor="#000" />
         <View
             android:layout_width="0dp"
@@ -60,14 +59,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/textview"
+            android:drawableRight="@drawable/coin"
             android:padding="@dimen/_5sdp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="0"
             android:id="@+id/score"
-            android:layout_gravity="center_horizontal|center_vertical"
+            android:gravity="center"
             android:drawablePadding="@dimen/_5sdp"
             android:layoutDirection="rtl"
-            android:editable="false"
             android:textColor="#000" />
         <View
             android:layout_width="0dp"

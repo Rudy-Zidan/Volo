@@ -43,13 +43,18 @@ public class PhoneScreen {
 
     public float getRandomX() {
         Random rand = new Random();
-        return rand.nextInt(this.getWidthPX())+60;
+        float x = rand.nextInt(this.getWidthPX())+1;
+        int marginLeft = this.convertSpToPixels(60);
+        if( x < (marginLeft*2)) {
+            x += marginLeft;
+        }
+        return x;
     }
 
     public float getRandomY() {
         Random rand = new Random();
         float y = rand.nextInt(this.getHeightPX())+1;
-        int marginTop = this.convertSpToPixels(30);
+        int marginTop = this.convertSpToPixels(60);
 
         if( y < (marginTop*2)) {
             y += marginTop;
