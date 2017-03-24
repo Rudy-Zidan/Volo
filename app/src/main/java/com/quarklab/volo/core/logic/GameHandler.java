@@ -4,6 +4,8 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Handler;
 
+import com.quarklab.volo.core.shapes.Shape;
+
 import java.util.Random;
 
 /**
@@ -14,17 +16,20 @@ public class GameHandler {
     private Handler viewHandler;
     private Handler speedHandler;
     private Handler randomLevelHandler;
+    private Handler shapeHandler;
 
     public GameHandler(){
         this.viewHandler = new Handler();
         this.speedHandler = new Handler();
         this.randomLevelHandler = new Handler();
+        this.shapeHandler = new Handler();
         this.speed = 1000;
     }
     public void start(){
         this.viewHandler.postDelayed(updateData,speed);
         this.speedHandler.postDelayed(updateSpeed,15000);
         this.randomLevelHandler.postDelayed(changeGameMode,20000);
+        this.shapeHandler.postDelayed(changeShapes, 50000);
     }
     public void end(){
         this.viewHandler.removeCallbacks(updateData);
@@ -59,6 +64,14 @@ public class GameHandler {
         public void run() {
             GameEngine.changeGameMode();
             randomLevelHandler.postDelayed(changeGameMode,20000);
+        }
+    };
+
+    private Runnable changeShapes = new Runnable() {
+        @Override
+        public void run() {
+            GameEngine.changeGameShape();
+            shapeHandler.postDelayed(changeShapes,50000);
         }
     };
 }

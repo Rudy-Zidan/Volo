@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <!-- くぼみ -->
+    <item android:left="@dimen/_10sdp" android:right="@dimen/_10sdp" android:gravity="center_horizontal|center_vertical">
+        <shape android:shape="rectangle" >
+            <corners android:radius="@dimen/_2sdp" />
+            <solid android:color="#102f2f2f" />
+        </shape>
+    </item>
+
+    <!-- グラデーション下地 -->
+    <item android:left="@dimen/_10sdp" android:right="@dimen/_10sdp" android:gravity="center_horizontal|center_vertical">
+        <shape android:shape="rectangle" >
+            <corners android:radius="@dimen/_2sdp" />
+            <gradient
+                android:angle="90"
+                android:endColor="#FF3232"
+                android:startColor="#EB1E1E"
+                android:centerColor="#EB1E1E"
+                android:type="linear" />
+        </shape>
+    </item>
+
+
+
+</layer-list>

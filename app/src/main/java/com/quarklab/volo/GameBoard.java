@@ -29,7 +29,7 @@ public class GameBoard extends Activity {
         this.renderEngine = new RenderEngine(this);
         this.soundManager = new SoundManager(this);
         this.gameEngine = new GameEngine(this);
-        this.renderEngine.renderButton();
+        this.renderEngine.renderButton(this.gameEngine.getShape());
         this.backClicked = false;
         this.setFontToTextViews();
     }

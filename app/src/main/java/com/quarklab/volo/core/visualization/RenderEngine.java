@@ -15,6 +15,7 @@ import android.widget.GridView;
 import com.quarklab.volo.R;
 import com.quarklab.volo.core.adapter.ButtonAdapter;
 import com.quarklab.volo.core.logic.ButtonAction;
+import com.quarklab.volo.core.shapes.Shape;
 
 import java.util.Random;
 
@@ -62,7 +63,7 @@ public class RenderEngine {
         return this.screen.getNormalHeightPX();
     }
 
-    public void renderButton() {
+    public void renderButton(Shape shape) {
 
         if(this.frameLayout.indexOfChild(this.button) > -1) {
             this.frameLayout.removeView(this.button);
@@ -77,7 +78,7 @@ public class RenderEngine {
 
         this.setButtonLayout();
 
-        this.buttonColors();
+        this.buttonColors(shape);
 
         this.buttonAction.execute(this.context,this.button);
 
@@ -109,29 +110,29 @@ public class RenderEngine {
         this.button.setX(x);
     }
 
-    private void buttonColors() {
+    private void buttonColors(Shape shape) {
         switch (this.rand.nextInt(4)){
             case 0:
-                this.button.setBackgroundResource(R.drawable.green_button);
                 this.button.setTag("good");
+                this.button.setBackgroundResource(shape.getTemplate(this.button.getTag().toString()));
                 break;
             case 1:
-                this.button.setBackgroundResource(R.drawable.red_button);
                 this.button.setTag("evil");
+                this.button.setBackgroundResource(shape.getTemplate(this.button.getTag().toString()));
                 break;
             case 2:
-                this.button.setBackgroundResource(R.drawable.warm_button);
                 this.button.setTag("meh");
+                this.button.setBackgroundResource(shape.getTemplate(this.button.getTag().toString()));
                 break;
             case 3:
                 this.randomTrigger--;
                 if(randomTrigger <= 0) {
-                    this.button.setBackgroundResource(R.drawable.random);
-                    this.button.setTag("random");
+                    this.button.setTag("oval_random");
+                    this.button.setBackgroundResource(shape.getTemplate(this.button.getTag().toString()));
                     this.setRandomTrigger();
                 }else{
-                    this.button.setBackgroundResource(R.drawable.green_button);
                     this.button.setTag("good");
+                    this.button.setBackgroundResource(shape.getTemplate(this.button.getTag().toString()));
                 }
                 break;
         }

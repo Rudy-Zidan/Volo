@@ -19,6 +19,7 @@ import com.quarklab.volo.GameBoard;
 import com.quarklab.volo.core.modes.GameMode;
 import com.quarklab.volo.core.modes.GameModeListener;
 import com.quarklab.volo.core.notification.OnBoardNotification;
+import com.quarklab.volo.core.shapes.Shape;
 //import com.quarklab.volo.core.TTS.Speaker;
 
 import java.util.Random;
@@ -51,6 +52,8 @@ public class GameEngine {
 
     private static OnBoardNotification onBoardNotification;
 
+    private static Shape shape;
+
     public GameEngine(Context context) {
         this.context = context;
         this.gameBoard = (GameBoard) this.context;
@@ -77,6 +80,8 @@ public class GameEngine {
 //        this.heartIcon = (ImageView) ((Activity)this.context).findViewById(R.id.heart);
 
         this.onBoardNotification = new OnBoardNotification(this.context);
+
+        this.shape = new Shape();
     }
 
     public static void startGame() {
@@ -97,14 +102,14 @@ public class GameEngine {
                 break;
             case "meh": meh(button);
                 break;
-            case "random": random(button);
+            case "oval_random": random(button);
                 break;
         }
 
     }
 
     public static void changeGameBoard() {
-        gameBoard.getRenderEngine().renderButton();
+        gameBoard.getRenderEngine().renderButton(shape);
     }
 
     public static void changeGameMode() {
@@ -115,6 +120,14 @@ public class GameEngine {
         onBoardNotification.setY(gameBoard.getRenderEngine().getScreenHeight()/2);
         onBoardNotification.setColor("#ffffff");
         onBoardNotification.notify(text, 1500, 30, true);
+    }
+
+    public static void changeGameShape() {
+        shape.changeShape();
+        onBoardNotification.setX((gameBoard.getRenderEngine().getScreenWidth()/2));
+        onBoardNotification.setY(gameBoard.getRenderEngine().getScreenHeight()/2);
+        onBoardNotification.setColor("#ffffff");
+        onBoardNotification.notify(shape.getCurrentShape(), 1500, 30, true);
     }
 
     public static void changeScore(int value) {
@@ -204,6 +217,8 @@ public class GameEngine {
         return ended;
     }
 
+    public Shape getShape(){return this.shape;}
+
     private void animate(final View button, int[] colors, int dots) {
         int extraSpace = 50;
         int radius = button.getWidth()/2 + extraSpace;
@@ -213,7 +228,7 @@ public class GameEngine {
             @Override
             public void onAnimationStart() {
                 String tag = button.getTag().toString();
-                if(tag.equals("random")) {
+                if(tag.equals("oval_random")) {
                     Random rand = new Random();
                     switch (rand.nextInt(4)) {
                         case 0: scoreAdded(rand.nextInt(20)+10);
