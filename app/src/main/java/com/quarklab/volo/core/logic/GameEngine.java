@@ -1,17 +1,14 @@
 package com.quarklab.volo.core.logic;
 
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 
-import android.os.Build;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,9 +16,9 @@ import android.widget.Toast;
 
 import com.quarklab.volo.R;
 import com.quarklab.volo.GameBoard;
-import com.quarklab.volo.core.Modes.GameMode;
-import com.quarklab.volo.core.Modes.GameModeListener;
-import com.quarklab.volo.core.Notification.OnBoardNotification;
+import com.quarklab.volo.core.modes.GameMode;
+import com.quarklab.volo.core.modes.GameModeListener;
+import com.quarklab.volo.core.notification.OnBoardNotification;
 //import com.quarklab.volo.core.TTS.Speaker;
 
 import java.util.Random;

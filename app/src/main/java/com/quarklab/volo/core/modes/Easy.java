@@ -1,4 +1,4 @@
-package com.quarklab.volo.core.Modes;
+package com.quarklab.volo.core.modes;
 
 
 /**

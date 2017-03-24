@@ -1,4 +1,4 @@
-package com.quarklab.volo.core.Notification;
+package com.quarklab.volo.core.notification;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -11,8 +11,6 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.quarklab.volo.R;
-
-import org.w3c.dom.Text;
 
 import java.util.Locale;
 
