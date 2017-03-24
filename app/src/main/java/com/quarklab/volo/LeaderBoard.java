@@ -63,6 +63,14 @@ public class LeaderBoard extends Activity {
             data.put("id", Long.parseLong(account.get("id").toString()));
             JSONArray rankResponse = SquareBashAPI.post(getString(R.string.leader_board_api),
                     data.toString());
+            if(rankResponse == null){
+                rankResponse = new JSONArray();
+                JSONObject dummy = new JSONObject();
+                dummy.put("name", "Me");
+                dummy.put("score", this.setting.getScore());
+                dummy.put("facebookId", "");
+                rankResponse.put(dummy);
+            }
             this.prepareAdapterData(rankResponse);
             } else {
                 JSONObject dummy = new JSONObject();

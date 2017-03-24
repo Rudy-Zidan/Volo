@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.quarklab.volo.LeaderBoard" >
+    tools:context="com.quarklab.volo.LeaderBoard"
+    android:background="@drawable/gameboard"
+    >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,7 +24,7 @@
             android:text="Leader Board "
             android:id="@+id/title"
             android:textSize="30sp"
-            android:textColor="#2f2f2f"
+            android:textColor="#FFFFFF"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"

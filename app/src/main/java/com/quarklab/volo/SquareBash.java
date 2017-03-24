@@ -175,16 +175,16 @@ public class SquareBash extends Activity {
                         data.put("friends",objects);
                         JSONObject x = SquareBashAPI.postObject(getString(R.string.update_score_api),
                                 data.toString());
-                        if(x.getBoolean("status")){
+                        if(x != null && x.getBoolean("status")){
                             //TODO Open leadersboard a                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          ctivity.
                             displayLeaderBoard();
                         }else{
                             linearActions.setVisibility(View.VISIBLE);
                             linearLoader.setVisibility(View.GONE);
-                            alertUser();
+                            displayLeaderBoard();
                         }
                     } catch (JSONException e) {
-                        e.printStackTrace();
+                        displayLeaderBoard();
                     }
                     }
                 }
