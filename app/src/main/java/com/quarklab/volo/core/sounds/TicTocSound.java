@@ -13,6 +13,7 @@ public class TicTocSound extends AsyncTask<Void, Void, Void> {
 
     private MediaPlayer player;
     private Context context;
+    private boolean isPlaying;
 
     public TicTocSound(Context context) {
         this.context = context;
@@ -28,6 +29,7 @@ public class TicTocSound extends AsyncTask<Void, Void, Void> {
         this.player.setLooping(true); // Set looping
         this.player.setVolume(1f,1f);
         this.player.start();
+        this.isPlaying = true;
         return null;
     }
 
@@ -40,5 +42,10 @@ public class TicTocSound extends AsyncTask<Void, Void, Void> {
         this.player.stop();
         this.player.release();
         this.cancel(true);
+        this.isPlaying = false;
+    }
+
+    public boolean isPlaying() {
+        return this.isPlaying;
     }
 }

@@ -37,8 +37,8 @@ public class SoundManager {
     }
 
     public void stopTicTocSound(){
-        if(this.gameBoard.setting.playSound() && this.ticTocSound.getStatus().equals(AsyncTask.Status.RUNNING)) {
-            if(this.backgroundMusic.getStatus().equals(AsyncTask.Status.RUNNING)){
+        if(this.gameBoard.setting.playSound() && this.ticTocSound != null &&this.ticTocSound.isPlaying()) {
+            if(this.backgroundMusic.isPlaying()){
                 this.backgroundMusic.setVolume(1f, 1f);
             }
             this.ticTocSound.stop();
@@ -54,7 +54,7 @@ public class SoundManager {
     }
 
     public void stopBackgroundSound(){
-        if(this.gameBoard.setting.playSound()) {
+        if(this.gameBoard.setting.playSound() && this.backgroundMusic != null) {
             this.backgroundMusic.stop();
         }
     }

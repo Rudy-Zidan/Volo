@@ -12,6 +12,7 @@ import com.quarklab.volo.R;
 public class BackgroundSound extends AsyncTask<Void, Void, Void> {
     private MediaPlayer player;
     private Context context;
+    private boolean isPlaying;
 
     public BackgroundSound(Context context) {
         this.context = context;
@@ -27,6 +28,7 @@ public class BackgroundSound extends AsyncTask<Void, Void, Void> {
         this.player.setLooping(true); // Set looping
         this.player.setVolume(1f,1f);
         this.player.start();
+        this.isPlaying = true;
         return null;
     }
 
@@ -39,9 +41,14 @@ public class BackgroundSound extends AsyncTask<Void, Void, Void> {
         this.player.stop();
         this.player.release();
         this.cancel(true);
+        this.isPlaying = false;
     }
 
     public void setVolume(float left, float right) {
         this.player.setVolume(left,right);
+    }
+
+    public boolean isPlaying() {
+        return this.isPlaying;
     }
 }
