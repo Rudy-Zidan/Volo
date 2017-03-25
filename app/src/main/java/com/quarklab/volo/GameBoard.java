@@ -43,15 +43,12 @@ public class GameBoard extends Activity {
         super.onResume();
         if(!this.gameEngine.isEnded()){
             this.gameEngine.startGame();
-            this.soundManager.startBackgroundSound();
         }
     }
 
     public void onPause() {
         super.onPause();
         this.gameEngine.stopGame();
-        this.soundManager.stopBackgroundSound();
-        this.soundManager.stopTicTocSound();
     }
 
     public GameEngine getGameEngine(){

@@ -20,7 +20,7 @@ public class BackgroundSound extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPreExecute() {
-        this.player = MediaPlayer.create(context, R.raw.background);
+        this.player = MediaPlayer.create(context, R.raw.gamebackground);
     }
 
     @Override

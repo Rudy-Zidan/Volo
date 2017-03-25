@@ -48,7 +48,7 @@ public class GameEngine {
     private ImageView heartIcon;
 
     private TextView scoreText;
-    private TextView lifesText;
+    private static TextView lifesText;
 
     private static OnBoardNotification onBoardNotification;
 
@@ -57,8 +57,6 @@ public class GameEngine {
     public GameEngine(Context context) {
         this.context = context;
         this.gameBoard = (GameBoard) this.context;
-        this.currentScore = 0;
-        this.lifes = 4;
         this.gameHandler = new GameHandler();
         this.toastSpeed = 100;
 
@@ -85,10 +83,16 @@ public class GameEngine {
     }
 
     public static void startGame() {
+        lifes = 4;
+        lifesText.setText(""+lifes);
+        currentScore = 0;
+        gameBoard.soundManager.startBackgroundSound();
         gameHandler.start();
     }
 
     public void stopGame() {
+        this.gameBoard.soundManager.stopTicTocSound();
+        this.gameBoard.soundManager.stopBackgroundSound();
         this.gameHandler.end();
     }
 
@@ -192,11 +196,12 @@ public class GameEngine {
             again.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                scoreNumber = 0;
-                TextView score = (TextView) ((Activity)context).findViewById(R.id.score);
-                score.setText(""+scoreNumber);
-                dialog.dismiss();
-                startGame();
+                    scoreNumber = 0;
+                    TextView score = (TextView) ((Activity)context).findViewById(R.id.score);
+                    score.setText(""+scoreNumber);
+                    dialog.dismiss();
+
+                    startGame();
                 }
             });
 

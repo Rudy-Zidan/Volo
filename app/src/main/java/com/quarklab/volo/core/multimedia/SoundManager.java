@@ -50,11 +50,10 @@ public class SoundManager {
             this.backgroundMusic = new BackgroundSound(this.context);
             this.backgroundMusic.execute();
         }
-
     }
 
     public void stopBackgroundSound(){
-        if(this.gameBoard.setting.playSound() && this.backgroundMusic != null) {
+        if(this.gameBoard.setting.playSound() && this.backgroundMusic != null && this.backgroundMusic.isPlaying()) {
             this.backgroundMusic.stop();
         }
     }
