@@ -128,10 +128,6 @@ public class GameEngine {
 
     public static void changeGameShape() {
         shape.changeShape();
-        onBoardNotification.setX((gameBoard.getRenderEngine().getScreenWidth()/2));
-        onBoardNotification.setY(gameBoard.getRenderEngine().getScreenHeight()/2);
-        onBoardNotification.setColor("#ffffff");
-        onBoardNotification.notify(shape.getCurrentShape(), 1500, 30, true);
     }
 
     public static void changeScore(int value) {
