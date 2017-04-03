@@ -118,6 +118,7 @@ public class GameEngine {
 
     public static void changeGameMode() {
         gameMode.change();
+        gameBoard.soundManager.playSound(R.raw.mode_change);
         String text = gameMode.getCurrentGameMode();
         //speaker.speak(text);
         onBoardNotification.setX((gameBoard.getRenderEngine().getScreenWidth()/2));

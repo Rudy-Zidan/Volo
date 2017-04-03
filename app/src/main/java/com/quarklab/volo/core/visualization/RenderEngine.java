@@ -83,6 +83,10 @@ public class RenderEngine {
         this.buttonAction.execute(this.context,this.button);
 
         this.frameLayout.addView(this.button);
+        this.button.animate()
+                    .rotation(360)
+                    .setDuration(500)
+                    .start();
     }
 
     private void setButtonLayout() {
@@ -108,6 +112,8 @@ public class RenderEngine {
         }
 
         this.button.setX(x);
+
+
     }
 
     private void buttonColors(Shape shape) {
