@@ -19,8 +19,8 @@
             <corners android:radius="@dimen/button_inner_radius" />
             <gradient
                 android:angle="270"
-                android:startColor="#7f5e7e"
-                android:endColor="#8f738e"
+                android:startColor="#272143"
+                android:endColor="#272143"
                 android:type="sweep" />
         </shape>
     </item>

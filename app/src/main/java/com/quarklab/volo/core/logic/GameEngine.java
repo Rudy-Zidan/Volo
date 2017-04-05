@@ -38,7 +38,6 @@ public class GameEngine {
     private static int currentScore;
     private static int lifes;
     private static GameHandler gameHandler;
-    private static int toastSpeed;
     private static boolean ended;
     private SmallBang smallBang;
     private static Toast toast;
@@ -55,15 +54,14 @@ public class GameEngine {
     private static Shape shape;
 
     public GameEngine(Context context) {
-        this.context = context;
-        this.gameBoard = (GameBoard) this.context;
-        this.gameHandler = new GameHandler();
-        this.toastSpeed = 100;
+        GameEngine.context = context;
+        gameBoard = (GameBoard) GameEngine.context;
+        gameHandler = new GameHandler();
 
         this.initGameMode();
 
         ended = false;
-        smallBang = SmallBang.attach2Window((Activity)this.context);
+        smallBang = SmallBang.attach2Window((Activity) GameEngine.context);
         LayoutInflater li = gameBoard.getLayoutInflater();
         toastAppear = li.inflate(R.layout.toast, (LinearLayout) gameBoard.findViewById(R.id.custom_toast_layout_id));
         toast = new Toast(context);
@@ -72,14 +70,14 @@ public class GameEngine {
         toast.setGravity(Gravity.CENTER,Gravity.CENTER,Gravity.CENTER);
         //this.speaker = new Speaker(this.context);
 
-        this.scoreText = (TextView) ((Activity)this.context).findViewById(R.id.score);
+        this.scoreText = (TextView) ((Activity) GameEngine.context).findViewById(R.id.score);
 
-        this.lifesText = (TextView) ((Activity)this.context).findViewById(R.id.lifes);
+        lifesText = (TextView) ((Activity) GameEngine.context).findViewById(R.id.lifes);
 //        this.heartIcon = (ImageView) ((Activity)this.context).findViewById(R.id.heart);
 
-        this.onBoardNotification = new OnBoardNotification(this.context);
+        onBoardNotification = new OnBoardNotification(GameEngine.context);
 
-        this.shape = new Shape();
+        shape = new Shape();
     }
 
     public static void startGame() {
@@ -91,14 +89,14 @@ public class GameEngine {
     }
 
     public void stopGame() {
-        this.gameBoard.soundManager.stopTicTocSound();
-        this.gameBoard.soundManager.stopBackgroundSound();
-        this.gameHandler.end();
+        gameBoard.soundManager.stopTicTocSound();
+        gameBoard.soundManager.stopBackgroundSound();
+        gameHandler.end();
     }
 
     public void actionHandler(View button) {
-        this.onBoardNotification.setX((button.getX() + (button.getWidth() / 2)) - 25);
-        this.onBoardNotification.setY(button.getY());
+        onBoardNotification.setX((button.getX() + (button.getWidth() / 2)) - 25);
+        onBoardNotification.setY(button.getY());
         switch (button.getTag().toString()) {
             case "good": good(button);
                 break;
@@ -136,25 +134,25 @@ public class GameEngine {
     }
 
     private void good(View button) {
-        this.onBoardNotification.setColor("#579B00");
+        onBoardNotification.setColor("#579B00");
         int[] colors ={0XFF86AC41,0XFF99AC41,0XFF22AC41,0XFF00AC41,0XFF20AC50,0XFF82AC20};
         this.animate(button,colors,16);
     }
 
     private void evil(View button) {
-        this.onBoardNotification.setColor("#FF3232");
+        onBoardNotification.setColor("#FF3232");
         int[] colors ={0XFFCE5A57,0XFFCE5A20,0XFFFF726E,0XFFB64F4C,0XFFB62B27,0XFFB46260};
         this.animate(button,colors,16);
     }
 
     private void meh(View button) {
-        this.onBoardNotification.setColor("#FFE13C");
+        onBoardNotification.setColor("#FFE13C");
         int[] colors ={0XFFE1B16A,0XFFE1B103,0XFFFDC97A, 0XFFFFB33F, 0XFFF0A93E,0XFFFF9A01};
         this.animate(button,colors,16);
     }
 
     private void random(View button) {
-        this.onBoardNotification.setColor("#876DD1");
+        onBoardNotification.setColor("#876DD1");
         int[] colors ={0XFFFF5A00,0XFFFF7B32,0XFFFF8B4C,0XFFF25500, 0XFFF06215,0XFFDD6B2D};
         this.animate(button,colors,16);
     }
@@ -219,7 +217,7 @@ public class GameEngine {
         return ended;
     }
 
-    public Shape getShape(){return this.shape;}
+    public Shape getShape(){return shape;}
 
     private void animate(final View button, int[] colors, int dots) {
         int extraSpace = 50;
@@ -255,12 +253,12 @@ public class GameEngine {
     }
 
     private void updateScoreText(int score) {
-        this.gameBoard.setting.updateScore(score);
+        gameBoard.setting.updateScore(score);
         this.scoreText.setText(""+Numbers.format(score));
     }
 
     private void initGameMode() {
-        this.gameMode = new GameMode(new GameModeListener() {
+        gameMode = new GameMode(new GameModeListener() {
             @Override
             public void nothing() {
                 gameBoard.soundManager.playSound(R.raw.gameover);
@@ -304,20 +302,20 @@ public class GameEngine {
             currentScore = 0;
         }
         updateScoreText(currentScore);
-        this.onBoardNotification.notify("- "+score, 500, 18, false);
+        onBoardNotification.notify("- "+score, 500, 18, false);
     }
 
     private void scoreAdded(int score) {
         currentScore += score;
         gameBoard.soundManager.playSound(R.raw.score);
         updateScoreText(currentScore);
-        this.onBoardNotification.notify("+ "+score, 500, 18, false);
+        onBoardNotification.notify("+ "+score, 500, 18, false);
     }
 
     private void addLife(int n) {
         lifes+=n;
         lifesText.setText(""+lifes);
        // animateHeartIcon();
-        this.gameBoard.soundManager.stopTicTocSound();
+        gameBoard.soundManager.stopTicTocSound();
     }
 }

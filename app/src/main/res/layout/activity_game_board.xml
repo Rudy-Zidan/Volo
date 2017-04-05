@@ -49,7 +49,7 @@
             android:drawablePadding="@dimen/_5sdp"
             android:layoutDirection="rtl"
             android:gravity="center"
-            android:textColor="#000" />
+            android:textColor="#303D5D" />
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -67,7 +67,7 @@
             android:gravity="center"
             android:drawablePadding="@dimen/_5sdp"
             android:layoutDirection="rtl"
-            android:textColor="#000" />
+            android:textColor="#303D5D" />
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"

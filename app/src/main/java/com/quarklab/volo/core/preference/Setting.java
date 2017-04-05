@@ -12,7 +12,7 @@ public class Setting {
 
     public Setting(Context context){
         this.context = context;
-        this.preferences = context.getSharedPreferences("setting",context.MODE_PRIVATE);
+        this.preferences = context.getSharedPreferences("setting", Context.MODE_PRIVATE);
         if(!this.preferences.contains("sound")){
             this.preferences.edit().putBoolean("sound",true);
         }
@@ -27,10 +27,7 @@ public class Setting {
         this.preferences.edit().putString("facebookUser",account).commit();
     }
     public boolean isFacebookAccountExists(){
-        if(!this.preferences.getString("facebookUser","").equals(""))
-            return true;
-        else
-            return false;
+        return !this.preferences.getString("facebookUser", "").equals("");
     }
     public String getFacebookAccount(){
         return this.preferences.getString("facebookUser","");

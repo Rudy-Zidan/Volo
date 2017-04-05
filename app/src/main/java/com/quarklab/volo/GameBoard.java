@@ -41,8 +41,8 @@ public class GameBoard extends Activity {
     }
     public void onResume() {
         super.onResume();
-        if(!this.gameEngine.isEnded()){
-            this.gameEngine.startGame();
+        if(!GameEngine.isEnded()){
+            GameEngine.startGame();
         }
     }
 
