@@ -42,14 +42,14 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="4"
-            android:drawableRight="@drawable/glossy_heart"
+            android:drawableRight="@drawable/heart"
             android:id="@+id/lifes"
             android:background="@drawable/textview"
             android:padding="@dimen/_5sdp"
             android:drawablePadding="@dimen/_5sdp"
             android:layoutDirection="rtl"
             android:gravity="center"
-            android:textColor="#303D5D" />
+            android:textColor="#fff" />
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -67,7 +67,7 @@
             android:gravity="center"
             android:drawablePadding="@dimen/_5sdp"
             android:layoutDirection="rtl"
-            android:textColor="#303D5D" />
+            android:textColor="#fff" />
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"

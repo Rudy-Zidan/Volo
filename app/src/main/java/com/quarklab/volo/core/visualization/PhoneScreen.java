@@ -33,7 +33,7 @@ public class PhoneScreen {
     }
 
     public int getWidthPX(){
-        return this.metrics.widthPixels  - (int)(this.metrics.widthPixels * 0.25);
+        return this.metrics.widthPixels  - (int)(this.metrics.widthPixels * 0.15);
     }
 
     public int convertSpToPixels(float sp) {
@@ -44,7 +44,7 @@ public class PhoneScreen {
     public float getRandomX() {
         Random rand = new Random();
         float x = rand.nextInt(this.getWidthPX())+1;
-        int marginLeft = this.convertSpToPixels(60);
+        int marginLeft = this.convertSpToPixels(30);
         if( x < (marginLeft*2)) {
             x += marginLeft;
         }

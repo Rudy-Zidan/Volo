@@ -22,7 +22,7 @@ public class OnBoardNotification {
     private float y;
     private int speed;
     private int textSize;
-    private String color;
+    private int color;
     private Context context;
     private Typeface typeface;
     private FrameLayout layout;
@@ -39,19 +39,19 @@ public class OnBoardNotification {
         this(context);
         this.x = x;
         this.y = y;
-        this.color = "#FFF";
+        this.color = R.color.white;
     }
 
     public void setX(float x){this.x = x;}
 
     public void setY(float y){this.y = y;}
 
-    public void setColor(String color){this.color = color;}
+    public void setColor(int color){this.color = color;}
 
     public void setSpeed(int speed){this.speed = speed;}
 
 
-    public void notify(String message, String color){
+    public void notify(String message, int color){
         this.color = color;
         this.execute(message, false);
     }
@@ -100,7 +100,7 @@ public class OnBoardNotification {
     private void setHolderProperties(){
         this.notificationHolder.setTextSize(this.textSize);
         this.notificationHolder.setShadowLayer(1.5f, 0, 0, Color.parseColor("#2F2F2F"));
-        this.notificationHolder.setTextColor(Color.parseColor(this.color));
+        this.notificationHolder.setTextColor(this.context.getResources().getColor(this.color));
         this.notificationHolder.setTypeface(this.typeface);
     }
 

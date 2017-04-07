@@ -22,7 +22,8 @@ public class Speaker {
         });
     }
 
-    public void speak(String speech) {
+    public void speak(String speech, float speed) {
+        this.myTTS.setSpeechRate(speed);
         this.myTTS.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
     }
 

@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.quarklab.volo.R;
 import com.quarklab.volo.GameBoard;
+import com.quarklab.volo.core.TTS.Speaker;
 import com.quarklab.volo.core.modes.GameMode;
 import com.quarklab.volo.core.modes.GameModeListener;
 import com.quarklab.volo.core.notification.OnBoardNotification;
@@ -42,9 +43,8 @@ public class GameEngine {
     private SmallBang smallBang;
     private static Toast toast;
     private static View toastAppear;
-    //private static Speaker speaker;
-
-    private ImageView heartIcon;
+    private static Speaker speaker;
+    private int scoreContinousTimes;
 
     private TextView scoreText;
     private static TextView lifesText;
@@ -68,16 +68,17 @@ public class GameEngine {
         toast.setView(toastAppear);
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER,Gravity.CENTER,Gravity.CENTER);
-        //this.speaker = new Speaker(this.context);
+        this.speaker = new Speaker(this.context);
 
         this.scoreText = (TextView) ((Activity) GameEngine.context).findViewById(R.id.score);
 
         lifesText = (TextView) ((Activity) GameEngine.context).findViewById(R.id.lifes);
-//        this.heartIcon = (ImageView) ((Activity)this.context).findViewById(R.id.heart);
 
         onBoardNotification = new OnBoardNotification(GameEngine.context);
 
         shape = new Shape();
+
+        this.scoreContinousTimes = 0;
     }
 
     public static void startGame() {
@@ -121,7 +122,7 @@ public class GameEngine {
         //speaker.speak(text);
         onBoardNotification.setX((gameBoard.getRenderEngine().getScreenWidth()/2));
         onBoardNotification.setY(gameBoard.getRenderEngine().getScreenHeight()/2);
-        onBoardNotification.setColor("#ffffff");
+        onBoardNotification.setColor(R.color.white);
         onBoardNotification.notify(text, 1500, 30, true);
     }
 
@@ -134,45 +135,28 @@ public class GameEngine {
     }
 
     private void good(View button) {
-        onBoardNotification.setColor("#579B00");
+        onBoardNotification.setColor(R.color.green);
         int[] colors ={0XFF86AC41,0XFF99AC41,0XFF22AC41,0XFF00AC41,0XFF20AC50,0XFF82AC20};
         this.animate(button,colors,16);
     }
 
     private void evil(View button) {
-        onBoardNotification.setColor("#FF3232");
+        onBoardNotification.setColor(R.color.red);
         int[] colors ={0XFFCE5A57,0XFFCE5A20,0XFFFF726E,0XFFB64F4C,0XFFB62B27,0XFFB46260};
         this.animate(button,colors,16);
     }
 
     private void meh(View button) {
-        onBoardNotification.setColor("#FFE13C");
+        onBoardNotification.setColor(R.color.warm);
         int[] colors ={0XFFE1B16A,0XFFE1B103,0XFFFDC97A, 0XFFFFB33F, 0XFFF0A93E,0XFFFF9A01};
         this.animate(button,colors,16);
     }
 
     private void random(View button) {
-        onBoardNotification.setColor("#876DD1");
-        int[] colors ={0XFFFF5A00,0XFFFF7B32,0XFFFF8B4C,0XFFF25500, 0XFFF06215,0XFFDD6B2D};
+        onBoardNotification.setColor(R.color.skyblue);
+        int[] colors ={0XFF7ec0ee,0XFF8ac6ef,0XFF97ccf1,0XFF71acd6, 0XFF8ac6ef,0XFF7ec0ee};
         this.animate(button,colors,16);
     }
-
-    //@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-//    private void animateHeartIcon() {
-//        this.heartIcon.animate()
-//            .alpha(0.f)
-//            .scaleX(1.5f).scaleY(1.5f)
-//            .setDuration(300)
-//            .withEndAction(new Runnable() {
-//                @Override
-//                public void run() {
-//                    heartIcon.setAlpha(1.f);
-//                    heartIcon.setScaleX(1.f);
-//                    heartIcon.setScaleY(1.f);
-//                }
-//            })
-//            .start();
-//    }
 
     public static void showReplayDialog() {
         if(!gameBoard.backClicked){
@@ -266,11 +250,13 @@ public class GameEngine {
 
             @Override
             public void onScoreAdded(int score) {
+                scoreContinousTimes+=1;
                 scoreAdded(score);
             }
 
             @Override
             public void onScoreReduced(int score) {
+                scoreContinousTimes = 0;
                 reduceScore(score);
             }
 
@@ -285,7 +271,6 @@ public class GameEngine {
         if(lifes > 0) {
             lifes--;
             lifesText.setText(""+lifes);
-           // animateHeartIcon();
         }
         if(lifes == 1) {
             gameBoard.soundManager.startTicTocSound();
@@ -310,12 +295,15 @@ public class GameEngine {
         gameBoard.soundManager.playSound(R.raw.score);
         updateScoreText(currentScore);
         onBoardNotification.notify("+ "+score, 500, 18, false);
+        if (this.scoreContinousTimes == 3) {
+            this.scoreContinousTimes = 0;
+            this.speaker.speak("Fantastic", 0.5f);
+        }
     }
 
     private void addLife(int n) {
         lifes+=n;
         lifesText.setText(""+lifes);
-       // animateHeartIcon();
         gameBoard.soundManager.stopTicTocSound();
     }
 }
