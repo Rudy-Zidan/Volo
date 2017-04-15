@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +22,7 @@ import com.quarklab.volo.core.modes.GameMode;
 import com.quarklab.volo.core.modes.GameModeListener;
 import com.quarklab.volo.core.notification.OnBoardNotification;
 import com.quarklab.volo.core.shapes.Shape;
+import com.quarklab.volo.core.utilities.Utility;
 
 import java.util.Random;
 
@@ -113,6 +116,7 @@ public class GameEngine {
         gameBoard.getRenderEngine().renderButton(shape);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public static void changeGameMode() {
         gameMode.change();
         gameBoard.soundManager.playSound(R.raw.mod_change);
@@ -121,6 +125,8 @@ public class GameEngine {
         onBoardNotification.setY(gameBoard.getRenderEngine().getScreenHeight()/2);
         onBoardNotification.setColor(R.color.white);
         onBoardNotification.notify(text, 1500, 30, true);
+        Utility utility = new Utility(GameEngine.context);
+        utility.fallOneDown();
     }
 
     public static void changeGameShape() {
