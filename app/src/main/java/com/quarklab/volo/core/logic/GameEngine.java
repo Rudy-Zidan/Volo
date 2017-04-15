@@ -9,7 +9,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,7 +20,6 @@ import com.quarklab.volo.core.modes.GameMode;
 import com.quarklab.volo.core.modes.GameModeListener;
 import com.quarklab.volo.core.notification.OnBoardNotification;
 import com.quarklab.volo.core.shapes.Shape;
-//import com.quarklab.volo.core.TTS.Speaker;
 
 import java.util.Random;
 
@@ -119,7 +117,6 @@ public class GameEngine {
         gameMode.change();
         gameBoard.soundManager.playSound(R.raw.mod_change);
         String text = gameMode.getCurrentGameMode();
-        //speaker.speak(text);
         onBoardNotification.setX((gameBoard.getRenderEngine().getScreenWidth()/2));
         onBoardNotification.setY(gameBoard.getRenderEngine().getScreenHeight()/2);
         onBoardNotification.setColor(R.color.white);
@@ -188,7 +185,6 @@ public class GameEngine {
                 @Override
                 public void onClick(View v) {
                 dialog.dismiss();
-                //speaker.shutdown();
                 ((Activity)context).onBackPressed();
                 }
             });
@@ -253,7 +249,7 @@ public class GameEngine {
         gameMode = new GameMode(new GameModeListener() {
             @Override
             public void nothing() {
-                gameBoard.soundManager.playSound(R.raw.gameover);
+                gameBoard.soundManager.playSound(R.raw.over);
             }
 
             @Override
@@ -279,12 +275,10 @@ public class GameEngine {
         if(lifes > 0) {
             lifes--;
             lifesText.setText(""+lifes);
-        }
-        if(lifes == 1) {
-            playTicToc();
+            gameBoard.soundManager.playSound(R.raw.life_lost);
         }
         if(lifes == 0) {
-            gameBoard.soundManager.playSound(R.raw.lose);
+            gameBoard.soundManager.playSound(R.raw.over);
             stopGame();
         }
     }
@@ -296,6 +290,7 @@ public class GameEngine {
         }
         updateScoreText(currentScore);
         onBoardNotification.notify("- "+score, 500, 18, false);
+        gameBoard.soundManager.playSound(R.raw.score_lost);
     }
 
     private void scoreAdded(int score) {
@@ -305,7 +300,7 @@ public class GameEngine {
         onBoardNotification.notify("+ "+score, 500, 18, false);
         if (this.scoreContinousTimes == 3) {
             this.scoreContinousTimes = 0;
-            this.speaker.speak("Fantastic", 0.5f);
+            gameBoard.soundManager.playSound(R.raw.sweet);
         }
     }
 
@@ -313,6 +308,5 @@ public class GameEngine {
         lifes+=n;
         lifesText.setText(""+lifes);
         gameBoard.soundManager.playSound(R.raw.life_added);
-        stopTicToc();
     }
 }
