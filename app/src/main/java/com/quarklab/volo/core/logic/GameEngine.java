@@ -117,7 +117,7 @@ public class GameEngine {
 
     public static void changeGameMode() {
         gameMode.change();
-        gameBoard.soundManager.playSound(R.raw.mode_change);
+        gameBoard.soundManager.playSound(R.raw.mod_change);
         String text = gameMode.getCurrentGameMode();
         //speaker.speak(text);
         onBoardNotification.setX((gameBoard.getRenderEngine().getScreenWidth()/2));
@@ -203,6 +203,14 @@ public class GameEngine {
 
     public Shape getShape(){return shape;}
 
+    public static void playTicToc(){
+        gameBoard.soundManager.startTicTocSound();
+    }
+
+    public static void stopTicToc(){
+        gameBoard.soundManager.stopTicTocSound();
+    }
+
     private void animate(final View button, int[] colors, int dots) {
         int extraSpace = 50;
         int radius = button.getWidth()/2 + extraSpace;
@@ -273,7 +281,7 @@ public class GameEngine {
             lifesText.setText(""+lifes);
         }
         if(lifes == 1) {
-            gameBoard.soundManager.startTicTocSound();
+            playTicToc();
         }
         if(lifes == 0) {
             gameBoard.soundManager.playSound(R.raw.lose);
@@ -292,7 +300,7 @@ public class GameEngine {
 
     private void scoreAdded(int score) {
         currentScore += score;
-        gameBoard.soundManager.playSound(R.raw.score);
+        gameBoard.soundManager.playSound(R.raw.coins);
         updateScoreText(currentScore);
         onBoardNotification.notify("+ "+score, 500, 18, false);
         if (this.scoreContinousTimes == 3) {
@@ -304,6 +312,7 @@ public class GameEngine {
     private void addLife(int n) {
         lifes+=n;
         lifesText.setText(""+lifes);
-        gameBoard.soundManager.stopTicTocSound();
+        gameBoard.soundManager.playSound(R.raw.life_added);
+        stopTicToc();
     }
 }

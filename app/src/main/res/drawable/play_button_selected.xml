@@ -17,11 +17,7 @@
         android:top="1sp">
         <shape android:shape="rectangle" >
             <corners android:radius="@dimen/button_inner_radius" />
-            <gradient
-                android:angle="270"
-                android:startColor="#6f4b6e"
-                android:endColor="#7f5e7e"
-                android:type="sweep" />
+            <solid android:color="#272143" />
         </shape>
     </item>
 
