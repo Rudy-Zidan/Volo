@@ -37,7 +37,6 @@ dependencies {
 //        transitive = true
 //    }
     compile 'com.intuit.sdp:sdp-android:1.0.4'
-
 }
 
 apply plugin: 'com.google.gms.google-services'

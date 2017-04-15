@@ -15,9 +15,10 @@ import com.quarklab.volo.R;
 
 class Gift extends Utility{
     private ImageView image;
-
-    public Gift(Context context) {
-        super(context);
+    private enum Types {Life, Score}
+    private int[] colors ={0XFF7ec0ee,0XFF8ac6ef,0XFF97ccf1,0XFF71acd6, 0XFF8ac6ef,0XFF7ec0ee};
+    public Gift(Context context, UtilityListener listener) {
+        super(context, listener);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -27,7 +28,9 @@ class Gift extends Utility{
         this.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                image.clearAnimation();
+                listener.onGiftClick(image);
+                animateImage(image, colors, 16);
             }
         });
         this.layout.addView(image);
@@ -36,7 +39,7 @@ class Gift extends Utility{
     }
 
     private void setLayout() {
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(100, 100);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(this.WIDTH, this.HEIGHT);
         image.setX(this.screen.getRandomX());
         image.setY(this.screen.convertSpToPixels(60));
         image.setLayoutParams(layoutParams);

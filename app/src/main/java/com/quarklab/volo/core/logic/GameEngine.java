@@ -11,6 +11,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +24,7 @@ import com.quarklab.volo.core.modes.GameModeListener;
 import com.quarklab.volo.core.notification.OnBoardNotification;
 import com.quarklab.volo.core.shapes.Shape;
 import com.quarklab.volo.core.utilities.Utility;
+import com.quarklab.volo.core.utilities.UtilityListener;
 
 import java.util.Random;
 
@@ -125,7 +127,18 @@ public class GameEngine {
         onBoardNotification.setY(gameBoard.getRenderEngine().getScreenHeight()/2);
         onBoardNotification.setColor(R.color.white);
         onBoardNotification.notify(text, 1500, 30, true);
-        Utility utility = new Utility(GameEngine.context);
+        Utility utility = new Utility(GameEngine.context, new UtilityListener() {
+            @Override
+            public void onGiftClick(ImageView image) {
+                onBoardNotification.notify("Gift", 1500, 30, true);
+            }
+
+            @Override
+            public void onBombClick(ImageView image) {
+                onBoardNotification.notify("Bomb", 1500, 30, true);
+            }
+
+        });
         utility.fallOneDown();
     }
 
