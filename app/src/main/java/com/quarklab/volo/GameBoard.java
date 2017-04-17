@@ -67,5 +67,8 @@ public class GameBoard extends Activity {
 
         TextView score = (TextView)findViewById(R.id.score);
         score.setTypeface(typeface);
+
+        TextView timer = (TextView)findViewById(R.id.timerText);
+        timer.setTypeface(typeface);
     }
 }

@@ -15,7 +15,6 @@ import com.quarklab.volo.R;
 
 class Gift extends Utility{
     private ImageView image;
-    private enum Types {Life, Score}
     private int[] colors ={0XFF7ec0ee,0XFF8ac6ef,0XFF97ccf1,0XFF71acd6, 0XFF8ac6ef,0XFF7ec0ee};
     public Gift(Context context, UtilityListener listener) {
         super(context, listener);
@@ -29,6 +28,7 @@ class Gift extends Utility{
             @Override
             public void onClick(View view) {
                 image.clearAnimation();
+                layout.removeView(image);
                 listener.onGiftClick(image);
             }
         });

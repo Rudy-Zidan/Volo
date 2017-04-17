@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Context;
 
 import android.os.Build;
+import android.os.CountDownTimer;
 import android.support.annotation.RequiresApi;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -18,7 +19,6 @@ import android.widget.Toast;
 
 import com.quarklab.volo.R;
 import com.quarklab.volo.GameBoard;
-import com.quarklab.volo.core.TTS.Speaker;
 import com.quarklab.volo.core.modes.GameMode;
 import com.quarklab.volo.core.modes.GameModeListener;
 import com.quarklab.volo.core.notification.OnBoardNotification;
@@ -46,7 +46,6 @@ public class GameEngine {
     private SmallBang smallBang;
     private static Toast toast;
     private static View toastAppear;
-    private static Speaker speaker;
     private int scoreContinousTimes;
     private long startClickedGreen;
 
@@ -58,6 +57,8 @@ public class GameEngine {
     private GameModeListener gameModeListener;
 
     private static Shape shape;
+
+    private TextView timerText;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public GameEngine(Context context) {
@@ -77,11 +78,11 @@ public class GameEngine {
         toast.setView(toastAppear);
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER,Gravity.CENTER,Gravity.CENTER);
-        this.speaker = new Speaker(this.context);
 
         this.scoreText = (TextView) ((Activity) GameEngine.context).findViewById(R.id.score);
 
         lifesText = (TextView) ((Activity) GameEngine.context).findViewById(R.id.lifes);
+        this.timerText = (TextView) ((Activity) GameEngine.context).findViewById(R.id.timerText);
 
         onBoardNotification = new OnBoardNotification(GameEngine.context);
 
@@ -155,7 +156,7 @@ public class GameEngine {
 
             @Override
             public void onBombClick(ImageView image) {
-                onBoardNotification.notify("Bomb", 1500, 30, true);
+                bombAction();
             }
 
         });
@@ -172,6 +173,39 @@ public class GameEngine {
             case 1: addLife(1);
                 break;
         }
+    }
+
+    private void bombAction(){
+
+        Random rand = new Random();
+        int totalSeconds = rand.nextInt(10000);
+        if(totalSeconds < 5000){
+            totalSeconds = 5000;
+        }
+        int interval = 1000;
+
+        gameBoard.getRenderEngine().changeDefaultColor(shape);
+
+        new CountDownTimer(totalSeconds, interval) {
+            boolean isStarted = false;
+
+            @Override
+            public void onTick(long l) {
+                if(!isStarted){
+                    playTicToc();
+                }
+                timerText.setText(""+Math.round(l/1000.0));
+                isStarted = true;
+            }
+
+            @Override
+            public void onFinish() {
+                gameBoard.getRenderEngine().resetDefaultColor(shape);
+                timerText.setText(" ");
+                isStarted = false;
+            }
+        }.start();
+
     }
 
     private void good(View button) {

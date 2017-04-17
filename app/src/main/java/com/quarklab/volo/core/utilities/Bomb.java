@@ -34,8 +34,8 @@ class Bomb extends Utility{
             @Override
             public void onClick(View view) {
                 image.clearAnimation();
+                layout.removeView(image);
                 listener.onBombClick(image);
-                animateImage(image, colors, 16);
             }
         });
         this.layout.addView(image);

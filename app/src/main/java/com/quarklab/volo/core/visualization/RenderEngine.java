@@ -31,6 +31,7 @@ public class RenderEngine {
     private ButtonAction buttonAction;
     private int randomTrigger;
     private Random rand;
+    private int defaultColor;
 
     private PhoneScreen screen;
 
@@ -39,6 +40,7 @@ public class RenderEngine {
         this.setUpActivityScreen();
         this.rand = new Random();
         this.setRandomTrigger();
+        this.defaultColor = -1;
     }
     private void setUpActivityScreen(){
         this.activity = ((Activity)this.context);
@@ -63,6 +65,16 @@ public class RenderEngine {
         return this.screen.getNormalHeightPX();
     }
 
+    public void changeDefaultColor(Shape shape){
+        this.defaultColor = this.rand.nextInt(4);
+        this.buttonColors(shape);
+    }
+
+    public void resetDefaultColor(Shape shape){
+        this.defaultColor = -1;
+        this.buttonColors(shape);
+    }
+
     public void renderButton(Shape shape) {
 
         if(this.frameLayout.indexOfChild(this.button) > -1) {
@@ -83,10 +95,6 @@ public class RenderEngine {
         this.buttonAction.execute(this.context,this.button);
 
         this.frameLayout.addView(this.button);
-//        this.button.animate()
-//                    .rotation(360)
-//                    .setDuration(500)
-//                    .start();
     }
 
     private void setButtonLayout() {
@@ -112,12 +120,14 @@ public class RenderEngine {
         }
 
         this.button.setX(x);
-
-
     }
 
     private void buttonColors(Shape shape) {
-        switch (this.rand.nextInt(4)){
+        int target = this.rand.nextInt(4);
+        if(this.defaultColor > -1){
+            target = this.defaultColor;
+        }
+        switch (target){
             case 0:
                 this.button.setTag("good");
                 this.button.setBackgroundResource(shape.getTemplate(this.button.getTag().toString()));

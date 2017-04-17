@@ -58,6 +58,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="0"
+            android:id="@+id/timerText"
+            android:textColor="@android:color/holo_red_dark"
+            android:padding="@dimen/_5sdp"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            />
+        <View android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="@drawable/textview"
             android:drawableRight="@drawable/coin"
             android:padding="@dimen/_5sdp"
