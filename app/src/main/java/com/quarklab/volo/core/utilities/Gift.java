@@ -30,7 +30,6 @@ class Gift extends Utility{
             public void onClick(View view) {
                 image.clearAnimation();
                 listener.onGiftClick(image);
-                animateImage(image, colors, 16);
             }
         });
         this.layout.addView(image);

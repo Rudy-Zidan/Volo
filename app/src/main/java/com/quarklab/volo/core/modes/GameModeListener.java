@@ -9,5 +9,7 @@ public interface GameModeListener {
 
     void onScoreAdded(int score);
     void onScoreReduced(int score);
+
     void onLifeLost();
+    void onLifeAdded(int n);
 }

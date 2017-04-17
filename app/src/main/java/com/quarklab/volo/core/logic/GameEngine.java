@@ -48,20 +48,26 @@ public class GameEngine {
     private static View toastAppear;
     private static Speaker speaker;
     private int scoreContinousTimes;
+    private long startClickedGreen;
 
     private TextView scoreText;
     private static TextView lifesText;
 
     private static OnBoardNotification onBoardNotification;
+    private static Utility utility;
+    private GameModeListener gameModeListener;
 
     private static Shape shape;
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public GameEngine(Context context) {
         GameEngine.context = context;
         gameBoard = (GameBoard) GameEngine.context;
         gameHandler = new GameHandler();
 
+        this.initGameModeListener();
         this.initGameMode();
+        this.initializeUtility();
 
         ended = false;
         smallBang = SmallBang.attach2Window((Activity) GameEngine.context);
@@ -82,6 +88,7 @@ public class GameEngine {
         shape = new Shape();
 
         this.scoreContinousTimes = 0;
+        this.startClickedGreen = 0;
     }
 
     public static void startGame() {
@@ -118,28 +125,11 @@ public class GameEngine {
         gameBoard.getRenderEngine().renderButton(shape);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public static void changeGameMode() {
         gameMode.change();
         gameBoard.soundManager.playSound(R.raw.mod_change);
         String text = gameMode.getCurrentGameMode();
-        onBoardNotification.setX((gameBoard.getRenderEngine().getScreenWidth()/2));
-        onBoardNotification.setY(gameBoard.getRenderEngine().getScreenHeight()/2);
-        onBoardNotification.setColor(R.color.white);
-        onBoardNotification.notify(text, 1500, 30, true);
-        Utility utility = new Utility(GameEngine.context, new UtilityListener() {
-            @Override
-            public void onGiftClick(ImageView image) {
-                onBoardNotification.notify("Gift", 1500, 30, true);
-            }
-
-            @Override
-            public void onBombClick(ImageView image) {
-                onBoardNotification.notify("Bomb", 1500, 30, true);
-            }
-
-        });
-        utility.fallOneDown();
+        centerNotification(text);
     }
 
     public static void changeGameShape() {
@@ -148,6 +138,40 @@ public class GameEngine {
 
     public static void changeScore(int value) {
         currentScore = value;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    public static void claimUtility() {
+        utility.fallOneDown();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    private void initializeUtility(){
+         this.utility = new Utility(GameEngine.context, new UtilityListener() {
+            @Override
+            public void onGiftClick(ImageView image) {
+                giftAction();
+            }
+
+            @Override
+            public void onBombClick(ImageView image) {
+                onBoardNotification.notify("Bomb", 1500, 30, true);
+            }
+
+        });
+    }
+
+    private void giftAction(){
+        Random rand = new Random();
+        switch (rand.nextInt(2)) {
+            case 0: int score = rand.nextInt(100)+1;
+                    scoreAdded(score);
+                    gameBoard.soundManager.playSound(R.raw.coins);
+                    centerNotification("+ "+score);
+                break;
+            case 1: addLife(1);
+                break;
+        }
     }
 
     private void good(View button) {
@@ -238,13 +262,13 @@ public class GameEngine {
                 if(tag.equals("oval_random")) {
                     Random rand = new Random();
                     switch (rand.nextInt(4)) {
-                        case 0: scoreAdded(rand.nextInt(20)+10);
+                        case 0: gameModeListener.onScoreAdded(rand.nextInt(20)+10);
                             break;
-                        case 1: reduceScore(rand.nextInt(20)+10);
+                        case 1: gameModeListener.onScoreReduced(rand.nextInt(20)+10);
                             break;
-                        case 2: reduceLife();
+                        case 2: gameModeListener.onLifeLost();
                             break;
-                        case 3: addLife(1);
+                        case 3: gameModeListener.onLifeAdded(1);
                             break;
                     }
                 } else {
@@ -265,7 +289,11 @@ public class GameEngine {
     }
 
     private void initGameMode() {
-        gameMode = new GameMode(new GameModeListener() {
+        gameMode = new GameMode(this.gameModeListener);
+    }
+
+    private void initGameModeListener(){
+        this.gameModeListener = new GameModeListener() {
             @Override
             public void nothing() {
                 gameBoard.soundManager.playSound(R.raw.over);
@@ -273,21 +301,32 @@ public class GameEngine {
 
             @Override
             public void onScoreAdded(int score) {
+                if(startClickedGreen == 0){
+                    startClickedGreen = System.currentTimeMillis();
+                }
                 scoreContinousTimes+=1;
+                onBoardNotification.notify("+ "+score, 500, 18, false);
                 scoreAdded(score);
+                gameBoard.soundManager.playSound(R.raw.score);
             }
 
             @Override
             public void onScoreReduced(int score) {
                 scoreContinousTimes = 0;
                 reduceScore(score);
+                gameBoard.soundManager.playSound(R.raw.score_lost);
             }
 
             @Override
             public void onLifeLost() {
                 reduceLife();
             }
-        });
+
+            @Override
+            public void onLifeAdded(int n){
+                addLife(n);
+            }
+        };
     }
 
     private void reduceLife() {
@@ -309,17 +348,21 @@ public class GameEngine {
         }
         updateScoreText(currentScore);
         onBoardNotification.notify("- "+score, 500, 18, false);
-        gameBoard.soundManager.playSound(R.raw.score_lost);
     }
 
     private void scoreAdded(int score) {
         currentScore += score;
-        gameBoard.soundManager.playSound(R.raw.coins);
         updateScoreText(currentScore);
-        onBoardNotification.notify("+ "+score, 500, 18, false);
-        if (this.scoreContinousTimes == 3) {
+        long lastClickGreen = System.currentTimeMillis();
+        double firstAndLastClickDiff = (lastClickGreen - this.startClickedGreen) / 1000.0;
+        if (this.scoreContinousTimes == 3 && firstAndLastClickDiff <= 10.0 ) {
             this.scoreContinousTimes = 0;
+            this.startClickedGreen = 0;
             gameBoard.soundManager.playSound(R.raw.sweet);
+            centerNotification("Strike");
+        }else if(firstAndLastClickDiff > 10.0){
+            this.scoreContinousTimes = 0;
+            this.startClickedGreen = 0;
         }
     }
 
@@ -327,5 +370,13 @@ public class GameEngine {
         lifes+=n;
         lifesText.setText(""+lifes);
         gameBoard.soundManager.playSound(R.raw.life_added);
+        centerNotification("+1 Life");
+    }
+
+    private static void centerNotification(String msg){
+        onBoardNotification.setX((gameBoard.getRenderEngine().getScreenWidth()/2));
+        onBoardNotification.setY(gameBoard.getRenderEngine().getScreenHeight()/2);
+        onBoardNotification.setColor(R.color.white);
+        onBoardNotification.notify(msg, 1500, 30, true);
     }
 }
