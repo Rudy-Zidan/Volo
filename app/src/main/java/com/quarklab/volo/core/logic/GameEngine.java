@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.CountDownTimer;
 import android.support.annotation.RequiresApi;
@@ -373,6 +374,7 @@ public class GameEngine {
         }
         if(lifes == 0) {
             gameBoard.soundManager.playSound(R.raw.over);
+            this.lifeTimer.cancel();
             stopGame();
         }
     }
@@ -418,9 +420,9 @@ public class GameEngine {
 
     private void startLifeTimeCounter() {
         Random rand = new Random();
-        int minutes = rand.nextInt(10);
-        if(minutes < 5){
-            minutes = 5;
+        int minutes = rand.nextInt(4);
+        if(minutes < 1){
+            minutes = 1;
         }
         int interval = 1000;
         long minutesInMilliseconds = minutes * 60000;
@@ -434,13 +436,15 @@ public class GameEngine {
                 long seconds = Math.round((l % 60000) / 1000);
                 String time =  minutes + ":" + (seconds < 10 ? '0' : "") + seconds;
                 timerText.setText(time);
-                if(!isStarted && minutes == 0){
+                if(!isStarted && minutes == 0 && seconds == 5){
+                    timerText.setTextColor(context.getResources().getColor(R.color.red));
                     playTicToc();
                 }
             }
 
             @Override
             public void onFinish() {
+                timerText.setText("00:00");
                 stopGame();
             }
         };

@@ -31,12 +31,6 @@
         android:padding="5sp"
         >
 
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -60,7 +54,7 @@
             android:layout_height="wrap_content"
             android:text="0"
             android:id="@+id/timerText"
-            android:textColor="@android:color/holo_red_dark"
+            android:textColor="@android:color/white"
             android:padding="@dimen/_5sdp"
             android:gravity="center"
             android:textAppearance="?android:attr/textAppearanceLarge"
@@ -81,10 +75,5 @@
             android:drawablePadding="@dimen/_5sdp"
             android:layoutDirection="rtl"
             android:textColor="#fff" />
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            />
     </LinearLayout>
 </FrameLayout>
