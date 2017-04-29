@@ -59,6 +59,7 @@ public class GameEngine {
     private static Shape shape;
 
     private TextView timerText;
+    private CountDownTimer lifeTimer;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public GameEngine(Context context) {
@@ -90,6 +91,7 @@ public class GameEngine {
 
         this.scoreContinousTimes = 0;
         this.startClickedGreen = 0;
+        this.startLifeTimeCounter();
     }
 
     public static void startGame() {
@@ -412,5 +414,36 @@ public class GameEngine {
         onBoardNotification.setY(gameBoard.getRenderEngine().getScreenHeight()/2);
         onBoardNotification.setColor(R.color.white);
         onBoardNotification.notify(msg, 1500, 30, true);
+    }
+
+    private void startLifeTimeCounter() {
+        Random rand = new Random();
+        int minutes = rand.nextInt(10);
+        if(minutes < 5){
+            minutes = 5;
+        }
+        int interval = 1000;
+        long minutesInMilliseconds = minutes * 60000;
+        timerText.setText(minutes+":00");
+        this.lifeTimer = new CountDownTimer(minutesInMilliseconds, interval) {
+            boolean isStarted = false;
+
+            @Override
+            public void onTick(long l) {
+                long minutes = Math.round(l / 60000);
+                long seconds = Math.round((l % 60000) / 1000);
+                String time =  minutes + ":" + (seconds < 10 ? '0' : "") + seconds;
+                timerText.setText(time);
+                if(!isStarted && minutes == 0){
+                    playTicToc();
+                }
+            }
+
+            @Override
+            public void onFinish() {
+                stopGame();
+            }
+        };
+        this.lifeTimer.start();
     }
 }

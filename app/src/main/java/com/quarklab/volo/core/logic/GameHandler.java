@@ -43,6 +43,8 @@ public class GameHandler {
         this.viewHandler.removeCallbacks(updateData);
         this.speedHandler.removeCallbacks(updateSpeed);
         this.randomLevelHandler.removeCallbacks(changeGameMode);
+        this.shapeHandler.removeCallbacks(changeShapes);
+        this.utilityHandler.removeCallbacks(dropUtitlity);
         GameEngine.showReplayDialog();
     }
 
