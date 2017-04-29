@@ -40,7 +40,8 @@ public class GameEngine {
     private static Context context;
     private static GameBoard gameBoard;
     private static int scoreNumber;
-    private static int currentScore;
+    private static int currentUserScore;
+    private static int currentScoreRate;
     private static int lifes;
     private static GameHandler gameHandler;
     private static boolean ended;
@@ -98,7 +99,7 @@ public class GameEngine {
     public static void startGame() {
         lifes = 4;
         lifesText.setText(""+lifes);
-        currentScore = 0;
+        currentUserScore = 0;
         gameBoard.soundManager.startBackgroundSound();
         gameHandler.start();
     }
@@ -141,7 +142,7 @@ public class GameEngine {
     }
 
     public static void changeScore(int value) {
-        currentScore = value;
+        currentScoreRate = value;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -299,9 +300,9 @@ public class GameEngine {
                 if(tag.equals("oval_random")) {
                     Random rand = new Random();
                     switch (rand.nextInt(4)) {
-                        case 0: gameModeListener.onScoreAdded(rand.nextInt(20)+10);
+                        case 0: gameModeListener.onScoreAdded(0);
                             break;
-                        case 1: gameModeListener.onScoreReduced(rand.nextInt(20)+10);
+                        case 1: gameModeListener.onScoreReduced(0);
                             break;
                         case 2: gameModeListener.onLifeLost();
                             break;
@@ -343,14 +344,14 @@ public class GameEngine {
                 }
                 scoreContinousTimes+=1;
                 onBoardNotification.notify("+ "+score, 500, 18, false);
-                scoreAdded(score);
+                scoreAdded(score + currentScoreRate);
                 gameBoard.soundManager.playSound(R.raw.score);
             }
 
             @Override
             public void onScoreReduced(int score) {
                 scoreContinousTimes = 0;
-                reduceScore(score);
+                reduceScore(score + currentScoreRate);
                 gameBoard.soundManager.playSound(R.raw.score_lost);
             }
 
@@ -380,17 +381,17 @@ public class GameEngine {
     }
 
     private void reduceScore(int score) {
-        currentScore -= score;
-        if(currentScore < 0){
-            currentScore = 0;
+        currentUserScore -= score;
+        if(currentUserScore < 0){
+            currentUserScore = 0;
         }
-        updateScoreText(currentScore);
+        updateScoreText(currentUserScore);
         onBoardNotification.notify("- "+score, 500, 18, false);
     }
 
     private void scoreAdded(int score) {
-        currentScore += score;
-        updateScoreText(currentScore);
+        currentUserScore += score;
+        updateScoreText(currentUserScore);
         long lastClickGreen = System.currentTimeMillis();
         double firstAndLastClickDiff = (lastClickGreen - this.startClickedGreen) / 1000.0;
         if (this.scoreContinousTimes == 3 && firstAndLastClickDiff <= 10.0 ) {

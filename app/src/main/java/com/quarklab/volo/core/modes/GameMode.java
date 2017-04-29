@@ -10,7 +10,6 @@ public class GameMode {
     protected enum buttons {GOOD, EVIL, MEH}
     private modes current;
 
-    private int scoreRate;
     private int score;
     private int lifes;
     private Random rand;
@@ -19,7 +18,6 @@ public class GameMode {
     protected GameModeListener gmlistener;
 
     public GameMode(GameModeListener gmListener) {
-        this.scoreRate = 10;
         this.score = 0;
         this.lifes = 4;
         this.current = modes.Easy;
@@ -88,11 +86,12 @@ public class GameMode {
     }
 
     private int calcScore(int power) {
-        int score = this.scoreRate;
+        Random rand = new Random();
+        int score = rand.nextInt(20)+1;
         if(power !=0){
             score =  power*score;
         }
-        return score;
+        return Math.abs(score);
     }
 
     private void setLifes(int n) {
