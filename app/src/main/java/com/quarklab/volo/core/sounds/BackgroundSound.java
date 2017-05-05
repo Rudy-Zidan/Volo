@@ -40,7 +40,7 @@ public class BackgroundSound extends AsyncTask<Void, Void, Void> {
     public void stop(){
         if(this.player != null){
             this.player.release();
-            //this.cancel(true);
+            this.cancel(true);
             this.isPlaying = false;
             this.player = null;
         }

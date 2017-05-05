@@ -52,6 +52,11 @@ public class GameBoard extends Activity {
     public void onPause() {
         super.onPause();
         this.gameEngine.stopGame();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
         this.gameEngine = null;
         this.renderEngine = null;
         this.setting = null;
