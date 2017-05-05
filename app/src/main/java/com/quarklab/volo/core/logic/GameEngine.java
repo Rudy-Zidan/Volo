@@ -27,9 +27,7 @@ import java.util.Random;
 import xyz.hanks.library.SmallBang;
 import xyz.hanks.library.SmallBangListener;
 
-/**
- * Created by rudy on 6/20/16.
- */
+
 public class GameEngine {
     private GameMode gameMode;
     private Context context;
@@ -78,7 +76,7 @@ public class GameEngine {
 
     public void startGame() {
         this.lifes = 4;
-        this.lifesText.setText(""+lifes);
+        this.lifesText.setText(String.valueOf(lifes));
         this.currentUserScore = 0;
         this.gameBoard.soundManager.startBackgroundSound();
         this.gameHandler.start();
@@ -108,27 +106,27 @@ public class GameEngine {
 
     }
 
-    public void changeGameBoard() {
+    private void changeGameBoard() {
         this.gameBoard.getRenderEngine().renderButton(shape);
     }
 
-    public void changeGameMode() {
+    private void changeGameMode() {
         this.gameMode.change();
         this.gameBoard.soundManager.playSound(R.raw.mod_change);
         String text = this.gameMode.getCurrentGameMode();
         this.centerNotification(text);
     }
 
-    public void changeGameShape() {
+    private void changeGameShape() {
         this.shape.changeShape();
     }
 
-    public void changeScore(int value) {
+    private void changeScore(int value) {
         this.currentScoreRate = value;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    public void claimUtility() {
+    private void claimUtility() {
         this.utility.fallOneDown();
     }
 
@@ -180,7 +178,7 @@ public class GameEngine {
                 if(!isStarted){
                     playTicToc();
                 }
-                timerText.setText(""+Math.round(l/1000.0));
+                timerText.setText(String.valueOf(Math.round(l/1000.0)));
                 isStarted = true;
             }
 
@@ -218,7 +216,7 @@ public class GameEngine {
         this.animate(button,colors,16);
     }
 
-    public void showReplayDialog() {
+    private void showReplayDialog() {
         if(!gameBoard.backClicked){
             ended = true;
             final Dialog dialog = new Dialog(context);
@@ -227,7 +225,7 @@ public class GameEngine {
             dialog.setContentView(R.layout.replay_dialog);
 
             TextView score = (TextView) dialog.findViewById(R.id.dialog_score);
-            score.setText(gameBoard.setting.getScore()+"");
+            score.setText(String.valueOf(gameBoard.setting.getScore()));
 
             Button again = (Button) dialog.findViewById(R.id.btn_replay);
             Button no = (Button) dialog.findViewById(R.id.btn_no);
@@ -237,7 +235,7 @@ public class GameEngine {
                 public void onClick(View v) {
                     scoreNumber = 0;
                     TextView score = (TextView) ((Activity)context).findViewById(R.id.score);
-                    score.setText(""+scoreNumber);
+                    score.setText(String.valueOf(scoreNumber));
                     dialog.dismiss();
 
                     startGame();
@@ -262,11 +260,11 @@ public class GameEngine {
 
     public Shape getShape(){return this.shape;}
 
-    public void playTicToc(){
+    private void playTicToc(){
         this.gameBoard.soundManager.startTicTocSound();
     }
 
-    public void stopTicToc(){
+    private void stopTicToc(){
         this.gameBoard.soundManager.stopTicTocSound();
     }
 
@@ -305,7 +303,7 @@ public class GameEngine {
 
     private void updateScoreText(int score) {
         this.gameBoard.setting.updateScore(score);
-        this.scoreText.setText(""+Numbers.format(score));
+        this.scoreText.setText(String.valueOf(Numbers.format(score)));
     }
 
     private void initGameMode() {
@@ -352,7 +350,7 @@ public class GameEngine {
     private void reduceLife() {
         if(lifes > 0) {
             this.lifes--;
-            this.lifesText.setText(""+lifes);
+            this.lifesText.setText(String.valueOf(lifes));
             this.gameBoard.soundManager.playSound(R.raw.life_lost);
         }
         if(lifes == 0) {
@@ -389,7 +387,7 @@ public class GameEngine {
 
     private void addLife(int n) {
         this.lifes+=n;
-        this.lifesText.setText(""+lifes);
+        this.lifesText.setText(String.valueOf(lifes));
         this.gameBoard.soundManager.playSound(R.raw.life_added);
         this.centerNotification("+1 Life");
     }
@@ -409,7 +407,7 @@ public class GameEngine {
         }
         int interval = 1000;
         long minutesInMilliseconds = minutes * 60000;
-        this.timerText.setText(minutes+":00");
+        this.timerText.setText(String.format("%s:00", String.valueOf(minutes)));
         this.lifeTimer = new CountDownTimer(minutesInMilliseconds, interval) {
             boolean isStarted = false;
 
@@ -427,7 +425,7 @@ public class GameEngine {
 
             @Override
             public void onFinish() {
-                timerText.setText("00:00");
+                timerText.setText(R.string.default_time);
                 stopGame();
             }
         };

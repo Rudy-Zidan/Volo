@@ -11,4 +11,5 @@
     <string name="leader_board_api">/rank</string>
     <string name="server_problem">Server under maintenance, try again later.</string>
     <string name="banner_ad_unit_id">ca-app-pub-5665008338785349/8413875716</string>
+    <string name="default_time">00:00</string>
 </resources>
