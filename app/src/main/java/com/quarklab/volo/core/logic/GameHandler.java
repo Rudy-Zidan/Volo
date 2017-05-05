@@ -71,22 +71,8 @@ public class GameHandler {
     private Runnable changeGameMode = new Runnable() {
 
         public void run() {
-            new CountDownTimer(20000, 1) {
-                @Override
-                public void onTick(long l) {
-                    long timeFrame = 5000 - l;
-                    if(timeFrame == 0 || timeFrame == 1){
-                        gameEngineListener.playTicTocSound();
-                    }
-                }
-
-                @Override
-                public void onFinish() {
-                    gameEngineListener.stopTicTocSound();
-                    gameEngineListener.changeGameMode();
-                    randomLevelHandler.postDelayed(changeGameMode, 20000);
-                }
-            }.start();
+            gameEngineListener.changeGameMode();
+            randomLevelHandler.postDelayed(changeGameMode, 20000);
         }
     };
 

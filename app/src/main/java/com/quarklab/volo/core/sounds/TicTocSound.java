@@ -39,10 +39,12 @@ public class TicTocSound extends AsyncTask<Void, Void, Void> {
     }
 
     public void stop(){
-        this.player.stop();
-        this.player.release();
-        this.cancel(true);
-        this.isPlaying = false;
+        if(this.player != null){
+            this.player.release();
+            //this.cancel(true);
+            this.isPlaying = false;
+            this.player = null;
+        }
     }
 
     public boolean isPlaying() {

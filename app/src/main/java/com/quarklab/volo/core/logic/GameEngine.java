@@ -175,6 +175,7 @@ public class GameEngine {
 
             @Override
             public void onTick(long l) {
+                timerText.setTextColor(context.getResources().getColor(R.color.red));
                 if(!isStarted){
                     playTicToc();
                 }
@@ -420,6 +421,8 @@ public class GameEngine {
                 if(!isStarted && minutes == 0 && seconds == 5){
                     timerText.setTextColor(context.getResources().getColor(R.color.red));
                     playTicToc();
+                }else{
+                    timerText.setTextColor(context.getResources().getColor(R.color.white));
                 }
             }
 

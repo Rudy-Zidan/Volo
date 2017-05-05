@@ -16,6 +16,7 @@ public class SoundManager {
     private BackgroundSound backgroundMusic;
     private TicTocSound ticTocSound;
     private GameBoard gameBoard;
+    private MediaPlayer mPlayer;
     public  SoundManager(Context context){
         this.context = context;
         this.gameBoard = (GameBoard) context;
@@ -23,9 +24,15 @@ public class SoundManager {
 
     public void playSound(int music){
         if(this.gameBoard.setting.playSound()) {
-            MediaPlayer player = MediaPlayer.create(this.context, music);
-            player.setVolume(1f, 1f);
-            player.start();
+            this.mPlayer = MediaPlayer.create(this.context, music);
+            this.mPlayer.setVolume(1f, 1f);
+            this.mPlayer.start();
+            this.mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mediaPlayer) {
+                    stopMediaPlayer();
+                }
+            });
         }
     }
     public void startTicTocSound() {
@@ -55,6 +62,13 @@ public class SoundManager {
     public void stopBackgroundSound(){
         if(this.gameBoard.setting.playSound() && this.backgroundMusic != null && this.backgroundMusic.isPlaying()) {
             this.backgroundMusic.stop();
+        }
+    }
+
+    private void stopMediaPlayer(){
+        if(this.mPlayer != null){
+            this.mPlayer.release();
+            this.mPlayer = null;
         }
     }
 }

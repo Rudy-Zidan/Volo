@@ -79,6 +79,7 @@ public class RenderEngine {
 
         if(this.frameLayout.indexOfChild(this.button) > -1) {
             this.frameLayout.removeView(this.button);
+            this.button = null;
         }
 
         this.button = new Button(this.context);
