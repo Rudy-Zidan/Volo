@@ -5,9 +5,6 @@ import android.os.Build;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
-import android.util.Log;
-
-import com.quarklab.volo.core.shapes.Shape;
 
 import java.util.Random;
 
@@ -21,8 +18,10 @@ public class GameHandler {
     private Handler randomLevelHandler;
     private Handler shapeHandler;
     private Handler utilityHandler;
+    private GameEngineListener gameEngineListener;
 
-    public GameHandler() {
+    public GameHandler(GameEngineListener gameEngineListener) {
+        this.gameEngineListener = gameEngineListener;
         this.viewHandler = new Handler();
         this.speedHandler = new Handler();
         this.randomLevelHandler = new Handler();
@@ -45,13 +44,12 @@ public class GameHandler {
         this.randomLevelHandler.removeCallbacks(changeGameMode);
         this.shapeHandler.removeCallbacks(changeShapes);
         this.utilityHandler.removeCallbacks(dropUtitlity);
-        GameEngine.showReplayDialog();
     }
 
     private Runnable updateData = new Runnable() {
         @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
         public void run() {
-            GameEngine.changeGameBoard();
+            gameEngineListener.changeGameBoard();
             viewHandler.postDelayed(updateData, speed);
         }
     };
@@ -65,7 +63,7 @@ public class GameHandler {
                 speed = 500;
             }
             int x = Math.abs((1000 - speed));
-            GameEngine.changeScore((x * 10) / 100);
+            gameEngineListener.changeGameScore((x * 10) / 100);
             speedHandler.postDelayed(updateSpeed, 15000);
         }
     };
@@ -78,14 +76,14 @@ public class GameHandler {
                 public void onTick(long l) {
                     long timeFrame = 5000 - l;
                     if(timeFrame == 0 || timeFrame == 1){
-                        GameEngine.playTicToc();
+                        gameEngineListener.playTicTocSound();
                     }
                 }
 
                 @Override
                 public void onFinish() {
-                    GameEngine.stopTicToc();
-                    GameEngine.changeGameMode();
+                    gameEngineListener.stopTicTocSound();
+                    gameEngineListener.changeGameMode();
                     randomLevelHandler.postDelayed(changeGameMode, 20000);
                 }
             }.start();
@@ -95,7 +93,7 @@ public class GameHandler {
     private Runnable changeShapes = new Runnable() {
         @Override
         public void run() {
-            GameEngine.changeGameShape();
+            gameEngineListener.changeGameShape();
             shapeHandler.postDelayed(changeShapes, 50000);
         }
     };
@@ -104,7 +102,7 @@ public class GameHandler {
         @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
         @Override
         public void run() {
-            GameEngine.claimUtility();
+            gameEngineListener.claimUtility();
             shapeHandler.postDelayed(dropUtitlity, getRandomTime(50000, 100000));
         }
     };

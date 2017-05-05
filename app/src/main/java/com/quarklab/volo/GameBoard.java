@@ -3,7 +3,9 @@ package com.quarklab.volo;
 import android.app.Activity;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.widget.TextView;
 
 import com.quarklab.volo.core.logic.GameEngine;
@@ -22,6 +24,7 @@ public class GameBoard extends Activity {
 
     public boolean backClicked;
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,14 +44,17 @@ public class GameBoard extends Activity {
     }
     public void onResume() {
         super.onResume();
-        if(!GameEngine.isEnded()){
-            GameEngine.startGame();
+        if(!this.gameEngine.isEnded()){
+            this.gameEngine.startGame();
         }
     }
 
     public void onPause() {
         super.onPause();
         this.gameEngine.stopGame();
+        this.gameEngine = null;
+        this.renderEngine = null;
+        this.setting = null;
     }
 
     public GameEngine getGameEngine(){

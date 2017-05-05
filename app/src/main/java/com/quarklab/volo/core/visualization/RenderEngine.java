@@ -144,7 +144,7 @@ public class RenderEngine {
                 this.randomTrigger--;
                 if(randomTrigger <= 0) {
                     this.button.setTag("oval_random");
-                    this.button.setBackgroundResource(shape.getTemplate(this.button.getTag().toString()));
+                    this.button.setBackgroundResource(R.drawable.dice);
                     this.setRandomTrigger();
                 }else{
                     this.button.setTag("good");
