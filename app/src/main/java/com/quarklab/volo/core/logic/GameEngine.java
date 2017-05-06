@@ -47,6 +47,7 @@ public class GameEngine {
     private int scoreNumber;
     private int currentUserScore;
     private int currentScoreRate;
+    private long currentTimeInMilliSec;
     private int lifes;
     private boolean ended;
     private int scoreContinousTimes;
@@ -68,16 +69,17 @@ public class GameEngine {
         this.scoreText = (TextView) ((Activity) this.context).findViewById(R.id.score);
         this.lifesText = (TextView) ((Activity) this.context).findViewById(R.id.lifes);
         this.timerText = (TextView) ((Activity) this.context).findViewById(R.id.timerText);
-
-        this.scoreContinousTimes = 0;
-        this.startClickedGreen = 0;
-        this.ended = false;
     }
 
     public void startGame() {
-        this.lifes = 4;
-        this.lifesText.setText(String.valueOf(lifes));
+        this.scoreContinousTimes = 0;
+        this.startClickedGreen = 0;
+        this.currentTimeInMilliSec = 0;
         this.currentUserScore = 0;
+        this.lifes = 4;
+        this.ended = false;
+
+        this.lifesText.setText(String.valueOf(lifes));
         this.gameBoard.soundManager.startBackgroundSound();
         this.gameHandler.start();
         this.startLifeTimeCounter();
@@ -100,7 +102,9 @@ public class GameEngine {
                 break;
             case "meh": this.meh(button);
                 break;
-            case "oval_random": this.random(button);
+            case "random": this.random(button);
+                break;
+            case "timer": this.timer(button);
                 break;
         }
 
@@ -217,6 +221,12 @@ public class GameEngine {
         this.animate(button,colors,16);
     }
 
+    private void timer(View button) {
+        this.onBoardNotification.setColor(R.color.skyblue);
+        int[] colors ={0XFF7ec0ee,0XFF8ac6ef,0XFF97ccf1,0XFF71acd6, 0XFF8ac6ef,0XFF7ec0ee};
+        this.animate(button,colors,16);
+    }
+
     private void showReplayDialog() {
         if(!gameBoard.backClicked){
             ended = true;
@@ -278,7 +288,7 @@ public class GameEngine {
             @Override
             public void onAnimationStart() {
                 String tag = button.getTag().toString();
-                if(tag.equals("oval_random")) {
+                if(tag.equals("random")) {
                     Random rand = new Random();
                     switch (rand.nextInt(4)) {
                         case 0: gameModeListener.onScoreAdded(0);
@@ -290,6 +300,8 @@ public class GameEngine {
                         case 3: gameModeListener.onLifeAdded(1);
                             break;
                     }
+                } else if(tag.equals("timer")){
+                    addTime();
                 } else {
                     gameMode.execute(button.getTag().toString());
                 }
@@ -409,11 +421,19 @@ public class GameEngine {
         int interval = 1000;
         long minutesInMilliseconds = minutes * 60000;
         this.timerText.setText(String.format("%s:00", String.valueOf(minutes)));
-        this.lifeTimer = new CountDownTimer(minutesInMilliseconds, interval) {
-            boolean isStarted = false;
+        this.startTimeCounter(minutesInMilliseconds, interval);
+    }
 
+    private void startTimeCounter(long milliseconds, long interval){
+        if(this.lifeTimer != null){
+            this.lifeTimer.cancel();
+        }
+
+        this.lifeTimer = new CountDownTimer(milliseconds, interval) {
+            boolean isStarted = false;
             @Override
             public void onTick(long l) {
+                currentTimeInMilliSec = l;
                 long minutes = Math.round(l / 60000);
                 long seconds = Math.round((l % 60000) / 1000);
                 String time =  minutes + ":" + (seconds < 10 ? '0' : "") + seconds;
@@ -474,5 +494,20 @@ public class GameEngine {
                 engine.claimUtility();
             }
         };
+    }
+
+    private void addTime(){
+        Random rand = new Random();
+        int millisec = rand.nextInt(25000);
+        if(millisec < 5000){
+            millisec = 5000;
+        }
+
+        long totalMilliSec = this.currentTimeInMilliSec + millisec;
+        int sec = millisec / 1000;
+
+        onBoardNotification.notify("+ "+sec, 500, 18, false);
+
+        this.startTimeCounter(totalMilliSec, 1000);
     }
 }

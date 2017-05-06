@@ -33,7 +33,7 @@ public class Shape {
                 break;
             case "meh": tag =  Shape.buttons.MEH;
                 break;
-            case "oval_random": tag =  Shape.buttons.RANDOM;
+            case "random": tag =  Shape.buttons.RANDOM;
                 break;
         }
         return tag;

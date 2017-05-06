@@ -30,6 +30,7 @@ public class RenderEngine {
     private Button button;
     private ButtonAction buttonAction;
     private int randomTrigger;
+    private int timerTrigger;
     private Random rand;
     private int defaultColor;
 
@@ -124,7 +125,7 @@ public class RenderEngine {
     }
 
     private void buttonColors(Shape shape) {
-        int target = this.rand.nextInt(4);
+        int target = this.rand.nextInt(5);
         if(this.defaultColor > -1){
             target = this.defaultColor;
         }
@@ -144,12 +145,23 @@ public class RenderEngine {
             case 3:
                 this.randomTrigger--;
                 if(randomTrigger <= 0) {
-                    this.button.setTag("oval_random");
+                    this.button.setTag("random");
                     this.button.setBackgroundResource(R.drawable.dice);
+                    this.button.setWidth(200);
+                    this.button.setHeight(200);
                     this.setRandomTrigger();
                 }else{
-                    this.button.setTag("good");
-                    this.button.setBackgroundResource(shape.getTemplate(this.button.getTag().toString()));
+                    buttonColors(shape);
+                }
+                break;
+            case 4:
+                this.timerTrigger--;
+                if(timerTrigger <= 0) {
+                    this.button.setTag("timer");
+                    this.button.setBackgroundResource(R.drawable.stopwatch);
+                    this.setTimeTrigger();
+                }else{
+                    buttonColors(shape);
                 }
                 break;
         }
@@ -157,5 +169,11 @@ public class RenderEngine {
 
     private void setRandomTrigger() {
         this.randomTrigger = this.rand.nextInt(20)+10;
+    }
+    private void setTimeTrigger() {
+        this.timerTrigger = this.rand.nextInt(10);
+        if(this.timerTrigger < 5){
+            this.timerTrigger = 5;
+        }
     }
 }
