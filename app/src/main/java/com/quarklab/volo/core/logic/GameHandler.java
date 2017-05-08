@@ -20,6 +20,7 @@ public class GameHandler {
     private Handler utilityHandler;
     private Handler timeUtilityHandler;
     private GameEngineListener gameEngineListener;
+    private boolean lockSpeed;
 
     public GameHandler(GameEngineListener gameEngineListener) {
         this.gameEngineListener = gameEngineListener;
@@ -30,6 +31,7 @@ public class GameHandler {
         this.utilityHandler = new Handler();
         this.timeUtilityHandler = new Handler();
         this.speed = 1000;
+        this.lockSpeed = false;
     }
 
     public void start() {
@@ -47,6 +49,28 @@ public class GameHandler {
         this.randomLevelHandler.removeCallbacks(changeGameMode);
         this.shapeHandler.removeCallbacks(changeShapes);
         this.utilityHandler.removeCallbacks(dropUtitlity);
+        this.timeUtilityHandler.removeCallbacks(timeUtitlity);
+    }
+
+    public void speedUpGameSpeed(){
+        lockSpeed = true;
+        viewHandler.removeCallbacksAndMessages(null);
+        speed = speed - (int)(speed*0.25);
+        viewHandler.postDelayed(updateData, speed);
+    }
+
+    public void slowUpGameSpeed(){
+        lockSpeed = true;
+        viewHandler.removeCallbacks(updateData);
+        speed = speed + (int)(speed*0.50);
+        viewHandler.postDelayed(updateData, speed);
+    }
+
+    public void unlockGameSpeed(){
+        lockSpeed = false;
+        viewHandler.removeCallbacks(updateData);
+        speed = getRandomTime(500, 1000);
+        viewHandler.postDelayed(updateData, speed);
     }
 
     private Runnable updateData = new Runnable() {
@@ -60,10 +84,8 @@ public class GameHandler {
     private Runnable updateSpeed = new Runnable() {
 
         public void run() {
-            Random rand = new Random();
-            speed = rand.nextInt(1000);
-            if (speed < 500) {
-                speed = 500;
+            if(!lockSpeed){
+                speed = getRandomTime(500, 1000);
             }
             int x = Math.abs((1000 - speed));
             gameEngineListener.changeGameScore((x * 10) / 100);

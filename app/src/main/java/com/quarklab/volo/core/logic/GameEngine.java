@@ -142,7 +142,7 @@ public class GameEngine {
 
             @Override
             public void onBombClick(ImageView image) {
-                bombAction();
+                bombAction(image.getTag().toString());
             }
 
              @Override
@@ -164,8 +164,8 @@ public class GameEngine {
         }
     }
 
-    private void bombAction(){
-
+    private void bombAction(String tag){
+        final String imageTag = tag;
         Random rand = new Random();
         int totalSeconds = rand.nextInt(10000);
         if(totalSeconds < 5000){
@@ -173,7 +173,15 @@ public class GameEngine {
         }
         int interval = 1000;
 
-        this.gameBoard.getRenderEngine().changeDefaultColor(shape);
+        centerNotification(imageTag+" Bomb");
+
+        if(imageTag.equals("Green") || imageTag.equals("Yellow") || imageTag.equals("Red")){
+            this.gameBoard.getRenderEngine().changeDefaultColor(shape);
+        }else if(imageTag.equals("SpeedUp")){
+            gameHandler.speedUpGameSpeed();
+        }else{
+            gameHandler.slowUpGameSpeed();
+        }
 
         new CountDownTimer(totalSeconds, interval) {
             boolean isStarted = false;
@@ -190,7 +198,11 @@ public class GameEngine {
 
             @Override
             public void onFinish() {
-                gameBoard.getRenderEngine().resetDefaultColor(shape);
+                if(imageTag.equals("Green") || imageTag.equals("Yellow") || imageTag.equals("Red")) {
+                    gameBoard.getRenderEngine().resetDefaultColor(shape);
+                }else{
+                    gameHandler.unlockGameSpeed();
+                }
                 timerText.setText(" ");
                 isStarted = false;
                 stopTicToc();
@@ -431,9 +443,11 @@ public class GameEngine {
                 long seconds = Math.round((l % 60000) / 1000);
                 String time =  minutes + ":" + (seconds < 10 ? '0' : "") + seconds;
                 timerText.setText(time);
-                if(!isStarted && minutes == 0 && seconds == 5){
+                if(!isStarted && seconds == 5){
                     timerText.setTextColor(context.getResources().getColor(R.color.red));
                     playTicToc();
+                }else if(seconds <= 4){
+                    timerText.setTextColor(context.getResources().getColor(R.color.red));
                 }else{
                     timerText.setTextColor(context.getResources().getColor(R.color.white));
                 }
