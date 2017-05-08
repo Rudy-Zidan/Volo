@@ -18,6 +18,7 @@ public class GameHandler {
     private Handler randomLevelHandler;
     private Handler shapeHandler;
     private Handler utilityHandler;
+    private Handler timeUtilityHandler;
     private GameEngineListener gameEngineListener;
 
     public GameHandler(GameEngineListener gameEngineListener) {
@@ -27,6 +28,7 @@ public class GameHandler {
         this.randomLevelHandler = new Handler();
         this.shapeHandler = new Handler();
         this.utilityHandler = new Handler();
+        this.timeUtilityHandler = new Handler();
         this.speed = 1000;
     }
 
@@ -36,6 +38,7 @@ public class GameHandler {
         this.randomLevelHandler.postDelayed(changeGameMode, 20000);
         this.shapeHandler.postDelayed(changeShapes, 50000);
         this.utilityHandler.postDelayed(dropUtitlity, getRandomTime(50000, 100000));
+        this.timeUtilityHandler.postDelayed(timeUtitlity, getRandomTime(10000, 50000));
     }
 
     public void end() {
@@ -89,7 +92,16 @@ public class GameHandler {
         @Override
         public void run() {
             gameEngineListener.claimUtility();
-            shapeHandler.postDelayed(dropUtitlity, getRandomTime(50000, 100000));
+            utilityHandler.postDelayed(dropUtitlity, getRandomTime(50000, 100000));
+        }
+    };
+
+    private Runnable timeUtitlity = new Runnable() {
+        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+        @Override
+        public void run() {
+            gameEngineListener.claimTimeUtility();
+            timeUtilityHandler.postDelayed(timeUtitlity, getRandomTime(10000, 50000));
         }
     };
 

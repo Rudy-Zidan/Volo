@@ -9,7 +9,6 @@ public interface GameEngineListener {
     void changeGameScore(int score);
     void changeGameMode();
     void changeGameShape();
-    void playTicTocSound();
-    void stopTicTocSound();
+    void claimTimeUtility();
     void claimUtility();
 }

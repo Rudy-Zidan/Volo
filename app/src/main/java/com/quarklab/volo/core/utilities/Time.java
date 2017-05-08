@@ -9,35 +9,30 @@ import android.widget.LinearLayout;
 
 import com.quarklab.volo.R;
 
-import java.util.Random;
-
-
 /**
- * Created by rudy on 4/15/17.
+ * Created by rudy on 5/8/17.
  */
 
-class Bomb extends Utility{
+public class Time extends Utility {
 
-    private enum Types {SpeedUp, SpeedDown, Green, Yellow, Red}
-    public Bomb(Context context, UtilityListener listener) {
+    public Time(Context context, UtilityListener listener) {
         super(context, listener);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    public void renderBomb(){
+    public void renderTime(){
         this.image = new ImageView(this.context);
         this.setLayout();
-        this.setImageTags();
         this.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 image.clearAnimation();
                 layout.removeView(image);
-                listener.onBombClick(image);
+                listener.onTimeClick(image);
             }
         });
         this.layout.addView(image);
-        this.image.setImageResource(R.drawable.bomb);
+        this.image.setImageResource(R.drawable.stopwatch);
         this.animate();
     }
 
@@ -59,11 +54,5 @@ class Bomb extends Utility{
                         layout.removeView(image);
                     }
                 });
-    }
-
-    private void setImageTags(){
-        Random rand = new Random();
-        int typeIndex = rand.nextInt(Types.values().length);
-        this.image.setTag(Types.values()[typeIndex].toString());
     }
 }

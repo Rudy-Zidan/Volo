@@ -7,6 +7,7 @@ import android.provider.SyncStateContract;
 import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.quarklab.volo.R;
 import com.quarklab.volo.core.logic.GameEngine;
@@ -28,6 +29,7 @@ public class Utility {
     protected PhoneScreen screen;
     protected UtilityListener listener;
     protected SmallBang smallBang;
+    protected ImageView image;
 
     protected final int WIDTH = 200;
     protected final int HEIGHT = 200;
@@ -57,21 +59,8 @@ public class Utility {
         }
     }
 
-    protected void animateImage(final View image, int[] colors, int dots) {
-        int extraSpace = 50;
-        int radius = image.getWidth()/2 + extraSpace;
-        smallBang.setColors(colors);
-        smallBang.setDotNumber(dots);
-        smallBang.bang(image,radius,new SmallBangListener() {
-            @Override
-            public void onAnimationStart() {
-            }
-
-            @Override
-            public void onAnimationEnd() {
-                image.clearAnimation();
-                layout.removeView(image);
-            }
-        });
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    public void callTimeToFall() {
+        new Time(this.context, this.listener).renderTime();
     }
 }

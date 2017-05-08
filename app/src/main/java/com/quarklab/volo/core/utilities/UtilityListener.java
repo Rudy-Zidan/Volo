@@ -9,4 +9,5 @@ import android.widget.ImageView;
 public interface UtilityListener {
     void onGiftClick(ImageView image);
     void onBombClick(ImageView image);
+    void onTimeClick(ImageView image);
 }

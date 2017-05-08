@@ -104,8 +104,6 @@ public class GameEngine {
                 break;
             case "random": this.random(button);
                 break;
-            case "timer": this.timer(button);
-                break;
         }
 
     }
@@ -147,7 +145,10 @@ public class GameEngine {
                 bombAction();
             }
 
-        });
+             @Override
+             public void onTimeClick(ImageView image) { addTime(); }
+
+         });
     }
 
     private void giftAction(){
@@ -216,12 +217,6 @@ public class GameEngine {
     }
 
     private void random(View button) {
-        this.onBoardNotification.setColor(R.color.skyblue);
-        int[] colors ={0XFF7ec0ee,0XFF8ac6ef,0XFF97ccf1,0XFF71acd6, 0XFF8ac6ef,0XFF7ec0ee};
-        this.animate(button,colors,16);
-    }
-
-    private void timer(View button) {
         this.onBoardNotification.setColor(R.color.skyblue);
         int[] colors ={0XFF7ec0ee,0XFF8ac6ef,0XFF97ccf1,0XFF71acd6, 0XFF8ac6ef,0XFF7ec0ee};
         this.animate(button,colors,16);
@@ -300,8 +295,6 @@ public class GameEngine {
                         case 3: gameModeListener.onLifeAdded(1);
                             break;
                     }
-                } else if(tag.equals("timer")){
-                    addTime();
                 } else {
                     gameMode.execute(button.getTag().toString());
                 }
@@ -478,15 +471,12 @@ public class GameEngine {
                 engine.changeGameShape();
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
-            public void playTicTocSound() {
-                engine.playTicToc();
+            public void claimTimeUtility() {
+                engine.utility.callTimeToFall();
             }
 
-            @Override
-            public void stopTicTocSound() {
-                engine.stopTicToc();
-            }
 
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
@@ -506,7 +496,7 @@ public class GameEngine {
         long totalMilliSec = this.currentTimeInMilliSec + millisec;
         int sec = millisec / 1000;
 
-        onBoardNotification.notify("+ "+sec, 500, 18, false);
+        onBoardNotification.notify("+ "+sec+" Sec", 500, 18, false);
 
         this.startTimeCounter(totalMilliSec, 1000);
     }

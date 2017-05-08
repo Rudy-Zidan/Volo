@@ -125,7 +125,7 @@ public class RenderEngine {
     }
 
     private void buttonColors(Shape shape) {
-        int target = this.rand.nextInt(5);
+        int target = this.rand.nextInt(4);
         if(this.defaultColor > -1){
             target = this.defaultColor;
         }
@@ -154,26 +154,10 @@ public class RenderEngine {
                     buttonColors(shape);
                 }
                 break;
-            case 4:
-                this.timerTrigger--;
-                if(timerTrigger <= 0) {
-                    this.button.setTag("timer");
-                    this.button.setBackgroundResource(R.drawable.stopwatch);
-                    this.setTimeTrigger();
-                }else{
-                    buttonColors(shape);
-                }
-                break;
         }
     }
 
     private void setRandomTrigger() {
         this.randomTrigger = this.rand.nextInt(20)+10;
-    }
-    private void setTimeTrigger() {
-        this.timerTrigger = this.rand.nextInt(10);
-        if(this.timerTrigger < 5){
-            this.timerTrigger = 5;
-        }
     }
 }
