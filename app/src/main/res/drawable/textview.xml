@@ -2,29 +2,21 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <!-- くぼみ -->
-    <item android:width="@dimen/_100sdp">
+    <item android:width="@dimen/_80sdp">
         <shape android:shape="rectangle" >
             <corners android:radius="@dimen/_10sdp" />
-            <solid android:color="#102f2f2f" />
+            <solid android:color="#2f2f2f" />
         </shape>
     </item>
 
     <!-- グラデーション下地 -->
     <item
-        android:bottom="1sp"
-        android:left="1sp"
-        android:right="1sp"
-        android:top="1sp"
-        android:width="@dimen/_100sdp"
+        android:width="@dimen/_80sdp"
         >
         <shape android:shape="rectangle">
             <corners android:radius="@dimen/_10sdp" />
-            <gradient
-                android:angle="90"
-                android:endColor="#272143"
-                android:centerColor="#272143"
-                android:startColor="#272143"
-                android:type="linear" />
+            <solid android:color="#fefefe"/>
+            <stroke android:color="#dadada" />
         </shape>
     </item>
 

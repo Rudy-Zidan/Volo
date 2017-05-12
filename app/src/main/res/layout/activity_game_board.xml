@@ -7,28 +7,14 @@
     tools:context=".GameBoard"
     android:id="@+id/gameBoardLayout">
 
-    <GridView
-        android:id="@+id/GameBoard"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:columnWidth="600dp"
-        android:numColumns="3"
-        android:stretchMode="columnWidth"
-        android:layout_gravity="center|top"
-        android:scrollIndicators="none"
-        android:scrollbars="none"
-        android:paddingLeft="0dp"
-        android:paddingRight="0dp"
-        android:layout_marginTop="25sp"
-        android:fastScrollEnabled="false"
-        android:visibility="gone"
-        >
-    </GridView>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="5sp"
+        android:padding="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:background="@drawable/top_bar_layout"
         >
 
         <TextView
@@ -36,6 +22,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="4"
+            android:layout_marginLeft="@dimen/_10sdp"
             android:drawableRight="@drawable/heart"
             android:id="@+id/lifes"
             android:background="@drawable/textview"
@@ -43,7 +30,7 @@
             android:drawablePadding="@dimen/_5sdp"
             android:layoutDirection="rtl"
             android:gravity="center"
-            android:textColor="#fff" />
+            android:textColor="#000" />
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -54,7 +41,7 @@
             android:layout_height="wrap_content"
             android:text="0"
             android:id="@+id/timerText"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
             android:padding="@dimen/_5sdp"
             android:gravity="center"
             android:textAppearance="?android:attr/textAppearanceLarge"
@@ -71,9 +58,33 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="0"
             android:id="@+id/score"
+            android:layout_marginRight="@dimen/_10sdp"
             android:gravity="center"
             android:drawablePadding="@dimen/_5sdp"
             android:layoutDirection="rtl"
-            android:textColor="#fff" />
+            android:textColor="#000" />
+    </LinearLayout>
+    <LinearLayout
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|bottom"
+        android:background="@drawable/mode_layout"
+        android:padding="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_2sdp"
+        android:orientation="horizontal" >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:src="@drawable/heart"/>
+        <TextView
+            style="?android:attr/textAppearanceSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:background="#0000"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:text="Sudden Death" />
     </LinearLayout>
 </FrameLayout>

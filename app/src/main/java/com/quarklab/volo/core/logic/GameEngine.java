@@ -449,7 +449,7 @@ public class GameEngine {
                 }else if(seconds <= 4){
                     timerText.setTextColor(context.getResources().getColor(R.color.red));
                 }else{
-                    timerText.setTextColor(context.getResources().getColor(R.color.white));
+                    timerText.setTextColor(context.getResources().getColor(R.color.black));
                 }
             }
 
