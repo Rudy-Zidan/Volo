@@ -5,16 +5,21 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.CountDownTimer;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.quarklab.volo.R;
 import com.quarklab.volo.GameBoard;
+import com.quarklab.volo.core.callback.AnimationDrawableCallback;
 import com.quarklab.volo.core.modes.GameMode;
 import com.quarklab.volo.core.modes.GameModeListener;
 import com.quarklab.volo.core.notification.OnBoardNotification;
@@ -43,6 +48,8 @@ public class GameEngine {
 
     private TextView scoreText;
     private TextView lifesText;
+    private TextView gameModeText;
+    private LinearLayout gameModeHolder;
 
     private int scoreNumber;
     private int currentUserScore;
@@ -69,6 +76,8 @@ public class GameEngine {
         this.scoreText = (TextView) ((Activity) this.context).findViewById(R.id.score);
         this.lifesText = (TextView) ((Activity) this.context).findViewById(R.id.lifes);
         this.timerText = (TextView) ((Activity) this.context).findViewById(R.id.timerText);
+        this.gameModeText = (TextView) ((Activity) this.context).findViewById(R.id.game_mode_text);
+        this.gameModeHolder = (LinearLayout) ((Activity) this.context).findViewById(R.id.gameModeHolder);
     }
 
     public void startGame() {
@@ -78,6 +87,8 @@ public class GameEngine {
         this.currentUserScore = 0;
         this.lifes = 4;
         this.ended = false;
+        String text = (this.gameMode.getCurrentGameMode()).replace("_", " ");
+        this.gameModeText.setText(text);
 
         this.lifesText.setText(String.valueOf(lifes));
         this.gameBoard.soundManager.startBackgroundSound();
@@ -89,6 +100,10 @@ public class GameEngine {
         this.gameBoard.soundManager.stopTicTocSound();
         this.gameBoard.soundManager.stopBackgroundSound();
         this.gameHandler.end();
+        if(this.lifeTimer != null){
+            this.lifeTimer.cancel();
+            this.lifeTimer = null;
+        }
         this.showReplayDialog();
     }
 
@@ -115,7 +130,8 @@ public class GameEngine {
     private void changeGameMode() {
         this.gameMode.change();
         this.gameBoard.soundManager.playSound(R.raw.mod_change);
-        String text = this.gameMode.getCurrentGameMode();
+        String text = (this.gameMode.getCurrentGameMode()).replace("_", " ");
+        this.gameModeText.setText(text);
         this.centerNotification(text);
     }
 
@@ -476,11 +492,6 @@ public class GameEngine {
             }
 
             @Override
-            public void changeGameMode() {
-                engine.changeGameMode();
-            }
-
-            @Override
             public void changeGameShape() {
                 engine.changeGameShape();
             }
@@ -497,6 +508,11 @@ public class GameEngine {
             public void claimUtility() {
                 engine.claimUtility();
             }
+
+            @Override
+            public void animateGameHolder() {
+                engine.animateGameHolder();
+            }
         };
     }
 
@@ -509,9 +525,34 @@ public class GameEngine {
 
         long totalMilliSec = this.currentTimeInMilliSec + millisec;
         int sec = millisec / 1000;
-
-        onBoardNotification.notify("+ "+sec+" Sec", 500, 18, false);
-
+        centerNotification("+ "+sec+" Sec");
         this.startTimeCounter(totalMilliSec, 1000);
+    }
+
+    private void animateGameHolder(){
+        gameModeText.setTextColor(context.getResources().getColor(R.color.white));
+
+        setGameModeHolderBackground(R.drawable.game_mode_transition);
+        AnimationDrawable animate = (AnimationDrawable)gameModeHolder.getBackground();
+
+        animate.setCallback(new AnimationDrawableCallback(animate, gameModeHolder) {
+            @Override
+            public void onAnimationComplete() {
+                gameModeText.setTextColor(context.getResources().getColor(R.color.black));
+                setGameModeHolderBackground(R.drawable.mode_layout);
+                changeGameMode();
+                stopTicToc();
+            }
+        });
+        playTicToc();
+        animate.start();
+    }
+
+    private void setGameModeHolderBackground(int res){
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+            gameModeHolder.setBackgroundResource(res);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            gameModeHolder.setBackground(this.context.getResources().getDrawable(res));
+        }
     }
 }

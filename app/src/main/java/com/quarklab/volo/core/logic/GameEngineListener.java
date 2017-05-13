@@ -7,8 +7,8 @@ package com.quarklab.volo.core.logic;
 public interface GameEngineListener {
     void changeGameBoard();
     void changeGameScore(int score);
-    void changeGameMode();
     void changeGameShape();
     void claimTimeUtility();
     void claimUtility();
+    void animateGameHolder();
 }

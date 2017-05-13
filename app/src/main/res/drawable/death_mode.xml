@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <!-- くぼみ -->
+    <!--&lt;!&ndash; くぼみ &ndash;&gt;-->
     <item>
         <shape android:shape="rectangle" >
             <corners android:radius="@dimen/_20sdp" />
-            <solid android:color="#dedede" />
+            <solid android:color="#680010" />
         </shape>
     </item>
 
     <!-- グラデーション下地 -->
-    <item android:bottom="5sp">
+    <item
+        android:bottom="5sp">
         <shape android:shape="rectangle" >
             <corners android:radius="@dimen/_20sdp" />
-            <solid android:color="#fefefe"/>
+            <solid android:color="#900016" />
         </shape>
     </item>
-
 </layer-list>

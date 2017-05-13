@@ -6,7 +6,7 @@ import java.util.Random;
  * Created by rudy on 2/16/17.
  */
 public class GameMode {
-    private enum modes {Easy,SuddenDeath,NoScore,DoubleTap}
+    private enum modes {Easy,Sudden_Death,No_Score,Double_Tap}
     protected enum buttons {GOOD, EVIL, MEH}
     private modes current;
 
@@ -47,11 +47,11 @@ public class GameMode {
         switch (this.current) {
             case Easy: getEasyMode().execute(getTag(tag));
                 break;
-            case SuddenDeath: getSuddenDeathMode().execute(getTag(tag));
+            case Sudden_Death: getSuddenDeathMode().execute(getTag(tag));
                 break;
-            case NoScore:
+            case No_Score:
                 break;
-            case DoubleTap: getDoubleTabMode().execute(getTag(tag));
+            case Double_Tap: getDoubleTabMode().execute(getTag(tag));
                 break;
         }
     }

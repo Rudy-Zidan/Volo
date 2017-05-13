@@ -5,6 +5,12 @@ import android.os.Build;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
+import android.view.View;
+import android.widget.TextView;
+
+import com.quarklab.volo.R;
+
+import org.w3c.dom.Text;
 
 import java.util.Random;
 
@@ -96,7 +102,7 @@ public class GameHandler {
     private Runnable changeGameMode = new Runnable() {
 
         public void run() {
-            gameEngineListener.changeGameMode();
+            gameEngineListener.animateGameHolder();
             randomLevelHandler.postDelayed(changeGameMode, 20000);
         }
     };
@@ -126,6 +132,8 @@ public class GameHandler {
             timeUtilityHandler.postDelayed(timeUtitlity, getRandomTime(10000, 50000));
         }
     };
+
+
 
     private int getRandomTime(int min, int max){
         Random rand = new Random();

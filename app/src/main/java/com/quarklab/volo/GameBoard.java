@@ -40,6 +40,7 @@ public class GameBoard extends Activity {
     public void onBackPressed() {
         super.onBackPressed();
         this.backClicked = true;
+        this.gameEngine.stopGame();
         finish();
     }
     public void onResume() {

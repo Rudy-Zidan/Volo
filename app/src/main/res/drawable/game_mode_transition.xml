@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="true">
+
+    <!-- The drawables used here can be solid colors, gradients, shapes, images, etc. -->
+    <item android:drawable="@drawable/score_mode" android:duration="1000"/>
+    <item android:drawable="@drawable/death_mode" android:duration="1000"/>
+    <item android:drawable="@drawable/no_score_mode" android:duration="1000"/>
+    <item android:drawable="@drawable/score_mode" android:duration="1000"/>
+</animation-list>
