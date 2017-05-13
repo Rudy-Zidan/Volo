@@ -14,55 +14,111 @@
         android:orientation="horizontal"
         android:padding="@dimen/_5sdp"
         android:layout_marginTop="@dimen/_2sdp"
-        android:background="@drawable/top_bar_layout"
         >
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="@dimen/_100sdp"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="4"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:drawableRight="@drawable/heart"
-            android:id="@+id/lifes"
-            android:background="@drawable/textview"
+            android:layout_gravity="center|bottom"
+            android:background="@drawable/mode_layout"
             android:padding="@dimen/_5sdp"
-            android:drawablePadding="@dimen/_5sdp"
-            android:layoutDirection="rtl"
-            android:gravity="center"
-            android:textColor="#000" />
+            android:orientation="horizontal" >
+            <View android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="2"/>
+            <TextView
+                style="?android:attr/textAppearanceSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/lifes"
+                android:clickable="false"
+                android:textDirection="ltr"
+                android:background="#0000"
+                android:text="4" />
+            <View android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:src="@drawable/heart"/>
+            <View android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+        </LinearLayout>
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1"
             />
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="@dimen/_100sdp"
             android:layout_height="wrap_content"
-            android:text="0"
-            android:id="@+id/timerText"
-            android:textColor="@android:color/black"
+            android:layout_gravity="center|bottom"
+            android:background="@drawable/mode_layout"
             android:padding="@dimen/_5sdp"
-            android:gravity="center"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            />
+            android:orientation="horizontal" >
+            <View android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="2"/>
+            <TextView
+                style="?android:attr/textAppearanceSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/timerText"
+                android:clickable="false"
+                android:gravity="center"
+                android:background="#0000"
+                android:text="0" />
+            <View android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:src="@drawable/stopwatch"/>
+            <View android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+        </LinearLayout>
         <View android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1"/>
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="@dimen/_100sdp"
             android:layout_height="wrap_content"
-            android:background="@drawable/textview"
-            android:drawableRight="@drawable/coin"
+            android:background="@drawable/mode_layout"
             android:padding="@dimen/_5sdp"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="0"
-            android:id="@+id/score"
-            android:layout_marginRight="@dimen/_10sdp"
-            android:gravity="center"
-            android:drawablePadding="@dimen/_5sdp"
-            android:layoutDirection="rtl"
-            android:textColor="#000" />
+            android:orientation="horizontal" >
+            <View android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="2"/>
+            <TextView
+                style="?android:attr/textAppearanceSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/score"
+                android:clickable="false"
+                android:background="#0000"
+                android:textDirection="ltr"
+                android:gravity="center"
+                android:text="0" />
+            <View android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:src="@drawable/coin"/>
+            <View android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+        </LinearLayout>
     </LinearLayout>
     <LinearLayout
         style="?android:attr/buttonBarButtonStyle"
@@ -70,21 +126,30 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center|bottom"
         android:background="@drawable/mode_layout"
-        android:padding="@dimen/_5sdp"
-        android:layout_marginBottom="@dimen/_2sdp"
+        android:padding="@dimen/_2sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
         android:orientation="horizontal" >
+        <View android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="2"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="false"
             android:src="@drawable/heart"/>
+        <View android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
         <TextView
             style="?android:attr/textAppearanceSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="false"
+            android:gravity="center"
             android:background="#0000"
-            android:layout_marginLeft="@dimen/_5sdp"
             android:text="Sudden Death" />
+        <View android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="2"/>
     </LinearLayout>
 </FrameLayout>
