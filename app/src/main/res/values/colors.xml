@@ -9,4 +9,8 @@
     <color name="white">#fff</color>
     <color name="black">#000</color>
     <color name="skyblue">#7ec0ee</color>
+    <color name="darkOrange">#c9563c</color>
+    <color name="darkerOrange">#a54731</color>
+    <color name="darkNavy">#2e4053</color>
+    <color name="darkerNavy">#1b2530</color>
 </resources>

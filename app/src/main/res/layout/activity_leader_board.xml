@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.quarklab.volo.LeaderBoard"
-    android:background="@drawable/gameboard"
+    android:background="@drawable/dawn"
     >
     <LinearLayout
         android:layout_width="match_parent"

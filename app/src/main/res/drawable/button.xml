@@ -10,7 +10,7 @@
 
     <item android:top="16dp" android:left="16dp" android:right="16dp" android:bottom="16dp" android:gravity="bottom|center_vertical">
         <shape android:shape="oval">
-            <solid android:color="#272143" />
+            <solid android:color="#95FEFEFE" />
         </shape>
     </item>
 

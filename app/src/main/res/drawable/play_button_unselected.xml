@@ -1,26 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <!-- くぼみ -->
+    <!--&lt;!&ndash; くぼみ &ndash;&gt;-->
     <item>
         <shape android:shape="rectangle" >
             <corners android:radius="@dimen/button_inner_radius" />
-            <solid android:color="#102f2f2f" />
+            <solid android:color="@color/darkerNavy" />
         </shape>
     </item>
 
     <!-- グラデーション下地 -->
     <item
-        android:bottom="1sp"
-        android:left="1sp"
-        android:right="1sp"
-        android:top="1sp">
+        android:bottom="5sp">
         <shape android:shape="rectangle" >
             <corners android:radius="@dimen/button_inner_radius" />
-            <solid android:color="#272143" />
+            <solid android:color="@color/darkNavy" />
         </shape>
     </item>
-
-
-
 </layer-list>
