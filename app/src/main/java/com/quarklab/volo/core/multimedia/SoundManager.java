@@ -37,6 +37,10 @@ public class SoundManager {
     }
     public void startTicTocSound() {
         if(this.gameBoard.setting.playSound()){
+            if(this.ticTocSound != null){
+                this.stopTicTocSound();
+                this.ticTocSound = null;
+            }
             this.ticTocSound = new TicTocSound(this.context);
             this.backgroundMusic.setVolume(0.3f, 0.3f);
             this.ticTocSound.execute();

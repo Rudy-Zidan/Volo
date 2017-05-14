@@ -2,18 +2,18 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <!-- くぼみ -->
-    <item android:left="@dimen/_10sdp" android:right="@dimen/_10sdp" android:gravity="center_horizontal|center_vertical">
+    <item>
         <shape android:shape="rectangle" >
             <corners android:radius="@dimen/_2sdp" />
-            <solid android:color="#102f2f2f" />
+            <solid android:color="@color/darkerGrey" />
         </shape>
     </item>
 
     <!-- グラデーション下地 -->
-    <item android:left="@dimen/_10sdp" android:right="@dimen/_10sdp" android:gravity="center_horizontal|center_vertical">
+    <item android:bottom="@dimen/_5sdp">
         <shape android:shape="rectangle" >
             <corners android:radius="@dimen/_2sdp" />
-            <solid android:color="#FFB914"/>
+            <solid android:color="@color/darkGrey" />
         </shape>
     </item>
 

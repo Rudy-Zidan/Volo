@@ -227,20 +227,20 @@ public class GameEngine {
     }
 
     private void good(View button) {
-        this.onBoardNotification.setColor(R.color.green);
-        int[] colors ={0XFF86AC41,0XFF99AC41,0XFF22AC41,0XFF00AC41,0XFF20AC50,0XFF82AC20};
+        this.onBoardNotification.setColor(R.color.darkGreen);
+        int[] colors ={0XFF0a9c30,0XFF077123,0XFF0a9c30,0XFF077123,0XFF0a9c30,0XFF077123};
         this.animate(button,colors,16);
     }
 
     private void evil(View button) {
-        this.onBoardNotification.setColor(R.color.red);
-        int[] colors ={0XFFCE5A57,0XFFCE5A20,0XFFFF726E,0XFFB64F4C,0XFFB62B27,0XFFB46260};
+        this.onBoardNotification.setColor(R.color.darkRed);
+        int[] colors ={0XFF7a0a0a,0XFFCE5A20,0XFF7a0a0a,0XFFB64F4C,0XFF7a0a0a,0XFFB46260};
         this.animate(button,colors,16);
     }
 
     private void meh(View button) {
-        this.onBoardNotification.setColor(R.color.warm);
-        int[] colors ={0XFFE1B16A,0XFFE1B103,0XFFFDC97A, 0XFFFFB33F, 0XFFF0A93E,0XFFFF9A01};
+        this.onBoardNotification.setColor(R.color.darkGrey);
+        int[] colors ={0XFF2e4053,0XFF1b2530,0XFF2e4053, 0XFF1b2530, 0XFF2e4053,0XFF1b2530};
         this.animate(button,colors,16);
     }
 

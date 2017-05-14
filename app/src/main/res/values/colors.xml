@@ -13,4 +13,10 @@
     <color name="darkerOrange">#a54731</color>
     <color name="darkNavy">#2e4053</color>
     <color name="darkerNavy">#1b2530</color>
+    <color name="darkRed">#a90d0d</color>
+    <color name="darkerRed">#7a0a0a</color>
+    <color name="darkGrey">#59595a</color>
+    <color name="darkerGrey">#393939</color>
+    <color name="darkGreen">#0a9c30</color>
+    <color name="darkerGreen">#077123</color>
 </resources>
