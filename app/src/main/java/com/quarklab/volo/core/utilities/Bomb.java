@@ -18,7 +18,7 @@ import java.util.Random;
 
 class Bomb extends Utility{
 
-    private enum Types {SpeedUp, SpeedDown, Green, Yellow, Red}
+    private enum Types {Speed_Up, Speed_Down, Green, Gray, Red}
     public Bomb(Context context, UtilityListener listener) {
         super(context, listener);
     }
@@ -39,26 +39,6 @@ class Bomb extends Utility{
         this.layout.addView(image);
         this.image.setImageResource(R.drawable.bomb);
         this.animate();
-    }
-
-    private void setLayout() {
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(this.WIDTH, this.HEIGHT);
-        image.setX(this.screen.getRandomX());
-        image.setY(this.screen.convertSpToPixels(60));
-        image.setLayoutParams(layoutParams);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    private void animate(){
-        image.animate()
-                .translationY(this.screen.getHeightPX())
-                .setDuration(2500)
-                .withEndAction(new Runnable() {
-                    @Override
-                    public void run() {
-                        layout.removeView(image);
-                    }
-                });
     }
 
     private void setImageTags(){

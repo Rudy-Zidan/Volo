@@ -10,17 +10,17 @@ import android.widget.LinearLayout;
 import com.quarklab.volo.R;
 
 /**
- * Created by rudy on 5/8/17.
+ * Created by rudy on 5/18/17.
  */
 
-public class Time extends Utility {
+public class Dice extends Utility {
 
-    public Time(Context context, UtilityListener listener) {
+    public Dice(Context context, UtilityListener listener) {
         super(context, listener);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    public void renderTime(){
+    public void renderDice(){
         this.image = new ImageView(this.context);
         this.setLayout();
         this.image.setOnClickListener(new View.OnClickListener() {
@@ -28,11 +28,11 @@ public class Time extends Utility {
             public void onClick(View view) {
                 image.clearAnimation();
                 layout.removeView(image);
-                listener.onTimeClick(image);
+                listener.onDiceClick(image);
             }
         });
         this.layout.addView(image);
-        this.image.setImageResource(R.drawable.stopwatch);
+        this.image.setImageResource(R.drawable.dice);
         this.animate();
     }
 }

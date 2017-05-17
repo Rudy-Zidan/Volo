@@ -35,24 +35,4 @@ class Gift extends Utility{
         this.image.setImageResource(R.drawable.gift);
         this.animate();
     }
-
-    private void setLayout() {
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(this.WIDTH, this.HEIGHT);
-        image.setX(this.screen.getRandomX());
-        image.setY(this.screen.convertSpToPixels(60));
-        image.setLayoutParams(layoutParams);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    private void animate(){
-        image.animate()
-                .translationY(this.screen.getHeightPX())
-                .setDuration(2500)
-                .withEndAction(new Runnable() {
-                    @Override
-                    public void run() {
-                        layout.removeView(image);
-                    }
-                });
-    }
 }

@@ -9,6 +9,7 @@ public interface GameEngineListener {
     void changeGameScore(int score);
     void changeGameShape();
     void claimTimeUtility();
+    void claimDiceUtility();
     void claimUtility();
     void animateGameHolder();
 }

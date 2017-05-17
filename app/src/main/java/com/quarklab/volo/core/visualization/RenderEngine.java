@@ -29,8 +29,6 @@ public class RenderEngine {
     private FrameLayout frameLayout;
     private Button button;
     private ButtonAction buttonAction;
-    private int randomTrigger;
-    private int timerTrigger;
     private Random rand;
     private int defaultColor;
 
@@ -40,7 +38,6 @@ public class RenderEngine {
         this.context = context;
         this.setUpActivityScreen();
         this.rand = new Random();
-        this.setRandomTrigger();
         this.defaultColor = -1;
     }
     private void setUpActivityScreen(){
@@ -66,8 +63,8 @@ public class RenderEngine {
         return this.screen.getNormalHeightPX();
     }
 
-    public void changeDefaultColor(Shape shape){
-        this.defaultColor = this.rand.nextInt(4);
+    public void changeDefaultColor(Shape shape, String tag){
+        this.defaultColor = this.getTagIndex(tag);
         this.buttonColors(shape);
     }
 
@@ -125,39 +122,38 @@ public class RenderEngine {
     }
 
     private void buttonColors(Shape shape) {
-        int target = this.rand.nextInt(4);
+        int target = this.rand.nextInt(3);
         if(this.defaultColor > -1){
             target = this.defaultColor;
         }
         switch (target){
             case 0:
-                this.button.setTag("good");
-                this.button.setBackgroundResource(shape.getTemplate(this.button.getTag().toString()));
+
+                this.button.setTag(R.id.Tag,"good");
+                this.button.setBackgroundResource(shape.getTemplate(this.button.getTag(R.id.Tag).toString()));
                 break;
             case 1:
-                this.button.setTag("evil");
-                this.button.setBackgroundResource(shape.getTemplate(this.button.getTag().toString()));
+                this.button.setTag(R.id.Tag,"evil");
+                this.button.setBackgroundResource(shape.getTemplate(this.button.getTag(R.id.Tag).toString()));
                 break;
             case 2:
-                this.button.setTag("meh");
-                this.button.setBackgroundResource(shape.getTemplate(this.button.getTag().toString()));
-                break;
-            case 3:
-                this.randomTrigger--;
-                if(randomTrigger <= 0) {
-                    this.button.setTag("random");
-                    this.button.setBackgroundResource(R.drawable.dice);
-                    this.button.setWidth(200);
-                    this.button.setHeight(200);
-                    this.setRandomTrigger();
-                }else{
-                    buttonColors(shape);
-                }
+                this.button.setTag(R.id.Tag,"meh");
+                this.button.setBackgroundResource(shape.getTemplate(this.button.getTag(R.id.Tag).toString()));
                 break;
         }
+        this.button.setTag(R.id.Value, target);
     }
 
-    private void setRandomTrigger() {
-        this.randomTrigger = this.rand.nextInt(20)+10;
+    private int getTagIndex(String tag){
+        int index = -1;
+        switch (tag){
+            case "Green": index = 0;
+                break;
+            case "Red":   index = 1;
+                break;
+            case "Gray":  index = 2;
+                break;
+        }
+        return index;
     }
 }

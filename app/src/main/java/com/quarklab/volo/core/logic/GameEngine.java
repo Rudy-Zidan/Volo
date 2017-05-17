@@ -110,14 +110,12 @@ public class GameEngine {
     public void actionHandler(View button) {
         this.onBoardNotification.setX((button.getX() + (button.getWidth() / 2)) - 25);
         this.onBoardNotification.setY(button.getY());
-        switch (button.getTag().toString()) {
+        switch (button.getTag(R.id.Tag).toString()) {
             case "good": this.good(button);
                 break;
             case "evil": this.evil(button);
                 break;
             case "meh": this.meh(button);
-                break;
-            case "random": this.random(button);
                 break;
         }
 
@@ -164,6 +162,21 @@ public class GameEngine {
              @Override
              public void onTimeClick(ImageView image) { addTime(); }
 
+             @Override
+             public void onDiceClick(ImageView image) {
+                 Random rand = new Random();
+                 switch (rand.nextInt(4)) {
+                     case 0: gameModeListener.onScoreAdded(0);
+                         break;
+                     case 1: gameModeListener.onScoreReduced(0);
+                         break;
+                     case 2: gameModeListener.onLifeLost();
+                         break;
+                     case 3: gameModeListener.onLifeAdded(1);
+                         break;
+                 }
+             }
+
          });
     }
 
@@ -181,7 +194,7 @@ public class GameEngine {
     }
 
     private void bombAction(String tag){
-        final String imageTag = tag;
+        final String imageTag = tag.replace("_", " ");
         Random rand = new Random();
         int totalSeconds = rand.nextInt(10000);
         if(totalSeconds < 5000){
@@ -191,9 +204,9 @@ public class GameEngine {
 
         centerNotification(imageTag+" Bomb");
 
-        if(imageTag.equals("Green") || imageTag.equals("Yellow") || imageTag.equals("Red")){
-            this.gameBoard.getRenderEngine().changeDefaultColor(shape);
-        }else if(imageTag.equals("SpeedUp")){
+        if(imageTag.equals("Green") || imageTag.equals("Gray") || imageTag.equals("Red")){
+            this.gameBoard.getRenderEngine().changeDefaultColor(shape, imageTag);
+        }else if(imageTag.equals("Speed_Up")){
             gameHandler.speedUpGameSpeed();
         }else{
             gameHandler.slowUpGameSpeed();
@@ -214,7 +227,7 @@ public class GameEngine {
 
             @Override
             public void onFinish() {
-                if(imageTag.equals("Green") || imageTag.equals("Yellow") || imageTag.equals("Red")) {
+                if(imageTag.equals("Green") || imageTag.equals("Gray") || imageTag.equals("Red")) {
                     gameBoard.getRenderEngine().resetDefaultColor(shape);
                 }else{
                     gameHandler.unlockGameSpeed();
@@ -241,12 +254,6 @@ public class GameEngine {
     private void meh(View button) {
         this.onBoardNotification.setColor(R.color.darkGrey);
         int[] colors ={0XFF2e4053,0XFF1b2530,0XFF2e4053, 0XFF1b2530, 0XFF2e4053,0XFF1b2530};
-        this.animate(button,colors,16);
-    }
-
-    private void random(View button) {
-        this.onBoardNotification.setColor(R.color.skyblue);
-        int[] colors ={0XFF7ec0ee,0XFF8ac6ef,0XFF97ccf1,0XFF71acd6, 0XFF8ac6ef,0XFF7ec0ee};
         this.animate(button,colors,16);
     }
 
@@ -310,22 +317,7 @@ public class GameEngine {
         this.smallBang.bang(button, radius, new SmallBangListener() {
             @Override
             public void onAnimationStart() {
-                String tag = button.getTag().toString();
-                if(tag.equals("random")) {
-                    Random rand = new Random();
-                    switch (rand.nextInt(4)) {
-                        case 0: gameModeListener.onScoreAdded(0);
-                            break;
-                        case 1: gameModeListener.onScoreReduced(0);
-                            break;
-                        case 2: gameModeListener.onLifeLost();
-                            break;
-                        case 3: gameModeListener.onLifeAdded(1);
-                            break;
-                    }
-                } else {
-                    gameMode.execute(button.getTag().toString());
-                }
+                gameMode.execute(button.getTag(R.id.Tag).toString());
             }
 
             @Override
@@ -387,6 +379,7 @@ public class GameEngine {
             this.lifesText.setText(String.valueOf(lifes));
             this.gameBoard.soundManager.playSound(R.raw.life_lost);
         }
+        this.centerNotification("-1 life");
         if(lifes == 0) {
             this.gameBoard.soundManager.playSound(R.raw.over);
             this.lifeTimer.cancel();
@@ -400,7 +393,7 @@ public class GameEngine {
             this.currentUserScore = 0;
         }
         this.updateScoreText(this.currentUserScore);
-        this.onBoardNotification.notify("- "+score, 500, 18, false);
+        this.centerNotification("-"+score);
     }
 
     private void scoreAdded(int score) {
@@ -459,11 +452,12 @@ public class GameEngine {
                 long seconds = Math.round((l % 60000) / 1000);
                 String time =  minutes + ":" + (seconds < 10 ? '0' : "") + seconds;
                 timerText.setText(time);
-                if(!isStarted && seconds == 5){
+                if(seconds <= 5 && minutes == 0){
                     timerText.setTextColor(context.getResources().getColor(R.color.red));
-                    playTicToc();
-                }else if(seconds <= 4){
-                    timerText.setTextColor(context.getResources().getColor(R.color.red));
+                    if(!isStarted ){
+                        playTicToc();
+                        isStarted = true;
+                    }
                 }else{
                     timerText.setTextColor(context.getResources().getColor(R.color.black));
                 }
@@ -502,6 +496,11 @@ public class GameEngine {
                 engine.utility.callTimeToFall();
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+            @Override
+            public void claimDiceUtility() {
+                engine.utility.callDiceToFall();
+            }
 
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override

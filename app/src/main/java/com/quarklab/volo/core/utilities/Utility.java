@@ -8,6 +8,7 @@ import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.quarklab.volo.R;
 import com.quarklab.volo.core.logic.GameEngine;
@@ -52,15 +53,40 @@ public class Utility {
     public void fallOneDown(){
         Random rand = new Random();
         int giftOrBomb = rand.nextInt(2);
-        if(giftOrBomb == types.GIFT.getValue()) {
-            new Gift(this.context, this.listener).renderGift();
-        }else{
+//        if(giftOrBomb == types.GIFT.getValue()) {
+//            new Gift(this.context, this.listener).renderGift();
+//        }else{
             new Bomb(this.context, this.listener).renderBomb();
-        }
+//        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void callTimeToFall() {
         new Time(this.context, this.listener).renderTime();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    public void callDiceToFall() {
+        new Dice(this.context, this.listener).renderDice();
+    }
+
+    protected void setLayout() {
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(this.WIDTH, this.HEIGHT);
+        this.image.setX(this.screen.getRandomX());
+        this.image.setY(this.screen.convertSpToPixels(60));
+        this.image.setLayoutParams(layoutParams);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    protected void animate(){
+        this.image.animate()
+                .translationY(this.screen.getHeightPX())
+                .setDuration(2500)
+                .withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        layout.removeView(image);
+                    }
+                });
     }
 }

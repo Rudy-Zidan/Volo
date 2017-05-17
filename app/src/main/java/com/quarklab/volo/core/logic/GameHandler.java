@@ -25,6 +25,7 @@ public class GameHandler {
     private Handler shapeHandler;
     private Handler utilityHandler;
     private Handler timeUtilityHandler;
+    private Handler diceUtilityHandler;
     private GameEngineListener gameEngineListener;
     private boolean lockSpeed;
 
@@ -36,6 +37,7 @@ public class GameHandler {
         this.shapeHandler = new Handler();
         this.utilityHandler = new Handler();
         this.timeUtilityHandler = new Handler();
+        this.diceUtilityHandler = new Handler();
         this.speed = 1000;
         this.lockSpeed = false;
     }
@@ -45,8 +47,9 @@ public class GameHandler {
         this.speedHandler.postDelayed(updateSpeed, 15000);
         this.randomLevelHandler.postDelayed(changeGameMode, 20000);
         this.shapeHandler.postDelayed(changeShapes, 50000);
-        this.utilityHandler.postDelayed(dropUtitlity, getRandomTime(50000, 100000));
+        this.utilityHandler.postDelayed(dropUtitlity, getRandomTime(50000, 80000));
         this.timeUtilityHandler.postDelayed(timeUtitlity, getRandomTime(10000, 50000));
+        this.diceUtilityHandler.postDelayed(diceUtitlity, getRandomTime(40000, 60000));
     }
 
     public void end() {
@@ -56,6 +59,7 @@ public class GameHandler {
         this.shapeHandler.removeCallbacks(changeShapes);
         this.utilityHandler.removeCallbacks(dropUtitlity);
         this.timeUtilityHandler.removeCallbacks(timeUtitlity);
+        this.diceUtilityHandler.removeCallbacks(diceUtitlity);
     }
 
     public void speedUpGameSpeed(){
@@ -120,7 +124,7 @@ public class GameHandler {
         @Override
         public void run() {
             gameEngineListener.claimUtility();
-            utilityHandler.postDelayed(dropUtitlity, getRandomTime(50000, 100000));
+            utilityHandler.postDelayed(dropUtitlity, getRandomTime(50000, 80000));
         }
     };
 
@@ -130,6 +134,15 @@ public class GameHandler {
         public void run() {
             gameEngineListener.claimTimeUtility();
             timeUtilityHandler.postDelayed(timeUtitlity, getRandomTime(10000, 50000));
+        }
+    };
+
+    private Runnable diceUtitlity = new Runnable() {
+        @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+        @Override
+        public void run() {
+            gameEngineListener.claimDiceUtility();
+            diceUtilityHandler.postDelayed(diceUtitlity, getRandomTime(40000, 60000));
         }
     };
 
