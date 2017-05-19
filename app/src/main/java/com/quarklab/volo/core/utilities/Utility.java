@@ -32,8 +32,6 @@ public class Utility {
     protected SmallBang smallBang;
     protected ImageView image;
 
-    protected final int WIDTH = 200;
-    protected final int HEIGHT = 200;
     private enum types {
         GIFT(0), BOMB(1);
         private final int type;
@@ -71,8 +69,9 @@ public class Utility {
     }
 
     protected void setLayout() {
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(this.WIDTH, this.HEIGHT);
-        this.image.setX(this.screen.getRandomX());
+        int size = this.screen.getBlockSize(0.05f);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(size, size);
+        this.image.setX((float)this.screen.getRandomX());
         this.image.setY(this.screen.convertSpToPixels(60));
         this.image.setLayoutParams(layoutParams);
     }

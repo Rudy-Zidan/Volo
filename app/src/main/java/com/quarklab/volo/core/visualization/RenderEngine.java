@@ -81,6 +81,7 @@ public class RenderEngine {
         }
 
         this.button = new Button(this.context);
+        this.button.setSoundEffectsEnabled(false);
 
         this.button.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -98,27 +99,36 @@ public class RenderEngine {
 
     private void setButtonLayout() {
 
-        float x = this.screen.getRandomX();
-        float y = this.screen.getRandomY();
+        double x = this.screen.getRandomX();
+        double y = this.screen.getRandomY();
 
-        int blockSize = this.screen.getSize();
+        float percantage = ((float)(rand.nextInt(20)+1) / 100);
+        int width = this.screen.getWidthSize(percantage);
+        int height = this.screen.getHeightSize(percantage);
 
-        this.button.setWidth(blockSize);
-        this.button.setHeight(blockSize);
+        this.button.setWidth(width);
+        this.button.setHeight(height);
 
-        float totalHeight = (y + blockSize);
+        double totalHeight = (y + height);
         if ( totalHeight > this.screen.getHeightPX()){
-            y -= (totalHeight - this.screen.getHeightPX());
+            y -= (totalHeight - this.screen.getHeightPX())+this.screen.marginHeight();
+        }else if(totalHeight == this.screen.getHeightPX()){
+            y -= this.screen.marginHeight();
+        }else if(totalHeight < this.screen.getHeightPX() && (this.screen.getHeightPX() - totalHeight) <= this.screen.marginHeight()) {
+            y -= this.screen.marginHeight();
         }
 
-        this.button.setY(y);
+        this.button.setY((float)y);
 
-        float totalWidth = (x + blockSize);
+        double totalWidth = (x + width);
         if ( totalWidth > this.screen.getWidthPX()){
-            x -= (totalWidth - this.screen.getWidthPX());
+            x -= (totalWidth - this.screen.getWidthPX())+this.screen.marginWidth();
+        }else if(totalWidth == this.screen.getWidthPX()){
+            x -= this.screen.marginWidth();
+        }else if(totalWidth < this.screen.getWidthPX() && (this.screen.getWidthPX() - totalWidth) <= this.screen.marginWidth()) {
+            x -= this.screen.marginWidth();
         }
-
-        this.button.setX(x);
+        this.button.setX((float)x);
     }
 
     private void buttonColors(Shape shape) {

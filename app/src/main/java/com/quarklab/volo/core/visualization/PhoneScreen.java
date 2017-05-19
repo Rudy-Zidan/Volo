@@ -33,7 +33,7 @@ public class PhoneScreen {
     }
 
     public int getWidthPX(){
-        return this.metrics.widthPixels  - (int)(this.metrics.widthPixels * 0.15);
+        return this.metrics.widthPixels  - (int)(this.metrics.widthPixels * 0.1);
     }
 
     public int convertSpToPixels(float sp) {
@@ -41,12 +41,12 @@ public class PhoneScreen {
         return px;
     }
 
-    public float getRandomX() {
+    public double getRandomX() {
         Random rand = new Random();
-        float x = rand.nextInt(this.getWidthPX())+1;
-        int marginLeft = this.convertSpToPixels(30);
-        if( x < (marginLeft*2)) {
-            x += marginLeft;
+        double x = rand.nextInt(this.getWidthPX())+1;
+        double margin = this.marginWidth();
+        if( x < (margin)) {
+            x += margin;
         }
         return x;
     }
@@ -54,17 +54,37 @@ public class PhoneScreen {
     public float getRandomY() {
         Random rand = new Random();
         float y = rand.nextInt(this.getHeightPX())+1;
-        int marginTop = this.convertSpToPixels(60);
+        float margin = this.marginHeight();
 
-        if( y < (marginTop*2)) {
-            y += marginTop;
+        if( y < (margin)) {
+            y += margin;
         }
         return y;
     }
 
-    public int getSize() {
-        int total = (this.getWidthPX()+this.getHeightPX())/(3*4);
+    public int getWidthSize(float percentage) {
+        int total = (int)(this.getNormalWidthPX() * percentage);
         Random rand = new Random();
-        return rand.nextInt(total)+100;
+        int width = rand.nextInt(total);
+        return width;
+    }
+
+    public int getHeightSize(float percentage) {
+        int total = (int)(this.getNormalHeightPX() * percentage);
+        Random rand = new Random();
+        int height = rand.nextInt(total);
+        return height;
+    }
+
+    public float marginHeight(){
+        return (float)(this.metrics.heightPixels * 0.1);
+    }
+
+    public float marginWidth(){
+        return (float)(this.metrics.widthPixels * 0.1);
+    }
+
+    public int getBlockSize(float percentage){
+        return (int)((this.getHeightPX() + this.getWidthPX()) * percentage);
     }
 }
