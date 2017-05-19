@@ -548,7 +548,7 @@ public class GameEngine {
     }
 
     private void setGameModeHolderBackground(int res){
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+        if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.JELLY_BEAN) {
             gameModeHolder.setBackgroundResource(res);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             gameModeHolder.setBackground(this.context.getResources().getDrawable(res));
