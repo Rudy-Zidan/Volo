@@ -5,11 +5,11 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.CountDownTimer;
-import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +27,7 @@ import com.quarklab.volo.core.shapes.Shape;
 import com.quarklab.volo.core.utilities.Utility;
 import com.quarklab.volo.core.utilities.UtilityListener;
 
+import java.util.Locale;
 import java.util.Random;
 
 import xyz.hanks.library.SmallBang;
@@ -49,6 +50,7 @@ public class GameEngine {
     private TextView scoreText;
     private TextView lifesText;
     private TextView gameModeText;
+    private ImageView gameModeIcon;
     private LinearLayout gameModeHolder;
 
     private int scoreNumber;
@@ -77,6 +79,7 @@ public class GameEngine {
         this.lifesText = (TextView) ((Activity) this.context).findViewById(R.id.lifes);
         this.timerText = (TextView) ((Activity) this.context).findViewById(R.id.timerText);
         this.gameModeText = (TextView) ((Activity) this.context).findViewById(R.id.game_mode_text);
+        this.gameModeIcon = (ImageView) ((Activity) this.context).findViewById(R.id.game_mode_icon);
         this.gameModeHolder = (LinearLayout) ((Activity) this.context).findViewById(R.id.gameModeHolder);
     }
 
@@ -130,6 +133,7 @@ public class GameEngine {
         this.gameBoard.soundManager.playSound(R.raw.mod_change);
         String text = (this.gameMode.getCurrentGameMode()).replace("_", " ");
         this.gameModeText.setText(text);
+        this.setGameModeIcon();
         this.centerNotification(text);
     }
 
@@ -265,11 +269,25 @@ public class GameEngine {
             dialog.setCancelable(false);
             dialog.setContentView(R.layout.replay_dialog);
 
+            AssetManager am = this.context.getApplicationContext().getAssets();
+            Typeface typeface = Typeface.createFromAsset(am,
+                    String.format(Locale.US, "fonts/%s", "KBZipaDeeDooDah.ttf"));
+
+            TextView gameOverText = (TextView) dialog.findViewById(R.id.game_over_text);
+            gameOverText.setTypeface(typeface);
+
+            TextView scoreTextDialog = (TextView) dialog.findViewById(R.id.text_dialog);
+            scoreTextDialog.setTypeface(typeface);
+
             TextView score = (TextView) dialog.findViewById(R.id.dialog_score);
             score.setText(String.valueOf(gameBoard.setting.getScore()));
+            score.setTypeface(typeface);
 
             Button again = (Button) dialog.findViewById(R.id.btn_replay);
+            again.setTypeface(typeface);
+
             Button no = (Button) dialog.findViewById(R.id.btn_no);
+            no.setTypeface(typeface);
 
             again.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -544,6 +562,8 @@ public class GameEngine {
             }
         });
         playTicToc();
+        this.gameModeText.setText("Picking!");
+        this.gameModeIcon.setImageResource(R.drawable.loading);
         animate.start();
     }
 
@@ -552,6 +572,19 @@ public class GameEngine {
             gameModeHolder.setBackgroundResource(res);
         }else{
             gameModeHolder.setBackground(this.context.getResources().getDrawable(res));
+        }
+    }
+
+    private void setGameModeIcon(){
+        switch (this.gameMode.getCurrentGameMode()){
+            case "Easy": this.gameModeIcon.setImageResource(R.drawable.easy);
+            break;
+            case "Sudden_Death": this.gameModeIcon.setImageResource(R.drawable.skull);
+            break;
+            case "No_Score": this.gameModeIcon.setImageResource(R.drawable.noscore);
+            break;
+            case "Double_Tap": this.gameModeIcon.setImageResource(R.drawable.doubletab);
+            break;
         }
     }
 }

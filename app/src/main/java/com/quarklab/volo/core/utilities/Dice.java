@@ -22,6 +22,7 @@ public class Dice extends Utility {
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void renderDice(){
         this.image = new ImageView(this.context);
+        this.image.setSoundEffectsEnabled(false);
         this.setLayout();
         this.image.setOnClickListener(new View.OnClickListener() {
             @Override

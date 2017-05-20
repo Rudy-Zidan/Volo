@@ -26,6 +26,7 @@ class Bomb extends Utility{
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void renderBomb(){
         this.image = new ImageView(this.context);
+        this.image.setSoundEffectsEnabled(false);
         this.setLayout();
         this.setImageTags();
         this.image.setOnClickListener(new View.OnClickListener() {

@@ -86,10 +86,10 @@
             />
         <ImageButton
             style="@style/GlossyGradientButtonStyle"
-            android:layout_width="60sp"
-            android:layout_height="60sp"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="@dimen/_60sdp"
             android:id="@+id/sound"
-            android:padding="10sp"
+            android:padding="20sp"
             android:soundEffectsEnabled="false"
             android:src="@drawable/speaker"
             android:elevation="0sp"
@@ -102,16 +102,16 @@
             />
         <ImageButton
             style="@style/GlossyGradientButtonStyle"
-            android:layout_width="80sp"
-            android:layout_height="80sp"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_80sdp"
             android:id="@+id/play"
             android:text="@string/play"
             android:padding="5sp"
             android:soundEffectsEnabled="false"
-            android:layout_marginBottom="10dp"
+
             android:src="@drawable/play"
             android:elevation="0sp"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center_horizontal|center_vertical"/>
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -119,10 +119,10 @@
             />
         <ImageButton
             style="@style/GlossyGradientButtonStyle"
-            android:layout_width="60sp"
-            android:layout_height="60sp"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="@dimen/_60sdp"
             android:id="@+id/trophy"
-            android:padding="10sp"
+            android:padding="20sp"
             android:adjustViewBounds="true"
             android:soundEffectsEnabled="false"
             android:src="@drawable/trophy"

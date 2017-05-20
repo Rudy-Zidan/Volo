@@ -51,11 +51,11 @@ public class Utility {
     public void fallOneDown(){
         Random rand = new Random();
         int giftOrBomb = rand.nextInt(2);
-//        if(giftOrBomb == types.GIFT.getValue()) {
-//            new Gift(this.context, this.listener).renderGift();
-//        }else{
+        if(giftOrBomb == types.GIFT.getValue()) {
+            new Gift(this.context, this.listener).renderGift();
+        }else{
             new Bomb(this.context, this.listener).renderBomb();
-//        }
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)

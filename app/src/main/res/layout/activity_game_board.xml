@@ -115,9 +115,10 @@
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
             android:layout_marginLeft="@dimen/_20sdp"
+            android:id="@+id/game_mode_icon"
             android:clickable="false"
             android:layout_gravity="center"
-            android:src="@drawable/heart"/>
+            android:src="@drawable/easy"/>
         <TextView
             style="?android:attr/textAppearanceSmall"
             android:layout_width="wrap_content"
@@ -128,6 +129,6 @@
             android:background="#0000"
             android:layout_marginRight="@dimen/_20sdp"
             android:layout_gravity="center"
-            android:text="Death" />
+            android:text="Easy" />
     </LinearLayout>
 </FrameLayout>

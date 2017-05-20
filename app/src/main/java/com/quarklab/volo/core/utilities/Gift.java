@@ -22,6 +22,7 @@ class Gift extends Utility{
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void renderGift(){
         this.image = new ImageView(this.context);
+        this.image.setSoundEffectsEnabled(false);
         this.setLayout();
         this.image.setOnClickListener(new View.OnClickListener() {
             @Override
