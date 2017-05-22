@@ -22,7 +22,18 @@ public class Setting {
         if(!this.preferences.contains("facebookUser")){
             this.preferences.edit().putString("facebookUser","");
         }
+        if(!this.preferences.contains("facebook_id")){
+            this.preferences.edit().putString("facebook_id","");
+        }
     }
+    public void setFacebookId(String id){
+        this.preferences.edit().putString("facebook_id",id).commit();
+    }
+
+    public String getFacebookId(){
+        return this.preferences.getString("facebook_id","");
+    }
+
     public void updateFacebookAccount(String account){
         this.preferences.edit().putString("facebookUser",account).commit();
     }
@@ -35,6 +46,9 @@ public class Setting {
     public void updateScore(int score){
         long oldScore = this.preferences.getLong("score",0);
         this.preferences.edit().putLong("score",oldScore+score).commit();
+    }
+    public void setScore(int score){
+        this.preferences.edit().putLong("score",score).commit();
     }
     public long getScore(){
         return this.preferences.getLong("score",0);

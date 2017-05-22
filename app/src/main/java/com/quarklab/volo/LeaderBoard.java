@@ -95,7 +95,10 @@ public class LeaderBoard extends Activity {
                 JSONObject player = data.getJSONObject(i);
                 this.players[i] = player.getString("name");
                 this.scores[i] = player.getString("score");
-                this.userId[i] = player.getString("facebookId");
+                if(this.setting.getFacebookId().equals(player.getString("facebook_id"))){
+                    this.setting.setScore(Integer.parseInt(this.scores[i]));
+                }
+                this.userId[i] = player.getString("facebook_id");
             }catch (JSONException e) {
                 e.printStackTrace();
             }

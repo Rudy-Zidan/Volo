@@ -107,7 +107,7 @@ public class GameEngine {
             this.lifeTimer.cancel();
             this.lifeTimer = null;
         }
-        this.showReplayDialog();
+        //this.showReplayDialog();
     }
 
     public void actionHandler(View button) {
@@ -402,6 +402,7 @@ public class GameEngine {
             this.gameBoard.soundManager.playSound(R.raw.over);
             this.lifeTimer.cancel();
             this.stopGame();
+            this.showReplayDialog();
         }
     }
 

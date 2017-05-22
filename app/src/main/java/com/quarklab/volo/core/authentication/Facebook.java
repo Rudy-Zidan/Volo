@@ -74,10 +74,12 @@ public class Facebook {
                             JSONObject x = SquareBashAPI.postObject(context.getString(R.string.save_player_api),facebookAccount);
                             if(x.getBoolean("status")){
                                 squareBash.displayGameBoard();
+                                squareBash.setting.setFacebookId(object.getString("id"));
                                 squareBash.setting.updateFacebookAccount(facebookAccount);
                                 squareBash = null;
                             }else{
                                 if(!squareBash.setting.isFacebookAccountExists()) {
+                                    squareBash.setting.setFacebookId(object.getString("id"));
                                     squareBash.setting.updateFacebookAccount(facebookAccount);
                                 }
                                 squareBash.displayGameBoard();
