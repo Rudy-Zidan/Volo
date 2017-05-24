@@ -25,7 +25,12 @@ public class Setting {
         if(!this.preferences.contains("facebook_id")){
             this.preferences.edit().putString("facebook_id","");
         }
+
+        if(!this.preferences.contains("token")){
+            this.preferences.edit().putString("token","");
+        }
     }
+
     public void setFacebookId(String id){
         this.preferences.edit().putString("facebook_id",id).commit();
     }
@@ -66,5 +71,13 @@ public class Setting {
 
     public boolean playSound(){
         return this.preferences.getBoolean("sound",true);
+    }
+
+    public void setToken(String token){
+        this.preferences.edit().putString("token",token).commit();
+    }
+
+    public String getToken(){
+        return this.preferences.getString("token","");
     }
 }

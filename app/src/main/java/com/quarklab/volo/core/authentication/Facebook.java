@@ -75,6 +75,7 @@ public class Facebook {
                             if(x.getBoolean("status")){
                                 squareBash.displayGameBoard();
                                 squareBash.setting.setFacebookId(object.getString("id"));
+                                squareBash.setting.setToken(x.getString("token"));
                                 squareBash.setting.updateFacebookAccount(facebookAccount);
                                 squareBash = null;
                             }else{

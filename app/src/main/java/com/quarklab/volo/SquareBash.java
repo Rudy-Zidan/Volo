@@ -172,6 +172,7 @@ public class SquareBash extends Activity {
                         JSONObject data = new JSONObject();
                         data.put("id",Long.parseLong(account.get("id").toString()));
                         data.put("score",setting.getScore());
+                        data.put("token",setting.getToken());
                         data.put("friends",objects);
                         JSONObject x = SquareBashAPI.postObject(getString(R.string.update_score_api),
                                 data.toString());

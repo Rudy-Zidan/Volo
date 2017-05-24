@@ -61,6 +61,7 @@ public class LeaderBoard extends Activity {
             JSONObject account = new JSONObject(this.setting.getFacebookAccount());
             JSONObject data = new JSONObject();
             data.put("id", Long.parseLong(account.get("id").toString()));
+            data.put("token", setting.getToken());
             JSONArray rankResponse = SquareBashAPI.post(getString(R.string.leader_board_api),
                     data.toString());
             if(rankResponse == null){
