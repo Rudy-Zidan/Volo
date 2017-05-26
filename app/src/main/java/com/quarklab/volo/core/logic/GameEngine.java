@@ -90,9 +90,9 @@ public class GameEngine {
         this.currentUserScore = 0;
         this.lifes = 4;
         this.ended = false;
+        this.changeGameMode(false);
         String text = (this.gameMode.getCurrentGameMode()).replace("_", " ");
         this.gameModeText.setText(text);
-
         this.lifesText.setText(String.valueOf(lifes));
         this.gameBoard.soundManager.startBackgroundSound();
         this.gameHandler.start();
@@ -127,9 +127,11 @@ public class GameEngine {
         this.gameBoard.getRenderEngine().renderButton(shape);
     }
 
-    private void changeGameMode() {
+    private void changeGameMode(boolean playSound) {
         this.gameMode.change();
-        this.gameBoard.soundManager.playSound(R.raw.mod_change);
+        if(playSound){
+            this.gameBoard.soundManager.playSound(R.raw.mod_change);
+        }
         String text = (this.gameMode.getCurrentGameMode()).replace("_", " ");
         this.gameModeText.setText(text);
         this.setGameModeIcon();
@@ -564,7 +566,7 @@ public class GameEngine {
             public void onAnimationComplete() {
                 gameModeText.setTextColor(context.getResources().getColor(R.color.black));
                 setGameModeHolderBackground(R.drawable.mode_layout);
-                changeGameMode();
+                changeGameMode(true);
                 stopTicToc();
             }
         });
