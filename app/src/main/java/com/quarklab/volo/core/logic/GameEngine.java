@@ -86,7 +86,7 @@ public class GameEngine {
     public void startGame() {
         this.scoreContinousTimes = 0;
         this.startClickedGreen = 0;
-        this.currentTimeInMilliSec = 0;
+        this.currentTimeInMilliSec = this.gameBoard.setting.getCurrentTime();
         this.currentUserScore = 0;
         this.lifes = 4;
         this.ended = false;
@@ -107,7 +107,6 @@ public class GameEngine {
             this.lifeTimer.cancel();
             this.lifeTimer = null;
         }
-        //this.showReplayDialog();
     }
 
     public void actionHandler(View button) {
@@ -446,15 +445,19 @@ public class GameEngine {
     }
 
     private void startLifeTimeCounter() {
-        Random rand = new Random();
-        int minutes = rand.nextInt(4);
-        if(minutes < 1){
-            minutes = 1;
-        }
         int interval = 1000;
-        long minutesInMilliseconds = minutes * 60000;
-        this.timerText.setText(String.format("%s:00", String.valueOf(minutes)));
-        this.startTimeCounter(minutesInMilliseconds, interval);
+        if(this.currentTimeInMilliSec == 0){
+            Random rand = new Random();
+            int minutes = rand.nextInt(4);
+            if(minutes < 1){
+                minutes = 1;
+            }
+            long minutesInMilliseconds = minutes * 60000;
+            this.timerText.setText(String.format("%s:00", String.valueOf(minutes)));
+            this.startTimeCounter(minutesInMilliseconds, interval);
+        }else{
+            this.startTimeCounter(this.currentTimeInMilliSec, interval);
+        }
     }
 
     private void startTimeCounter(long milliseconds, long interval){
@@ -467,6 +470,7 @@ public class GameEngine {
             @Override
             public void onTick(long l) {
                 currentTimeInMilliSec = l;
+                gameBoard.setting.setCurrentTime(currentTimeInMilliSec);
                 long minutes = Math.round(l / 60000);
                 long seconds = Math.round((l % 60000) / 1000);
                 String time =  minutes + ":" + (seconds < 10 ? '0' : "") + seconds;
@@ -486,6 +490,8 @@ public class GameEngine {
             public void onFinish() {
                 timerText.setText(R.string.default_time);
                 stopGame();
+                gameBoard.setting.setCurrentTime(0);
+                showReplayDialog();
             }
         };
         this.lifeTimer.start();

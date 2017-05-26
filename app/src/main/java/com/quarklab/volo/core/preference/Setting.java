@@ -80,4 +80,12 @@ public class Setting {
     public String getToken(){
         return this.preferences.getString("token","");
     }
+
+    public void setCurrentTime(long millisec){
+        this.preferences.edit().putLong("time", millisec).commit();
+    }
+
+    public Long getCurrentTime(){
+        return this.preferences.getLong("time", 0);
+    }
 }

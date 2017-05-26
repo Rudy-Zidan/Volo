@@ -58,6 +58,7 @@ public class GameBoard extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        this.setting.setCurrentTime(0);
         this.gameEngine = null;
         this.renderEngine = null;
         this.setting = null;
