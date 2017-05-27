@@ -88,4 +88,12 @@ public class Setting {
     public Long getCurrentTime(){
         return this.preferences.getLong("time", 0);
     }
+
+    public void setGameMode(String gameMode){
+        this.preferences.edit().putString("mode", gameMode).commit();
+    }
+
+    public String getGameMode(){
+        return this.preferences.getString("mode", "");
+    }
 }

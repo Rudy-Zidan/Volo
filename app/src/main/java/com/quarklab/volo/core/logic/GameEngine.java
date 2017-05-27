@@ -90,7 +90,9 @@ public class GameEngine {
         this.currentUserScore = 0;
         this.lifes = 4;
         this.ended = false;
-        this.changeGameMode(false);
+        if(this.gameMode.getCurrentGameMode() != this.gameBoard.setting.getGameMode()){
+            this.changeGameMode(false);
+        }
         String text = (this.gameMode.getCurrentGameMode()).replace("_", " ");
         this.gameModeText.setText(text);
         this.lifesText.setText(String.valueOf(lifes));
@@ -132,7 +134,9 @@ public class GameEngine {
         if(playSound){
             this.gameBoard.soundManager.playSound(R.raw.mod_change);
         }
-        String text = (this.gameMode.getCurrentGameMode()).replace("_", " ");
+        String gameModeText = this.gameMode.getCurrentGameMode();
+        this.gameBoard.setting.setGameMode(gameModeText);
+        String text = gameModeText.replace("_", " ");
         this.gameModeText.setText(text);
         this.setGameModeIcon();
         this.centerNotification(text);
@@ -403,6 +407,7 @@ public class GameEngine {
             this.gameBoard.soundManager.playSound(R.raw.over);
             this.lifeTimer.cancel();
             this.stopGame();
+            this.gameBoard.setting.setGameMode("");
             this.showReplayDialog();
         }
     }
