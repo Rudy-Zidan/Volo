@@ -225,10 +225,9 @@ public class GameEngine {
             public void onTick(long l) {
                 timerText.setTextColor(context.getResources().getColor(R.color.red));
                 if(!isStarted){
-                    playTicToc();
+                    gameBoard.soundManager.startBombSound();
                 }
-                centerNotification(String.valueOf(Math.round(l/1000.0)), R.color.red);
-//                timerText.setText("00:0"+String.valueOf(Math.round(l/1000.0)));
+                timerText.setText("00:0"+String.valueOf(Math.round(l/1000)));
                 isStarted = true;
             }
 
@@ -239,9 +238,10 @@ public class GameEngine {
                 }else{
                     gameHandler.unlockGameSpeed();
                 }
-//                timerText.setText("00:00");
+                timerText.setTextColor(context.getResources().getColor(R.color.red));
+                timerText.setText("00:00");
                 isStarted = false;
-                stopTicToc();
+                gameBoard.soundManager.stopBombSound();
             }
         }.start();
     }
