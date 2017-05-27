@@ -23,8 +23,8 @@ public class OnBoardNotification {
     private int speed;
     private int textSize;
     private int color;
+
     private Context context;
-    private Typeface typeface;
     private FrameLayout layout;
     private TextView notificationHolder;
 
@@ -33,8 +33,8 @@ public class OnBoardNotification {
         this.context = context;
         this.setHolder();
         this.setLayout();
-        this.setTypeface();
     }
+
     public OnBoardNotification(Context context,float x, float y){
         this(context);
         this.x = x;
@@ -66,12 +66,6 @@ public class OnBoardNotification {
         this.layout = (FrameLayout)((Activity)this.context).findViewById(R.id.gameBoardLayout);
     }
 
-    private void setTypeface(){
-        AssetManager am = context.getAssets();
-        typeface = Typeface.createFromAsset(am,
-                String.format(Locale.US, "fonts/%s", "KBZipaDeeDooDah.ttf"));
-    }
-
     private void setHolder(){
         this.notificationHolder = new TextView(this.context);
     }
@@ -101,7 +95,6 @@ public class OnBoardNotification {
         this.notificationHolder.setTextSize(this.textSize);
         this.notificationHolder.setShadowLayer(1.5f, 0, 0, Color.parseColor("#2F2F2F"));
         this.notificationHolder.setTextColor(this.context.getResources().getColor(this.color));
-        this.notificationHolder.setTypeface(this.typeface);
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)

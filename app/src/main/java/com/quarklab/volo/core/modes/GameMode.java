@@ -10,8 +10,7 @@ public class GameMode {
     protected enum buttons {GOOD, EVIL, MEH}
     private modes current;
 
-    private int score;
-    private int lifes;
+    protected int score;
     private Random rand;
 
 
@@ -19,7 +18,6 @@ public class GameMode {
 
     public GameMode(GameModeListener gmListener) {
         this.score = 0;
-        this.lifes = 4;
         this.current = modes.Easy;
         this.gmlistener = gmListener;
         this.rand = new Random();
@@ -85,34 +83,36 @@ public class GameMode {
         return tag;
     }
 
-    private int calcScore(int power) {
+    private int calcScore(int limit, int power) {
+        if(limit == 0){
+            limit = 20;
+        }
         Random rand = new Random();
-        int score = rand.nextInt(20)+1;
+        int score = rand.nextInt(limit)+1;
         if(power !=0){
             score =  power*score;
         }
         return Math.abs(score);
     }
 
-    private void setLifes(int n) {
-        this.lifes += n;
-    }
-
     protected void endLife() {
         this.gmlistener.onLifeLost();
     }
 
-    protected void addScore(int power) {
-        this.gmlistener.onScoreAdded(this.calcScore(power));
+    protected void addScore(int limit, int power) {
+        this.gmlistener.onScoreAdded(this.calcScore(limit, power));
     }
 
-    protected void reduceScore(int power) {
-        this.gmlistener.onScoreReduced(this.calcScore(power));
+    protected void reduceScore(int limit, int power) {
+        this.gmlistener.onScoreReduced(this.calcScore(limit, power));
     }
 
     protected void nothing() {
         this.gmlistener.nothing();
     }
 
+    public void setUserScore(int score){
+        this.score = score;
+    }
 
 }

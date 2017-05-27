@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -29,7 +30,6 @@ public class Facebook {
     private List<String> permissionNeeds= Arrays.asList("user_photos", "email", "user_birthday", "user_friends");
     private Context context;
     private GraphRequest request;
-    private CallbackManager callbackManager;
     private SquareBash squareBash;
 
     public void authenticate(final Context context){

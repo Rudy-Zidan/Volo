@@ -13,7 +13,7 @@ class SuddenDeath extends GameMode{
         switch (tag) {
             case GOOD: endLife();
                 break;
-            case EVIL: addScore(0);
+            case EVIL: addScore(0, 0);
                 break;
             case MEH: nothing();
                 break;

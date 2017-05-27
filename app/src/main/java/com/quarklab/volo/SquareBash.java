@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.res.AssetManager;
-import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -38,7 +36,6 @@ import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Locale;
 
 
 public class SquareBash extends Activity {
@@ -47,8 +44,6 @@ public class SquareBash extends Activity {
     public CallbackManager callbackManager;
     private LinearLayout linearLoader;
     private LinearLayout linearActions;
-
-    private Typeface typeface;
 
     private Boolean exit = false;
 
@@ -71,6 +66,8 @@ public class SquareBash extends Activity {
         }
         play.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                linearActions.setVisibility(View.GONE);
+                linearLoader.setVisibility(View.VISIBLE);
                 if(isNetworkAvailable()) {
                     facebook.authenticate(SquareBash.this);
                 }else{
@@ -107,21 +104,19 @@ public class SquareBash extends Activity {
         });
         printKeyHash();
         this.showUserScore();
-
-        AssetManager am = getApplicationContext().getAssets();
-        typeface = Typeface.createFromAsset(am,
-                String.format(Locale.US, "fonts/%s", "KBZipaDeeDooDah.ttf"));
-        TextView title = (TextView) findViewById(R.id.title);
-        title.setTypeface(this.typeface);
     }
     public void displayGameBoard(){
         Intent gameBoardIntent= new Intent(SquareBash.this,GameBoard.class);
         startActivity(gameBoardIntent);
+        linearActions.setVisibility(View.VISIBLE);
+        linearLoader.setVisibility(View.GONE);
     }
 
     public void displayLeaderBoard(){
         Intent leaderBoardIntent= new Intent(SquareBash.this,LeaderBoard.class);
         startActivity(leaderBoardIntent);
+        linearActions.setVisibility(View.VISIBLE);
+        linearLoader.setVisibility(View.GONE);
     }
 
     private void HandleSoundButtonBG(ImageButton btn){
@@ -180,8 +175,6 @@ public class SquareBash extends Activity {
                             //TODO Open leadersboard a                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          ctivity.
                             displayLeaderBoard();
                         }else{
-                            linearActions.setVisibility(View.VISIBLE);
-                            linearLoader.setVisibility(View.GONE);
                             displayLeaderBoard();
                         }
                     } catch (JSONException e) {
@@ -195,22 +188,15 @@ public class SquareBash extends Activity {
             request.executeAsync();
         }
     }
-    private void alertUser(){
-        Toast.makeText(getApplicationContext(),R.string.server_problem,
-                Toast.LENGTH_SHORT).show();
-    }
 
     private void showUserScore(){
         TextView score = (TextView)findViewById(R.id.scoreText);
         score.setText(Numbers.format(this.setting.getScore())+"");
-        score.setTypeface(this.typeface);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        linearActions.setVisibility(View.VISIBLE);
-        linearLoader.setVisibility(View.GONE);
         this.showUserScore();
     }
 

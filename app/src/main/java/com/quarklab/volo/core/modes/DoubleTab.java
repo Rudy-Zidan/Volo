@@ -11,11 +11,11 @@ class DoubleTab extends GameMode{
 
     public void execute(buttons tag) {
         switch (tag) {
-            case GOOD: addScore(2);
+            case GOOD: addScore(0, 2);
                 break;
-            case EVIL: addScore(2);
+            case EVIL: addScore(0, 2);
                 break;
-            case MEH: reduceScore(2);
+            case MEH: reduceScore(this.score, 2);
                 break;
         }
     }

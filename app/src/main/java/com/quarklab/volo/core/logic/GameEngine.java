@@ -5,8 +5,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 
-import android.content.res.AssetManager;
-import android.graphics.Typeface;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Build;
 import android.os.CountDownTimer;
@@ -27,7 +25,6 @@ import com.quarklab.volo.core.shapes.Shape;
 import com.quarklab.volo.core.utilities.Utility;
 import com.quarklab.volo.core.utilities.UtilityListener;
 
-import java.util.Locale;
 import java.util.Random;
 
 import xyz.hanks.library.SmallBang;
@@ -61,6 +58,7 @@ public class GameEngine {
     private boolean ended;
     private int scoreContinousTimes;
     private long startClickedGreen;
+    private boolean gameEnding = false;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public GameEngine(Context context) {
@@ -139,7 +137,7 @@ public class GameEngine {
         String text = gameModeText.replace("_", " ");
         this.gameModeText.setText(text);
         this.setGameModeIcon();
-        this.centerNotification(text);
+        this.centerNotification(text, R.color.white);
     }
 
     private void changeGameShape() {
@@ -195,7 +193,7 @@ public class GameEngine {
             case 0: int score = rand.nextInt(100)+1;
                     this.scoreAdded(score);
                     this.gameBoard.soundManager.playSound(R.raw.coins);
-                    this.centerNotification("+ "+score);
+                    this.centerNotification("+ "+score, R.color.white);
                 break;
             case 1: this.addLife(1);
                 break;
@@ -211,7 +209,7 @@ public class GameEngine {
         }
         int interval = 1000;
 
-        centerNotification(imageTag+" Bomb");
+        centerNotification(imageTag+" Bomb", R.color.white);
 
         if(imageTag.equals("Green") || imageTag.equals("Gray") || imageTag.equals("Red")){
             this.gameBoard.getRenderEngine().changeDefaultColor(shape, imageTag);
@@ -220,7 +218,6 @@ public class GameEngine {
         }else{
             gameHandler.slowUpGameSpeed();
         }
-
         new CountDownTimer(totalSeconds, interval) {
             boolean isStarted = false;
 
@@ -230,7 +227,8 @@ public class GameEngine {
                 if(!isStarted){
                     playTicToc();
                 }
-                timerText.setText(String.valueOf(Math.round(l/1000.0)));
+                centerNotification(String.valueOf(Math.round(l/1000.0)), R.color.red);
+//                timerText.setText("00:0"+String.valueOf(Math.round(l/1000.0)));
                 isStarted = true;
             }
 
@@ -241,7 +239,7 @@ public class GameEngine {
                 }else{
                     gameHandler.unlockGameSpeed();
                 }
-                timerText.setText(" ");
+//                timerText.setText("00:00");
                 isStarted = false;
                 stopTicToc();
             }
@@ -274,25 +272,11 @@ public class GameEngine {
             dialog.setCancelable(false);
             dialog.setContentView(R.layout.replay_dialog);
 
-            AssetManager am = this.context.getApplicationContext().getAssets();
-            Typeface typeface = Typeface.createFromAsset(am,
-                    String.format(Locale.US, "fonts/%s", "KBZipaDeeDooDah.ttf"));
-
-            TextView gameOverText = (TextView) dialog.findViewById(R.id.game_over_text);
-            gameOverText.setTypeface(typeface);
-
-            TextView scoreTextDialog = (TextView) dialog.findViewById(R.id.text_dialog);
-            scoreTextDialog.setTypeface(typeface);
-
             TextView score = (TextView) dialog.findViewById(R.id.dialog_score);
             score.setText(String.valueOf(gameBoard.setting.getScore()));
-            score.setTypeface(typeface);
 
             Button again = (Button) dialog.findViewById(R.id.btn_replay);
-            again.setTypeface(typeface);
-
             Button no = (Button) dialog.findViewById(R.id.btn_no);
-            no.setTypeface(typeface);
 
             again.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -402,7 +386,7 @@ public class GameEngine {
             this.lifesText.setText(String.valueOf(lifes));
             this.gameBoard.soundManager.playSound(R.raw.life_lost);
         }
-        this.centerNotification("-1 life");
+        this.centerNotification("-1 life", R.color.white);
         if(lifes == 0) {
             this.gameBoard.soundManager.playSound(R.raw.over);
             this.lifeTimer.cancel();
@@ -418,11 +402,12 @@ public class GameEngine {
             this.currentUserScore = 0;
         }
         this.updateScoreText(this.currentUserScore);
-        this.centerNotification("-"+score);
+        this.centerNotification("-"+score, R.color.white);
     }
 
     private void scoreAdded(int score) {
         this.currentUserScore += score;
+        this.gameMode.setUserScore(this.currentUserScore);
         this.updateScoreText(currentUserScore);
         long lastClickGreen = System.currentTimeMillis();
         double firstAndLastClickDiff = (lastClickGreen - this.startClickedGreen) / 1000.0;
@@ -430,7 +415,7 @@ public class GameEngine {
             this.scoreContinousTimes = 0;
             this.startClickedGreen = 0;
             this.gameBoard.soundManager.playSound(R.raw.sweet);
-            this.centerNotification("Strike");
+            this.centerNotification("Strike", R.color.white);
         }else if(firstAndLastClickDiff > 10.0){
             this.scoreContinousTimes = 0;
             this.startClickedGreen = 0;
@@ -441,14 +426,14 @@ public class GameEngine {
         this.lifes+=n;
         this.lifesText.setText(String.valueOf(lifes));
         this.gameBoard.soundManager.playSound(R.raw.life_added);
-        this.centerNotification("+1 Life");
+        this.centerNotification("+1 Life", R.color.white);
     }
 
-    private void centerNotification(String msg){
+    private void centerNotification(String msg, int color){
         this.onBoardNotification.setX((this.gameBoard.getRenderEngine().getScreenWidth()/2));
         this.onBoardNotification.setY(this.gameBoard.getRenderEngine().getScreenHeight()/2);
-        this.onBoardNotification.setColor(R.color.white);
-        this.onBoardNotification.notify(msg, 1500, 30, true);
+        this.onBoardNotification.setColor(color);
+        this.onBoardNotification.notify(msg, 1000, 30, true);
     }
 
     private void startLifeTimeCounter() {
@@ -472,6 +457,11 @@ public class GameEngine {
             this.lifeTimer.cancel();
         }
 
+        if(gameEnding){
+            this.stopTicToc();
+            this.gameEnding = false;
+        }
+
         this.lifeTimer = new CountDownTimer(milliseconds, interval) {
             boolean isStarted = false;
             @Override
@@ -483,6 +473,7 @@ public class GameEngine {
                 String time =  minutes + ":" + (seconds < 10 ? '0' : "") + seconds;
                 timerText.setText(time);
                 if(seconds <= 5 && minutes == 0){
+                    gameEnding = true;
                     timerText.setTextColor(context.getResources().getColor(R.color.red));
                     if(!isStarted ){
                         playTicToc();
@@ -556,8 +547,9 @@ public class GameEngine {
 
         long totalMilliSec = this.currentTimeInMilliSec + millisec;
         int sec = millisec / 1000;
-        centerNotification("+ "+sec+" Sec");
+        centerNotification("+ "+sec+" Sec", R.color.white);
         this.startTimeCounter(totalMilliSec, 1000);
+        this.gameBoard.soundManager.playSound(R.raw.time);
     }
 
     private void animateGameHolder(){

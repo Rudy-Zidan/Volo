@@ -12,11 +12,11 @@ class Easy extends GameMode {
 
     public void execute(buttons tag) {
         switch (tag) {
-            case GOOD: addScore(0);
+            case GOOD: addScore(0, 0);
                 break;
             case EVIL: endLife();
                 break;
-            case MEH: reduceScore(0);
+            case MEH: reduceScore(this.score, 0);
                 break;
         }
     }
