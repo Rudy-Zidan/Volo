@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import com.quarklab.volo.GameBoard;
 import com.quarklab.volo.core.sounds.BackgroundSound;
 import com.quarklab.volo.core.sounds.BombSound;
+import com.quarklab.volo.core.sounds.ModeSound;
 import com.quarklab.volo.core.sounds.TicTocSound;
 
 /**
@@ -17,6 +18,7 @@ public class SoundManager {
     private BackgroundSound backgroundMusic;
     private TicTocSound ticTocSound;
     private BombSound bombSound;
+    private ModeSound modeSound;
     private GameBoard gameBoard;
     private MediaPlayer mPlayer;
     public  SoundManager(Context context){
@@ -76,6 +78,27 @@ public class SoundManager {
                 this.backgroundMusic.setVolume(1f, 1f);
             }
             this.bombSound.stop();
+        }
+    }
+
+    public void startModeChangeSound() {
+        if(this.gameBoard.setting.playSound()){
+            if(this.modeSound != null){
+                this.stopBombSound();
+                this.modeSound = null;
+            }
+            this.modeSound = new ModeSound(this.context);
+            this.backgroundMusic.setVolume(0.3f, 0.3f);
+            this.modeSound.execute();
+        }
+    }
+
+    public void stopModeChangeSound(){
+        if(this.gameBoard.setting.playSound() && this.modeSound != null &&this.modeSound.isPlaying()) {
+            if(this.backgroundMusic.isPlaying()){
+                this.backgroundMusic.setVolume(1f, 1f);
+            }
+            this.modeSound.stop();
         }
     }
 

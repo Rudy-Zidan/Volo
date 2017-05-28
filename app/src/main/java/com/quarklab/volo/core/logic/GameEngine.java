@@ -564,10 +564,10 @@ public class GameEngine {
                 gameModeText.setTextColor(context.getResources().getColor(R.color.black));
                 setGameModeHolderBackground(R.drawable.mode_layout);
                 changeGameMode(true);
-                stopTicToc();
+                gameBoard.soundManager.stopModeChangeSound();
             }
         });
-        playTicToc();
+        this.gameBoard.soundManager.startModeChangeSound();
         this.gameModeText.setText("Picking!");
         this.gameModeIcon.setImageResource(R.drawable.loading);
         animate.start();
