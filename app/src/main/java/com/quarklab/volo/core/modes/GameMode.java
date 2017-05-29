@@ -88,7 +88,7 @@ public class GameMode {
         int score = 0;
         if(stable){
             limit = 20;
-            score = rand.nextInt(limit);
+            score = rand.nextInt(limit) + 1;
         }else if(limit > 0){
             score = rand.nextInt(limit);
         }
