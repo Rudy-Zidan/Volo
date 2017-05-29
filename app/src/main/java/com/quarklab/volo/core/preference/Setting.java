@@ -50,7 +50,13 @@ public class Setting {
     }
     public void updateScore(int score){
         long oldScore = this.preferences.getLong("score",0);
-        this.preferences.edit().putLong("score",oldScore+score).commit();
+        long total_score = oldScore + score;
+        this.preferences.edit().putLong("score", total_score).commit();
+    }
+    public void updateToReduceScore(int score){
+        long oldScore = this.preferences.getLong("score",0);
+        long total_score = oldScore - score;
+        this.preferences.edit().putLong("score", total_score).commit();
     }
     public void setScore(int score){
         this.preferences.edit().putLong("score",score).commit();

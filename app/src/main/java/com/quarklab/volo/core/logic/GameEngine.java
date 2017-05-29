@@ -334,8 +334,11 @@ public class GameEngine {
         });
     }
 
-    private void updateScoreText(int score) {
-        this.gameBoard.setting.updateScore(score);
+    private void updateAddedScoreText(int score) {
+        this.scoreText.setText(String.valueOf(Numbers.format(score)));
+    }
+
+    private void updateReducedScoreText(int score) {
         this.scoreText.setText(String.valueOf(Numbers.format(score)));
     }
 
@@ -356,15 +359,16 @@ public class GameEngine {
                     startClickedGreen = System.currentTimeMillis();
                 }
                 scoreContinousTimes+=1;
-                onBoardNotification.notify("+ "+score, 500, 18, false);
-                scoreAdded(score + currentScoreRate);
+                int realScore = score + currentScoreRate;
+                onBoardNotification.notify("+ "+realScore, 500, 18, false);
+                scoreAdded(realScore);
                 gameBoard.soundManager.playSound(R.raw.score);
             }
 
             @Override
             public void onScoreReduced(int score) {
                 scoreContinousTimes = 0;
-                reduceScore(score + currentScoreRate);
+                reduceScore(score);
                 gameBoard.soundManager.playSound(R.raw.score_lost);
             }
 
@@ -401,14 +405,16 @@ public class GameEngine {
         if(this.currentUserScore < 0){
             this.currentUserScore = 0;
         }
-        this.updateScoreText(this.currentUserScore);
+        this.gameBoard.setting.updateToReduceScore(score);
+        this.updateReducedScoreText(this.currentUserScore);
         this.centerNotification("-"+score, R.color.white);
     }
 
     private void scoreAdded(int score) {
         this.currentUserScore += score;
         this.gameMode.setUserScore(this.currentUserScore);
-        this.updateScoreText(currentUserScore);
+        this.gameBoard.setting.updateScore(score);
+        this.updateAddedScoreText(this.currentUserScore);
         long lastClickGreen = System.currentTimeMillis();
         double firstAndLastClickDiff = (lastClickGreen - this.startClickedGreen) / 1000.0;
         if (this.scoreContinousTimes == 3 && firstAndLastClickDiff <= 10.0 ) {
