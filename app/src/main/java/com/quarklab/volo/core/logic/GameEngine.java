@@ -343,7 +343,7 @@ public class GameEngine {
     }
 
     private void initGameMode() {
-        this.gameMode = new GameMode(this.gameModeListener);
+        this.gameMode = new GameMode(this.gameModeListener, this.currentUserScore);
     }
 
     private void initGameModeListener(){
@@ -402,10 +402,12 @@ public class GameEngine {
 
     private void reduceScore(int score) {
         this.currentUserScore -= score;
-        if(this.currentUserScore < 0){
+        if(this.currentUserScore > 0){
+            this.gameBoard.setting.updateToReduceScore(score);
+        }else{
             this.currentUserScore = 0;
         }
-        this.gameBoard.setting.updateToReduceScore(score);
+
         this.updateReducedScoreText(this.currentUserScore);
         this.centerNotification("-"+score, R.color.white);
     }

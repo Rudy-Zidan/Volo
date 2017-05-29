@@ -5,8 +5,8 @@ package com.quarklab.volo.core.modes;
  */
 class SuddenDeath extends GameMode{
 
-    public SuddenDeath(GameModeListener gmListener) {
-        super(gmListener);
+    public SuddenDeath(GameModeListener gmListener, int score) {
+        super(gmListener, score);
     }
 
     public void execute(buttons tag) {

@@ -5,8 +5,8 @@ package com.quarklab.volo.core.modes;
  */
 class DoubleTab extends GameMode{
 
-    public DoubleTab(GameModeListener gmListener) {
-        super(gmListener);
+    public DoubleTab(GameModeListener gmListener, int score) {
+        super(gmListener, score);
     }
 
     public void execute(buttons tag) {

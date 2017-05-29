@@ -6,8 +6,8 @@ package com.quarklab.volo.core.modes;
  */
 class Easy extends GameMode {
 
-    public Easy(GameModeListener gmListener) {
-        super(gmListener);
+    public Easy(GameModeListener gmListener, int score) {
+        super(gmListener, score);
     }
 
     public void execute(buttons tag) {

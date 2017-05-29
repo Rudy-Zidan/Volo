@@ -16,8 +16,8 @@ public class GameMode {
 
     protected GameModeListener gmlistener;
 
-    public GameMode(GameModeListener gmListener) {
-        this.score = 0;
+    public GameMode(GameModeListener gmListener, int score) {
+        this.score = score;
         this.current = modes.Easy;
         this.gmlistener = gmListener;
         this.rand = new Random();
@@ -59,15 +59,15 @@ public class GameMode {
     }
 
     private Easy getEasyMode() {
-        return new Easy(this.gmlistener);
+        return new Easy(this.gmlistener, this.score);
     }
 
     private SuddenDeath getSuddenDeathMode() {
-        return new SuddenDeath(this.gmlistener);
+        return new SuddenDeath(this.gmlistener, this.score);
     }
 
     private DoubleTab getDoubleTabMode() {
-        return new DoubleTab(this.gmlistener);
+        return new DoubleTab(this.gmlistener, this.score);
     }
 
     private buttons getTag(String buttonTag) {
@@ -83,15 +83,20 @@ public class GameMode {
         return tag;
     }
 
-    private int calcScore(int limit, int power) {
-        if(limit == 0){
-            limit = 20;
-        }
+    private int calcScore(int limit, int power, boolean stable) {
         Random rand = new Random();
-        int score = rand.nextInt(limit)+1;
+        int score = 0;
+        if(stable){
+            limit = 20;
+            score = rand.nextInt(limit);
+        }else if(limit > 0){
+            score = rand.nextInt(limit);
+        }
+
         if(power !=0){
             score =  power*score;
         }
+
         return Math.abs(score);
     }
 
@@ -100,11 +105,11 @@ public class GameMode {
     }
 
     protected void addScore(int limit, int power) {
-        this.gmlistener.onScoreAdded(this.calcScore(limit, power));
+        this.gmlistener.onScoreAdded(this.calcScore(limit, power, true));
     }
 
     protected void reduceScore(int limit, int power) {
-        this.gmlistener.onScoreReduced(this.calcScore(limit, power));
+        this.gmlistener.onScoreReduced(this.calcScore(limit, power, false));
     }
 
     protected void nothing() {
