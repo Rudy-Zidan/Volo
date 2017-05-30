@@ -7,13 +7,11 @@ import android.os.Build;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.GridView;
 
 //import com.google.android.gms.ads.AdRequest;
 //import com.google.android.gms.ads.AdView;
 //import com.google.android.gms.ads.MobileAds;
 import com.quarklab.volo.R;
-import com.quarklab.volo.core.adapter.ButtonAdapter;
 import com.quarklab.volo.core.logic.ButtonAction;
 import com.quarklab.volo.core.shapes.Shape;
 
@@ -25,7 +23,6 @@ import java.util.Random;
 public class RenderEngine {
     private Context context;
     private Activity activity;
-    private GridView grid;
     private FrameLayout frameLayout;
     private Button button;
     private ButtonAction buttonAction;
@@ -48,11 +45,6 @@ public class RenderEngine {
         this.frameLayout = (FrameLayout)((Activity)this.context).findViewById(R.id.gameBoardLayout);
         this.screen = new PhoneScreen(this.context);
         this.buttonAction = new ButtonAction();
-
-    }
-    public void render(int resource){
-        this.grid = (GridView) ((Activity)context).findViewById (resource);
-        this.grid.setAdapter(new ButtonAdapter(this.context));
     }
 
     public int getScreenWidth(){
