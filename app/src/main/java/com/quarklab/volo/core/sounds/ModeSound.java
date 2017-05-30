@@ -21,7 +21,7 @@ public class ModeSound extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPreExecute() {
-        this.player = MediaPlayer.create(context, R.raw.cartoon_clock_ticking);
+        this.player = MediaPlayer.create(context, R.raw.mode_changing);
     }
 
     @Override
