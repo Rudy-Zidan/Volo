@@ -100,6 +100,7 @@ public class LeaderBoard extends Activity {
 
         AdRequest.Builder adBuilder = new AdRequest.Builder().addTestDevice("65294B7A3AF3B393B68BBC6026A955D3");
         AdRequest adRequest = adBuilder.build();
+//        AdRequest adRequest = new AdRequest.Builder().build();
 
         this.mAdView.loadAd(adRequest);
     }
