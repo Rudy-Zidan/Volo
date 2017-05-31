@@ -24,20 +24,11 @@ public class GameMode {
     }
 
     public void change() {
-        int random = this.rand.nextInt(10);
-        if (random % 2 == 0) {
-            if (!this.current.equals(modes.Easy)) {
-                this.current = modes.Easy;
-            }else{
-                change();
-            }
-        } else {
-            random = this.rand.nextInt(3) + 1;
-            if (!this.current.equals(modes.values()[random])) {
-                this.current = modes.values()[random];
-            }else{
-                change();
-            }
+        int random = this.rand.nextInt(3);
+        if (!this.current.equals(modes.values()[random])) {
+            this.current = modes.values()[random];
+        }else{
+            change();
         }
     }
 

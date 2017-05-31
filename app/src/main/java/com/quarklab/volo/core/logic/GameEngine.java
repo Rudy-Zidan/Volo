@@ -100,8 +100,7 @@ public class GameEngine {
     }
 
     public void stopGame() {
-        this.gameBoard.soundManager.stopTicTocSound();
-        this.gameBoard.soundManager.stopBackgroundSound();
+        this.stopAllGameSounds();
         this.gameHandler.end();
         if(this.lifeTimer != null){
             this.lifeTimer.cancel();
@@ -155,7 +154,7 @@ public class GameEngine {
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void initializeUtility(){
-         this.utility = new Utility(this.context, new UtilityListener() {
+        this.utility = new Utility(this.context, new UtilityListener() {
             @Override
             public void onGiftClick(ImageView image) {
                 giftAction();
@@ -166,25 +165,24 @@ public class GameEngine {
                 bombAction(image.getTag().toString());
             }
 
-             @Override
-             public void onTimeClick(ImageView image) { addTime(); }
+            @Override
+            public void onTimeClick(ImageView image) { addTime(); }
 
-             @Override
-             public void onDiceClick(ImageView image) {
-                 Random rand = new Random();
-                 switch (rand.nextInt(4)) {
-                     case 0: gameModeListener.onScoreAdded(0);
-                         break;
-                     case 1: gameModeListener.onScoreReduced(0);
-                         break;
-                     case 2: gameModeListener.onLifeLost();
-                         break;
-                     case 3: gameModeListener.onLifeAdded(1);
-                         break;
-                 }
-             }
-
-         });
+            @Override
+            public void onDiceClick(ImageView image) {
+                Random rand = new Random();
+                switch (rand.nextInt(4)) {
+                 case 0: gameModeListener.onScoreAdded(0);
+                     break;
+                 case 1: gameModeListener.onScoreReduced(0);
+                     break;
+                 case 2: gameModeListener.onLifeLost();
+                     break;
+                 case 3: gameModeListener.onLifeAdded(1);
+                     break;
+                }
+            }
+        });
     }
 
     private void giftAction(){
@@ -494,8 +492,8 @@ public class GameEngine {
 
             @Override
             public void onFinish() {
-                timerText.setText(R.string.default_time);
                 stopGame();
+                timerText.setText(R.string.default_time);
                 gameBoard.setting.setCurrentTime(0);
                 showReplayDialog();
             }
@@ -571,8 +569,8 @@ public class GameEngine {
             public void onAnimationComplete() {
                 gameModeText.setTextColor(context.getResources().getColor(R.color.black));
                 setGameModeHolderBackground(R.drawable.mode_layout);
-                changeGameMode(true);
                 gameBoard.soundManager.stopModeChangeSound();
+                changeGameMode(true);
             }
         });
         this.gameBoard.soundManager.startModeChangeSound();
@@ -600,5 +598,12 @@ public class GameEngine {
             case "Double_Tap": this.gameModeIcon.setImageResource(R.drawable.doubletab);
             break;
         }
+    }
+
+    private void stopAllGameSounds(){
+        stopTicToc();
+        this.gameBoard.soundManager.stopBackgroundSound();
+        this.gameBoard.soundManager.stopBombSound();
+        this.gameBoard.soundManager.stopModeChangeSound();
     }
 }

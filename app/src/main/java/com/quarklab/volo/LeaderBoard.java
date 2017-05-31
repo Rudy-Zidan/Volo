@@ -142,6 +142,7 @@ public class LeaderBoard extends Activity {
 //        if(this.mAdView != null){
 //            this.mAdView.destroy();
 //        }
+        Runtime.getRuntime().gc();
         finish();
     }
     public void onResume() {

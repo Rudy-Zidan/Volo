@@ -43,7 +43,6 @@ public class SoundManager {
         if(this.gameBoard.setting.playSound()){
             if(this.ticTocSound != null){
                 this.stopTicTocSound();
-                this.ticTocSound = null;
             }
             this.ticTocSound = new TicTocSound(this.context);
             this.backgroundMusic.setVolume(0.3f, 0.3f);
@@ -57,6 +56,7 @@ public class SoundManager {
                 this.backgroundMusic.setVolume(1f, 1f);
             }
             this.ticTocSound.stop();
+            this.ticTocSound = null;
         }
     }
 
@@ -64,7 +64,6 @@ public class SoundManager {
         if(this.gameBoard.setting.playSound()){
             if(this.bombSound != null){
                 this.stopBombSound();
-                this.bombSound = null;
             }
             this.bombSound = new BombSound(this.context);
             this.backgroundMusic.setVolume(0.3f, 0.3f);
@@ -78,14 +77,14 @@ public class SoundManager {
                 this.backgroundMusic.setVolume(1f, 1f);
             }
             this.bombSound.stop();
+            this.bombSound = null;
         }
     }
 
     public void startModeChangeSound() {
         if(this.gameBoard.setting.playSound()){
             if(this.modeSound != null){
-                this.stopBombSound();
-                this.modeSound = null;
+                this.stopModeChangeSound();
             }
             this.modeSound = new ModeSound(this.context);
             this.backgroundMusic.setVolume(0.3f, 0.3f);
@@ -99,6 +98,7 @@ public class SoundManager {
                 this.backgroundMusic.setVolume(1f, 1f);
             }
             this.modeSound.stop();
+            this.modeSound = null;
         }
     }
 

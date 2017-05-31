@@ -36,6 +36,7 @@ public class GameBoard extends Activity {
         super.onBackPressed();
         this.backClicked = true;
         this.gameEngine.stopGame();
+        Runtime.getRuntime().gc();
         finish();
     }
     public void onResume() {
