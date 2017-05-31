@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.quarklab.volo.LeaderBoard"
-    android:background="@drawable/dawn"
-    >
+    tools:context="com.quarklabs.volo.LeaderBoard"
+    android:background="@drawable/dawn">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,30 +34,28 @@
             android:layout_marginTop="5dp"/>
 
     </LinearLayout>
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/leaderBoardList"
-        android:layout_alignParentTop="true"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         android:layout_marginTop="@dimen/_60sdp"
-        android:layout_centerHorizontal="true" />
-    <!--<com.mopub.mobileads.MoPubView-->
-        <!--android:id="@+id/adviewMopub"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="50sp"-->
-        <!--android:layout_marginBottom="50sp"-->
-        <!--android:layout_gravity="bottom"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--/>-->
-    <!--<com.google.android.gms.ads.AdView-->
-        <!--android:id="@+id/adView"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="bottom"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--ads:adSize="BANNER"-->
-        <!--ads:adUnitId="@string/banner_ad_unit_id">-->
-    <!--</com.google.android.gms.ads.AdView>-->
+        >
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1"
+            android:id="@+id/leaderBoardList"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            ads:adSize="BANNER"
+            ads:adUnitId="@string/banner_ad_unit_id">
+        </com.google.android.gms.ads.AdView>
+    </LinearLayout>
 </RelativeLayout>
