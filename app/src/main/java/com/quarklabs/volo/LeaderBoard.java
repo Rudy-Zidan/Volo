@@ -97,11 +97,7 @@ public class LeaderBoard extends Activity {
     private void setAds() {
         MobileAds.initialize(getApplicationContext(), "ca-app-pub-5665008338785349~7222118517");
         this.mAdView = (AdView) findViewById(R.id.adView);
-
-        AdRequest.Builder adBuilder = new AdRequest.Builder().addTestDevice("65294B7A3AF3B393B68BBC6026A955D3");
-        AdRequest adRequest = adBuilder.build();
-//        AdRequest adRequest = new AdRequest.Builder().build();
-
+        AdRequest adRequest = new AdRequest.Builder().build();
         this.mAdView.loadAd(adRequest);
     }
 
