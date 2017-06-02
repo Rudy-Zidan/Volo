@@ -10,7 +10,7 @@
         android:text="Game Over"
         android:gravity="center"
         android:textSize="@dimen/_70sdp"
-        android:textColor="@color/darkerRed"
+        android:textColor="@color/darkRed"
         />
     <LinearLayout
         android:layout_width="wrap_content"

@@ -7,6 +7,7 @@
     <color name="green">#579B00</color>
     <color name="red">#FF3232</color>
     <color name="white">#fff</color>
+    <color name="transparent_white">#00ffffff</color>
     <color name="black">#000</color>
     <color name="skyblue">#7ec0ee</color>
     <color name="darkOrange">#c9563c</color>
