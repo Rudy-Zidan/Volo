@@ -26,7 +26,7 @@ import java.util.List;
  * Created by rudy on 7/9/16.
  */
 public class Facebook {
-    private List<String> permissionNeeds= Arrays.asList("user_photos", "email", "user_friends");
+    private List<String> permissionNeeds= Arrays.asList("public_profile", "email", "user_friends");
     private Context context;
     private GraphRequest request;
     private SquareBash squareBash;
