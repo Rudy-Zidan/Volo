@@ -162,7 +162,18 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         />
-
+    <ImageButton
+        style="@style/GlossyGradientButtonStyle"
+        android:layout_width="@dimen/_60sdp"
+        android:layout_height="@dimen/_60sdp"
+        android:id="@+id/howToPlay"
+        android:padding="20sp"
+        android:adjustViewBounds="true"
+        android:soundEffectsEnabled="false"
+        android:src="@drawable/trophy"
+        android:elevation="0sp"
+        android:layout_gravity="bottom|center"
+        />
 </LinearLayout>
 
 

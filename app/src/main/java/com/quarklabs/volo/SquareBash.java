@@ -87,6 +87,7 @@ public class SquareBash extends Activity {
         });
 
         ImageButton trophy = (ImageButton)findViewById(R.id.trophy);
+        ImageButton howToPlay = (ImageButton)findViewById(R.id.howToPlay);
 
         this.linearLoader = (LinearLayout) findViewById(R.id.loader);
         this.linearActions = (LinearLayout) findViewById(R.id.actions);
@@ -100,6 +101,14 @@ public class SquareBash extends Activity {
                 }else{
                     displayLeaderBoard();
                 }
+            }
+        });
+
+        howToPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent howToPlayIntent= new Intent(SquareBash.this,HowToPlay.class);
+                startActivity(howToPlayIntent);
             }
         });
         this.showUserScore();
