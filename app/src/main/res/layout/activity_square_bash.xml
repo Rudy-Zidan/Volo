@@ -168,9 +168,10 @@
         android:layout_height="@dimen/_60sdp"
         android:id="@+id/howToPlay"
         android:padding="20sp"
+        android:layout_marginBottom="@dimen/_5sdp"
         android:adjustViewBounds="true"
         android:soundEffectsEnabled="false"
-        android:src="@drawable/trophy"
+        android:src="@drawable/info"
         android:elevation="0sp"
         android:layout_gravity="bottom|center"
         />
