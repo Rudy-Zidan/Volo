@@ -77,63 +77,83 @@
         android:id="@+id/actions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         >
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            />
-        <ImageButton
-            style="@style/GlossyGradientButtonStyle"
-            android:layout_width="@dimen/_60sdp"
-            android:layout_height="@dimen/_60sdp"
-            android:id="@+id/sound"
-            android:padding="20sp"
-            android:soundEffectsEnabled="false"
-            android:src="@drawable/speaker"
-            android:elevation="0sp"
-            android:layout_gravity="left|center_vertical"
-            />
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            />
-        <ImageButton
-            style="@style/GlossyGradientButtonStyle"
-            android:layout_width="@dimen/_80sdp"
-            android:layout_height="@dimen/_80sdp"
-            android:id="@+id/play"
-            android:text="@string/play"
-            android:padding="5sp"
-            android:soundEffectsEnabled="false"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                />
+            <ImageButton
+                style="@style/GlossyGradientButtonStyle"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:id="@+id/sound"
+                android:padding="20sp"
+                android:soundEffectsEnabled="false"
+                android:src="@drawable/speaker"
+                android:elevation="0sp"
+                android:layout_gravity="left|center_vertical"
+                />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                />
+            <ImageButton
+                style="@style/GlossyGradientButtonStyle"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_80sdp"
+                android:id="@+id/play"
+                android:text="@string/play"
+                android:padding="5sp"
+                android:soundEffectsEnabled="false"
 
-            android:src="@drawable/play_with_fb"
-            android:elevation="0sp"
-            android:layout_gravity="center_horizontal|center_vertical"/>
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            />
+                android:src="@drawable/play_with_fb"
+                android:elevation="0sp"
+                android:layout_gravity="center_horizontal|center_vertical"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                />
+            <ImageButton
+                style="@style/GlossyGradientButtonStyle"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:id="@+id/trophy"
+                android:padding="20sp"
+                android:adjustViewBounds="true"
+                android:soundEffectsEnabled="false"
+                android:src="@drawable/trophy"
+                android:elevation="0sp"
+                android:layout_gravity="right|center_vertical"
+                />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                />
+        </LinearLayout>
         <ImageButton
             style="@style/GlossyGradientButtonStyle"
             android:layout_width="@dimen/_60sdp"
             android:layout_height="@dimen/_60sdp"
-            android:id="@+id/trophy"
+            android:id="@+id/howToPlay"
             android:padding="20sp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
             android:adjustViewBounds="true"
             android:soundEffectsEnabled="false"
-            android:src="@drawable/trophy"
+            android:src="@drawable/info"
             android:elevation="0sp"
-            android:layout_gravity="right|center_vertical"
-            />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_gravity="bottom|center"
             />
     </LinearLayout>
     <LinearLayout
@@ -161,19 +181,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_weight="1"
-        />
-    <ImageButton
-        style="@style/GlossyGradientButtonStyle"
-        android:layout_width="@dimen/_60sdp"
-        android:layout_height="@dimen/_60sdp"
-        android:id="@+id/howToPlay"
-        android:padding="20sp"
-        android:layout_marginBottom="@dimen/_5sdp"
-        android:adjustViewBounds="true"
-        android:soundEffectsEnabled="false"
-        android:src="@drawable/info"
-        android:elevation="0sp"
-        android:layout_gravity="bottom|center"
         />
 </LinearLayout>
 
