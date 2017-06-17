@@ -28,6 +28,9 @@
     <string name="how_to_play_text_double_tab_modes">
         The DoubleTab mode in which the green gives you double the score and Red is the same also, except the gray it will reduce double the score.
     </string>
+    <string name="how_to_play_text_no_score_modes">
+        The No Score mode in which all shapes do nothing.
+    </string>
     <string name="how_to_play_continue">
         And then it come the Utilities which will help you to achive your highest score:
     </string>
