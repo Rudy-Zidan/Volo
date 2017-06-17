@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import com.quarklabs.volo.core.animations.ZoomOutPageTransformer;
 import com.quarklabs.volo.core.fragments.HowToPlayFragment;
 import com.quarklabs.volo.core.fragments.ModesFragment;
+import com.quarklabs.volo.core.fragments.UtilitiesFragment;
 
 public class HowToPlay extends FragmentActivity {
 
@@ -40,7 +41,7 @@ public class HowToPlay extends FragmentActivity {
 
 
     private class PagerAdapter extends FragmentStatePagerAdapter {
-        private static final int NUM_PAGES = 5;
+        private static final int NUM_PAGES = 3;
 
         public PagerAdapter(FragmentManager fm) {
             super(fm);
@@ -50,8 +51,10 @@ public class HowToPlay extends FragmentActivity {
         public Fragment getItem(int position) {
             if (position == 0){
                 return new HowToPlayFragment();
-            }else{
+            }else if (position == 1){
                 return new ModesFragment();
+            }else{
+                return new UtilitiesFragment();
             }
         }
 

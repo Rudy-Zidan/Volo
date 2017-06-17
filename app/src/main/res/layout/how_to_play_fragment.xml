@@ -31,14 +31,22 @@
             android:layout_marginTop="5dp"/>
 
     </LinearLayout>
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/_10sdp"
+        >
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:scrollbars="vertical"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="@dimen/_20sdp"
             >
 
             <TextView
@@ -46,37 +54,50 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/_10sdp"
                 android:text="@string/how_to_play_text"
-                android:textColor="@color/white"
-                />
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textColor="@color/white" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/_10sdp"
                 android:text="@string/how_to_play_text_easy_modes"
-                android:textColor="@color/white"
-                />
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textColor="@color/white" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/_10sdp"
                 android:text="@string/how_to_play_text_sudden_death_modes"
-                android:textColor="@color/white"
-                />
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textColor="@color/white" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/_10sdp"
                 android:text="@string/how_to_play_text_double_tab_modes"
-                android:textColor="@color/white"
-                />
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textColor="@color/white" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/_10sdp"
                 android:text="@string/how_to_play_text_no_score_modes"
-                android:textColor="@color/white"
-                />
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textColor="@color/white" />
 
 
             <TextView
@@ -84,44 +105,61 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/_10sdp"
                 android:text="@string/how_to_play_continue"
-                android:textColor="@color/white"
-                />
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textColor="@color/white" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/_10sdp"
                 android:text="@string/how_to_play_text_gift_utility"
-                android:textColor="@color/white"
-                />
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textColor="@color/white" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/_10sdp"
                 android:text="@string/how_to_play_text_bomb_utility"
-                android:textColor="@color/white"
-                />
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textColor="@color/white" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/_10sdp"
                 android:text="@string/how_to_play_text_dice_utility"
-                android:textColor="@color/white"
-                />
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textColor="@color/white" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+
                 android:padding="@dimen/_10sdp"
                 android:text="@string/how_to_play_text_time_utility"
-                android:textColor="@color/white"
-                />
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:textColor="@color/white" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/_10sdp"
                 android:text="@string/how_to_play_text_other"
-                android:textColor="@color/white"
-                />
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:textColor="@color/white" />
         </LinearLayout>
     </ScrollView>
 

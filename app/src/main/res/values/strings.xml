@@ -17,36 +17,34 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="how_to_play_text">
-        A social board game with unpredictable events, You will face 3 modes each one have its own challange for specific period of time.
-    </string>
+        A social board game with unpredictable events, You will face 4 modes each one has its own challenge for a specific period of time.    </string>
     <string name="how_to_play_text_easy_modes">
-        The Easy mode in which the Green shape gives you score, Red shape take from you lifes and Gray shape take from you score.
-    </string>
+        The Easy mode in which the Green shape gives you score, Red shape takes from your life and grey shape takes from your score.    </string>
     <string name="how_to_play_text_sudden_death_modes">
-        The Sudden Death mode in which the Green will take from you life, Red will give you score and the gray will take from you score.
+        The Sudden Death mode in which the Green will take from you life, Red will give you score and the grey will take from your score.
     </string>
     <string name="how_to_play_text_double_tab_modes">
-        The DoubleTab mode in which the green gives you double the score and Red is the same also, except the gray it will reduce double the score.
+        The DoubleTab mode in which the green gives you double the score and Red is the same also, except the grey it will reduce double the score.
     </string>
     <string name="how_to_play_text_no_score_modes">
         The No Score mode in which all shapes do nothing.
     </string>
     <string name="how_to_play_continue">
-        And then it come the Utilities which will help you to achive your highest score:
+        And then comes the Utilities which will help you to achieve your highest score:
     </string>
     <string name="how_to_play_text_gift_utility">
         The Gifts which gives you score or life.
     </string>
     <string name="how_to_play_text_bomb_utility">
-        The Bombs which it will increase or decrease the game speed or it will be a bomb of the 3 colors (Red, Green, Gray) for specific period of time.
+        The Bombs which it will increase or decrease the game speed or it will be a bomb of the 3 colours (Red, Green, Gray) for a specific period of time.
     </string>
     <string name="how_to_play_text_dice_utility">
-        The Dice it represent your lucky shot which may gives you score or life or take from you score or life.
+        The Dice represents your lucky shot which may give you score or life or takes from your score or life.
     </string>
     <string name="how_to_play_text_time_utility">
-        The Stopwatch it will increase the game countdown timer so you can play more.
+        The Stopwatch will increase the game countdown timer so you can play more.
     </string>
     <string name="how_to_play_text_other">
-        You need to keep up with the game or you may loss your life or the time ends up quickly.
+        You need to keep up with the game or you may lose your life or the time ends up quickly.
     </string>
 </resources>
