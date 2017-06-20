@@ -45,6 +45,7 @@
             android:layout_height="0dip"
             android:layout_weight="1"
             android:id="@+id/leaderBoardList"
+            android:divider="@null"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
         <com.google.android.gms.ads.AdView

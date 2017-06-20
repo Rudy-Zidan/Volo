@@ -2,6 +2,8 @@
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:divider="@null"
+    android:showDividers="none"
     xmlns:facebook="http://schemas.android.com/apk/res-auto">
     <TableRow
         android:padding="10sp"
@@ -9,6 +11,7 @@
         android:layout_marginBottom="5sp"
         android:background="@drawable/leaderboard_row"
         android:showDividers="none"
+        android:divider="@null"
         android:layout_marginLeft="@dimen/_5sdp"
         android:layout_marginRight="@dimen/_5sdp"
         >

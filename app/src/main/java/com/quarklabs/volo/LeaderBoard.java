@@ -38,8 +38,9 @@ public class LeaderBoard extends Activity {
         this.getRank();
         ListAdapter adapter = new
                 ListAdapter(LeaderBoard.this, this.players, this.userId, this.scores);
-        list=(ListView)findViewById(R.id.leaderBoardList);
-        list.setAdapter(adapter);
+        this.list = (ListView)findViewById(R.id.leaderBoardList);
+        this.list.setDivider(null);
+        this.list.setAdapter(adapter);
         this.setAds();
     }
 
